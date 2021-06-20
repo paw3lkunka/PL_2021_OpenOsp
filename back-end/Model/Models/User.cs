@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+
 namespace OpenOsp.Model.Models {
-  public class User {
-    public int Id { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+  public class User : IdentityUser<int> {
+    public virtual List<Member> Members { get; set; }
+    public virtual List<Equipment> Equipments { get; set; }
+    public virtual List<Action> Actions { get; set; }
   }
 }

@@ -5,5 +5,8 @@ namespace OpenOsp.Model.Models {
     public int EquipmentId { get; set; }
     public float FuelUsed { get; set; }
     public int CounterState { get; set; }
+
+    public virtual Action Action { get; set; }
+    public virtual Equipment Equipment { get; set; }
   }
 }
