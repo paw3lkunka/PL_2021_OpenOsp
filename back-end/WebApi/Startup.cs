@@ -40,7 +40,7 @@ namespace OpenOsp.WebApi {
         .EnableSensitiveDataLogging();
       });
 
-      services.AddIdentity<User, IdentityRole<int>>(cfg => {
+      services.AddIdentityCore<User>(cfg => {
         cfg.User.RequireUniqueEmail = true;
         cfg.Password.RequireDigit = false;
         cfg.Password.RequireLowercase = false;

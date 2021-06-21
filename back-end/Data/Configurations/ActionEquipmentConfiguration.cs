@@ -13,7 +13,7 @@ namespace OpenOsp.Data.Configurations {
 
       builder.Entity<ActionEquipment>()
         .HasOne(e => e.Action)
-        .WithMany(e => e.Equipments)
+        .WithMany(e => e.Equipment)
         .OnDelete(DeleteBehavior.NoAction);
 
       builder.Entity<ActionEquipment>()

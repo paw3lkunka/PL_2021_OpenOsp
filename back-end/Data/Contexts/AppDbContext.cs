@@ -10,12 +10,12 @@ using OpenOsp.Data.Configurations;
 
 namespace OpenOsp.Data.Contexts
 {
-  public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+  public class AppDbContext : IdentityUserContext<User, int>
   {
     public virtual DbSet<OpenOsp.Model.Models.Action> Actions { get; set; }
-    public virtual DbSet<ActionEquipment> ActionEquipments { get; set; }
+    public virtual DbSet<ActionEquipment> ActionEquipment { get; set; }
     public virtual DbSet<ActionMember> ActionMembers { get; set; }
-    public virtual DbSet<Equipment> Equipments { get; set; }
+    public virtual DbSet<Equipment> Equipment { get; set; }
     public virtual DbSet<Member> Members { get; set; }
     public override DbSet<User> Users { get; set; }
 

@@ -23,7 +23,7 @@ namespace OpenOsp.Data.Configurations {
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<Action>()
-        .HasMany(e => e.Equipments)
+        .HasMany(e => e.Equipment)
         .WithOne(e => e.Action)
         .OnDelete(DeleteBehavior.Cascade);
     }

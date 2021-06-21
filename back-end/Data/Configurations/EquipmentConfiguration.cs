@@ -20,7 +20,7 @@ namespace OpenOsp.Data.Configurations {
 
       builder.Entity<Equipment>()
         .HasOne(e => e.User)
-        .WithMany(e => e.Equipments)
+        .WithMany(e => e.Equipment)
         .OnDelete(DeleteBehavior.NoAction);
     }
 

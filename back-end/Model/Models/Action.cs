@@ -12,6 +12,6 @@ namespace OpenOsp.Model.Models {
 
     public virtual User User { get; set; }
     public virtual List<ActionMember> Members { get; set; }
-    public virtual List<ActionEquipment> Equipments { get; set; }
+    public virtual List<ActionEquipment> Equipment { get; set; }
   }
 }
