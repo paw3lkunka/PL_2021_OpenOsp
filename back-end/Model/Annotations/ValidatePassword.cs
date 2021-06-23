@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenOsp.Model.Attributes {
+namespace OpenOsp.Model.Annotations {
   public class ValidatePassword : ValidationAttribute {
     object[] ValidValues;
 

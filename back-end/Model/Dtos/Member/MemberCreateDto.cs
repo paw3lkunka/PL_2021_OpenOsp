@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenOsp.Model.DTOs {
-  public class MemberVM {
+namespace OpenOsp.Model.Dtos {
+  public class MemberCreateDto {
     [Required(ErrorMessage = "First name is required")]
     [MaxLength(15)]
     public string FirstName { get; set; }

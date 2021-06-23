@@ -2,7 +2,7 @@ using System;
 using System.Net.Mail;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenOsp.Model.Attributes {
+namespace OpenOsp.Model.Annotations {
   public class ValidateEmail : ValidationAttribute {
     object[] ValidValues;
 

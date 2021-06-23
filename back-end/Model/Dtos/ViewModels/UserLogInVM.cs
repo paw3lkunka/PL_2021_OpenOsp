@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using OpenOsp.Model.Attributes;
+using OpenOsp.Model.Annotations;
 
-namespace OpenOsp.Model.DTOs {
+namespace OpenOsp.Model.Dtos.ViewModels {
   public class UserLoginVM {
     [Required(ErrorMessage = "Email is required")]
     [ValidateEmail]
