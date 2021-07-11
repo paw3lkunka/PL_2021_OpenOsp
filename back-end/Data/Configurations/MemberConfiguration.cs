@@ -13,14 +13,16 @@ namespace OpenOsp.Data.Configurations {
       });
 
       builder.Entity<Member>()
-        .HasMany(e => e.Actions)
-        .WithOne(e => e.Member)
-        .OnDelete(DeleteBehavior.Cascade);
-
-      builder.Entity<Member>()
         .HasOne(e => e.User)
         .WithMany(e => e.Members)
+        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.NoAction);
+
+      builder.Entity<Member>()
+        .HasMany(e => e.Actions)
+        .WithOne(e => e.Member)
+        .HasForeignKey(e => e.MemberId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
 
     public void SeedData(ModelBuilder builder) {

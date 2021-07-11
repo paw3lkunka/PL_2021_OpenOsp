@@ -5,7 +5,7 @@ using OpenOsp.Data.Contexts;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.WebApi.Services {
-  public class CrudService<T> : ICrudService<T> where T : DbModel {
+  public abstract class CrudService<T> : ICrudService<T> where T : class{
     private readonly AppDbContext _context;
 
     public CrudService(AppDbContext context) {
@@ -28,10 +28,6 @@ namespace OpenOsp.WebApi.Services {
 
     public IEnumerable<T> ReadAll() {
       return _context.Set<T>().ToList();
-    }
-
-    public T ReadById(int id) {
-      return _context.Set<T>().FirstOrDefault(e => e.Id.Equals(id));
     }
 
     public bool SaveChanges() {

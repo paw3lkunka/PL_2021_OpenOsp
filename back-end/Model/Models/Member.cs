@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Models {
-  public class Member : DbModel {
+  public class Member {
+    [Key]
+    public int Id { get; set; }
+
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Pesel { get; set; } 

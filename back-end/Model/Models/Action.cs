@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Model.Models {
-  public class Action : DbModel {
+  public class Action {
+    [Key]
+    public int Id { get; set; }
+
     [Required(ErrorMessage = "Action type is required")]
     public ActionType Type { get; set; }
 
@@ -17,8 +20,11 @@ namespace OpenOsp.Model.Models {
     [Required(ErrorMessage = "End time is required")]
     public DateTime EndTime { get; set; }
 
+    [Required(ErrorMessage = "Action's owner id is required")]
+    public int UserId { get; set; }
+
     public virtual User User { get; set; }
     public virtual List<ActionMember> Members { get; set; }
-    public virtual List<ActionEquipment> Equipment { get; set; }
+    public virtual IList<ActionEquipment> Equipment { get; set; }
   }
 }

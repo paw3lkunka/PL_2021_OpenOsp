@@ -5,7 +5,7 @@ using OpenOsp.Model.Models;
 using OpenOsp.WebApi.Services;
 
 namespace OpenOsp.WebApi.Controllers {
-  public abstract class CrudController<T> : ControllerBase where T : DbModel {
+  public abstract class CrudController<T> : ControllerBase where T : class {
     private readonly CrudService<T> _service;
 
     public CrudController(CrudService<T> service) {
@@ -13,10 +13,6 @@ namespace OpenOsp.WebApi.Controllers {
     }
 
     public ActionResult<IEnumerable<TReadDto>> GetAll<TReadDto>() {
-      return null;
-    }
-
-    public ActionResult<TReadDto> GetById<TReadDto>(int id) {
       return null;
     }
 

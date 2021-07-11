@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.WebApi.Services {
-  public interface ICrudService<T> where T : DbModel {
+  public interface ICrudService<T> where T : class {
     void Create(T entity);
     void Delete(T entity);
     IEnumerable<T> ReadAll();
-    T ReadById(int id);
     void Update(T entity);
     bool SaveChanges();
   }

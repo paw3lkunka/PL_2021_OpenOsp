@@ -1,7 +1,7 @@
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Model.Models {
-  public class ActionMember : DbModel {
+  public class ActionMember {
     public int ActionId { get; set; }
     public int MemberId { get; set; }
     public ActionMemberRole Role { get; set; }

@@ -9,8 +9,8 @@ using OpenOsp.Data.Contexts;
 namespace OpenOsp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210621090650_test5")]
-    partial class test5
+    [Migration("20210624092859_test7")]
+    partial class test7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,7 +102,7 @@ namespace OpenOsp.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(2);
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -114,11 +114,10 @@ namespace OpenOsp.Data.Migrations
 
             modelBuilder.Entity("OpenOsp.Model.Models.ActionEquipment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ActionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ActionId")
+                    b.Property<int>("EquipmentId")
                         .HasColumnType("int");
 
                     b.Property<int>("CounterState")
@@ -126,17 +125,16 @@ namespace OpenOsp.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<int>("EquipmentId")
-                        .HasColumnType("int");
-
                     b.Property<float>("FuelUsed")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
                         .HasDefaultValue(0f);
 
-                    b.HasKey("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasIndex("ActionId");
+                    b.HasKey("ActionId", "EquipmentId");
 
                     b.HasIndex("EquipmentId");
 
@@ -145,14 +143,14 @@ namespace OpenOsp.Data.Migrations
 
             modelBuilder.Entity("OpenOsp.Model.Models.ActionMember", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
                     b.Property<int>("ActionId")
                         .HasColumnType("int");
 
                     b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("Role")
@@ -160,9 +158,7 @@ namespace OpenOsp.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActionId");
+                    b.HasKey("ActionId", "MemberId");
 
                     b.HasIndex("MemberId");
 
@@ -332,7 +328,8 @@ namespace OpenOsp.Data.Migrations
                     b.HasOne("OpenOsp.Model.Models.User", "User")
                         .WithMany("Actions")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

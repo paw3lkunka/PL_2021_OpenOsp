@@ -12,4 +12,4 @@ database-update:
 	dotnet ef database update -p ./WebApi/OpenOsp.WebApi.csproj
 
 database-drop:
-	dotnet ef database drop -p ./WebApi/OpenOsp.WebApi.csproj
+	dotnet ef database drop -p ./WebApi/OpenOsp.WebApi.cspro

@@ -21,16 +21,19 @@ namespace OpenOsp.Data.Configurations {
       builder.Entity<User>()
         .HasMany(e => e.Actions)
         .WithOne(e => e.User)
+        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<User>()
         .HasMany(e => e.Equipment)
         .WithOne(e => e.User)
+        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<User>()
         .HasMany(e => e.Members)
         .WithOne(e => e.User)
+        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.Cascade);
     }
 

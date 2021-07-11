@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Models {
-  public class ActionEquipment : DbModel {
+  public class ActionEquipment {
     public int ActionId { get; set; }
     public int EquipmentId { get; set; }
     public float FuelUsed { get; set; }

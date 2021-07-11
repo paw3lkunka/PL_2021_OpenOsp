@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 using OpenOsp.Data.Contexts;
 using OpenOsp.Model.Models;
@@ -33,6 +34,12 @@ namespace OpenOsp.WebApi {
       services.AddControllers().AddNewtonsoftJson();
 
       services.AddDbContext<AppDbContext>(options => {
+        options.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), builder => {
+          builder.MigrationsAssembly("OpenOsp.Data");
+          builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        })
+        .EnableSensitiveDataLogging();
+
         options.UseMySql(Configuration.GetConnectionString("MySql"), new MySqlServerVersion(new Version()), builder => {
           builder.MigrationsAssembly("OpenOsp.Data");
           builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);

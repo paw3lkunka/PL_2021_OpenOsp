@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OpenOsp.Data.Migrations
 {
-    public partial class test5 : Migration
+    public partial class test7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,7 +57,7 @@ namespace OpenOsp.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     StartTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -201,16 +201,16 @@ namespace OpenOsp.Data.Migrations
                 name: "ActionEquipment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ActionId = table.Column<int>(type: "int", nullable: false),
                     EquipmentId = table.Column<int>(type: "int", nullable: false),
                     FuelUsed = table.Column<float>(type: "float", nullable: false, defaultValue: 0f),
-                    CounterState = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
+                    CounterState = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActionEquipment", x => x.Id);
+                    table.PrimaryKey("PK_ActionEquipment", x => new { x.ActionId, x.EquipmentId });
                     table.ForeignKey(
                         name: "FK_ActionEquipment_Actions_ActionId",
                         column: x => x.ActionId,
@@ -229,15 +229,15 @@ namespace OpenOsp.Data.Migrations
                 name: "ActionMembers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ActionId = table.Column<int>(type: "int", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
+                    Role = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActionMembers", x => x.Id);
+                    table.PrimaryKey("PK_ActionMembers", x => new { x.ActionId, x.MemberId });
                     table.ForeignKey(
                         name: "FK_ActionMembers_Actions_ActionId",
                         column: x => x.ActionId,
@@ -253,19 +253,9 @@ namespace OpenOsp.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActionEquipment_ActionId",
-                table: "ActionEquipment",
-                column: "ActionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ActionEquipment_EquipmentId",
                 table: "ActionEquipment",
                 column: "EquipmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActionMembers_ActionId",
-                table: "ActionMembers",
-                column: "ActionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActionMembers_MemberId",
