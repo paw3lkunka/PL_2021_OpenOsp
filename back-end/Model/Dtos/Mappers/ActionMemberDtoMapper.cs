@@ -16,7 +16,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
     }
 
     public ActionMemberReadDto MapRead(ActionMember entity) {
-        return new ActionMemberReadDto {
+      return new ActionMemberReadDto {
         MemberId = entity.Key2,
         Role = entity.Role,
       };

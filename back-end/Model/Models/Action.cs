@@ -15,10 +15,10 @@ namespace OpenOsp.Model.Models {
 
     [MaxLength(50)]
     public string Location { get; set; }
-    
+
     [Required(ErrorMessage = "Start time is required")]
     public DateTime StartTime { get; set; }
-    
+
     [Required(ErrorMessage = "End time is required")]
     public DateTime EndTime { get; set; }
 

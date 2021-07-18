@@ -14,15 +14,15 @@ using OpenOsp.WebApi.Exceptions;
 
 namespace OpenOsp.WebApi.Controllers {
   [Route("[controller]")]
-  public class ControllerWithKey<T, TCreateDto, TReadDto, TUpdateDto, TKey> : Controller<T, TCreateDto, TReadDto, TUpdateDto> 
+  public class ControllerWithKey<T, TCreateDto, TReadDto, TUpdateDto, TKey> : Controller<T, TCreateDto, TReadDto, TUpdateDto>
     where T : class, IHasKey<TKey>
     where TCreateDto : class
     where TReadDto : class
-    where TUpdateDto : class 
+    where TUpdateDto : class
     where TKey : IEquatable<TKey>, IComparable<TKey> {
     protected new readonly IServiceWithKey<T, TKey> _service;
-    
-    public ControllerWithKey(IServiceWithKey<T, TKey> service, IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper) 
+
+    public ControllerWithKey(IServiceWithKey<T, TKey> service, IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
       : base(service, mapper) {
       _service = service;
     }
@@ -33,7 +33,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key);
         return base.Read(entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -47,7 +47,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key);
         return base.Update(updateDto, entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -61,7 +61,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key);
         return base.Patch(patchDoc, entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -75,7 +75,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key);
         return base.Delete(entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -85,16 +85,16 @@ namespace OpenOsp.WebApi.Controllers {
   }
 
   [Route("[controller]")]
-  public class ControllerWithKey<T, TCreateDto, TReadDto, TUpdateDto, TKey1, TKey2> : Controller<T, TCreateDto, TReadDto, TUpdateDto> 
+  public class ControllerWithKey<T, TCreateDto, TReadDto, TUpdateDto, TKey1, TKey2> : Controller<T, TCreateDto, TReadDto, TUpdateDto>
     where T : class, IHasKey<TKey1, TKey2>
     where TCreateDto : class
     where TReadDto : class
-    where TUpdateDto : class 
+    where TUpdateDto : class
     where TKey1 : IEquatable<TKey1>, IComparable<TKey1>
     where TKey2 : IEquatable<TKey2>, IComparable<TKey2> {
     protected new readonly IServiceWithKey<T, TKey1, TKey2> _service;
-    
-    public ControllerWithKey(IServiceWithKey<T, TKey1, TKey2> service, IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper) 
+
+    public ControllerWithKey(IServiceWithKey<T, TKey1, TKey2> service, IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
       : base(service, mapper) {
       _service = service;
     }
@@ -105,7 +105,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2);
         return base.Read(entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -119,7 +119,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2);
         return base.Update(updateDto, entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -133,7 +133,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2);
         return base.Patch(patchDoc, entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -147,7 +147,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2);
         return base.Delete(entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -157,17 +157,17 @@ namespace OpenOsp.WebApi.Controllers {
   }
 
   [Route("[controller]")]
-  public class ControllerWithKey<T, TCreateDto, TReadDto, TUpdateDto, TKey1, TKey2, TKey3> : Controller<T, TCreateDto, TReadDto, TUpdateDto> 
+  public class ControllerWithKey<T, TCreateDto, TReadDto, TUpdateDto, TKey1, TKey2, TKey3> : Controller<T, TCreateDto, TReadDto, TUpdateDto>
     where T : class, IHasKey<TKey1, TKey2, TKey3>
     where TCreateDto : class
     where TReadDto : class
-    where TUpdateDto : class 
+    where TUpdateDto : class
     where TKey1 : IEquatable<TKey1>, IComparable<TKey1>
     where TKey2 : IEquatable<TKey2>, IComparable<TKey2>
     where TKey3 : IEquatable<TKey3>, IComparable<TKey3> {
     protected new readonly IServiceWithKey<T, TKey1, TKey2, TKey3> _service;
-    
-    public ControllerWithKey(IServiceWithKey<T, TKey1, TKey2, TKey3> service, IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper) 
+
+    public ControllerWithKey(IServiceWithKey<T, TKey1, TKey2, TKey3> service, IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
       : base(service, mapper) {
       _service = service;
     }
@@ -178,7 +178,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2, key3);
         return base.Read(entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -192,7 +192,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2, key3);
         return base.Update(updateDto, entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -206,7 +206,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2, key3);
         return base.Patch(patchDoc, entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {
@@ -220,7 +220,7 @@ namespace OpenOsp.WebApi.Controllers {
         var entity = _service.ReadByKey(key1, key2, key3);
         return base.Delete(entity);
       }
-      catch(NotFoundException) {
+      catch (NotFoundException) {
         return NotFound();
       }
       catch {

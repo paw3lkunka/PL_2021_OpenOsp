@@ -21,6 +21,6 @@ namespace OpenOsp.Model.Dtos {
 
     public virtual List<ActionMemberReadDto> Members { get; set; }
 
-    public virtual List<ActionEquipmentReadDto> Equipment { get; set; } 
+    public virtual List<ActionEquipmentReadDto> Equipment { get; set; }
   }
 }

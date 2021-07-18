@@ -6,7 +6,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       return new Member {
         FirstName = dto.FirstName,
         LastName = dto.LastName,
-        Pesel = dto.Pesel, 
+        Pesel = dto.Pesel,
       };
     }
 

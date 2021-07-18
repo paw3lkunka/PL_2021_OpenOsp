@@ -12,7 +12,7 @@ namespace OpenOsp.Model.Models {
 
     public string LastName { get; set; }
 
-    public string Pesel { get; set; } 
+    public string Pesel { get; set; }
 
     public int UserId { get; set; }
 

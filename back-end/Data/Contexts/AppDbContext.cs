@@ -8,14 +8,12 @@ using Microsoft.Extensions.Configuration;
 using OpenOsp.Model.Models;
 using OpenOsp.Data.Configurations;
 
-namespace OpenOsp.Data.Contexts
-{
-  public class AppDbContext : IdentityUserContext<User, int>
-  {
+namespace OpenOsp.Data.Contexts {
+  public class AppDbContext : IdentityUserContext<User, int> {
     public virtual DbSet<OpenOsp.Model.Models.Action> Actions { get; set; }
 
     public virtual DbSet<ActionEquipment> ActionEquipment { get; set; }
-    
+
     public virtual DbSet<ActionMember> ActionMembers { get; set; }
 
     public virtual DbSet<Equipment> Equipment { get; set; }
@@ -28,8 +26,7 @@ namespace OpenOsp.Data.Contexts
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
+    protected override void OnModelCreating(ModelBuilder builder) {
       base.OnModelCreating(builder);
       IList<IEntityConfiguration> entityConfigurations = new List<IEntityConfiguration> {
         new ActionConfiguration(),
@@ -39,8 +36,7 @@ namespace OpenOsp.Data.Contexts
         new MemberConfiguration(),
         new UserConfiguration()
       };
-      foreach (var entityConfiguration in entityConfigurations)
-      {
+      foreach (var entityConfiguration in entityConfigurations) {
         entityConfiguration.AddConfiguration(builder);
         entityConfiguration.SeedData(builder);
       }

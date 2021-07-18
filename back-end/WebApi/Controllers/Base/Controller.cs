@@ -46,7 +46,7 @@ namespace OpenOsp.WebApi.Controllers {
     [HttpPost]
     public virtual ActionResult<TReadDto> Post(TCreateDto createDto) {
       try {
-        if(!TryValidateModel(createDto)) {
+        if (!TryValidateModel(createDto)) {
           throw new ValidationProblemException();
         }
         var entity = _mapper.MapCreate(createDto);
@@ -73,7 +73,7 @@ namespace OpenOsp.WebApi.Controllers {
 
     protected ActionResult Update(TUpdateDto updateDto, T entity) {
       try {
-        if(!TryValidateModel(updateDto)) {
+        if (!TryValidateModel(updateDto)) {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(updateDto, entity);
@@ -81,10 +81,10 @@ namespace OpenOsp.WebApi.Controllers {
         _service.SaveChanges();
         return NoContent();
       }
-      catch(ValidationProblemException) {
+      catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch(DatabaseTransactionFailureException ex) {
+      catch (DatabaseTransactionFailureException ex) {
         return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
       }
     }
@@ -93,7 +93,7 @@ namespace OpenOsp.WebApi.Controllers {
       try {
         var entityToPatch = _mapper.MapPatch(entity);
         patchDoc.ApplyTo(entityToPatch);
-        if(!TryValidateModel(entityToPatch)) {
+        if (!TryValidateModel(entityToPatch)) {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(entityToPatch, entity);
@@ -101,10 +101,10 @@ namespace OpenOsp.WebApi.Controllers {
         _service.SaveChanges();
         return NoContent();
       }
-      catch(ValidationProblemException) {
+      catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch(DatabaseTransactionFailureException ex) {
+      catch (DatabaseTransactionFailureException ex) {
         return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
       }
     }
@@ -115,7 +115,7 @@ namespace OpenOsp.WebApi.Controllers {
         _service.SaveChanges();
         return NoContent();
       }
-      catch(DatabaseTransactionFailureException ex) {
+      catch (DatabaseTransactionFailureException ex) {
         return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
       }
     }

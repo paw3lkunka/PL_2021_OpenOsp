@@ -32,7 +32,7 @@ namespace OpenOsp.WebApi.Services {
     }
 
     public void SaveChanges() {
-      if(_context.SaveChanges() < 0) {
+      if (_context.SaveChanges() < 0) {
         throw new DatabaseTransactionFailureException();
       }
     }
