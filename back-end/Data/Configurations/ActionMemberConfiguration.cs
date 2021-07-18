@@ -6,20 +6,23 @@ namespace OpenOsp.Data.Configurations {
   internal class ActionMemberConfiguration : IEntityConfiguration {
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<ActionMember>(entity => {
-        entity.HasKey(e => new { e.ActionId, e.MemberId });
-        entity.Property(e => e.Role).HasDefaultValue(ActionMemberRole.Member);
+        entity.HasKey(e => new { e.Key1, e.Key2 });
+        entity.Property(e => e.Key1)
+          .HasColumnName("action_id");
+        entity.Property(e => e.Key2)
+          .HasColumnName("member_id");
+        entity.Property(e => e.Role)
+          .HasDefaultValue(ActionMemberRole.Member);
       });
-
       builder.Entity<ActionMember>()
         .HasOne(e => e.Action)
         .WithMany(e => e.Members)
-        .HasForeignKey(e => e.ActionId)
+        .HasForeignKey(e => e.Key1)
         .OnDelete(DeleteBehavior.NoAction);
-
       builder.Entity<ActionMember>()
         .HasOne(e => e.Member)
         .WithMany(e => e.Actions)
-        .HasForeignKey(e => e.MemberId)
+        .HasForeignKey(e => e.Key2)
         .OnDelete(DeleteBehavior.NoAction);
     }
 

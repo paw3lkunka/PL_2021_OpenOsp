@@ -2,36 +2,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenOsp.Data.Contexts;
-using OpenOsp.Model.Models;
+using OpenOsp.WebApi.Exceptions;
 
 namespace OpenOsp.WebApi.Services {
-  public abstract class CrudService<T> : ICrudService<T> where T : class{
-    private readonly AppDbContext _context;
+  public class Service<T> : IService<T>
+    where T : class {
+    protected readonly AppDbContext _context;
 
-    public CrudService(AppDbContext context) {
+    public Service(AppDbContext context) {
       _context = context;
     }
 
     public void Create(T entity) {
       if (entity == default(T)) {
-        throw new ArgumentException();
+        throw new NullReferenceException();
       }
       _context.Add<T>(entity);
     }
 
     public void Delete(T entity) {
       if (entity == default(T)) {
-        throw new ArgumentException();
+        throw new NullReferenceException();
       }
       _context.Remove<T>(entity);
     }
 
-    public IEnumerable<T> ReadAll() {
+    public virtual IEnumerable<T> ReadAll() {
       return _context.Set<T>().ToList();
     }
 
-    public bool SaveChanges() {
-      return _context.SaveChanges() >= 0;
+    public void SaveChanges() {
+      if(_context.SaveChanges() < 0) {
+        throw new DatabaseTransactionFailureException();
+      }
     }
 
     public void Update(T entity) {

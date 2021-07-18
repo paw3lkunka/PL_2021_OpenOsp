@@ -2,28 +2,33 @@ using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
   public class ActionEquipmentDtoMapper : IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto> {
-    public ActionEquipmentCreateDto MapCreate(ActionEquipment entity) {
-      throw new System.NotImplementedException();
+    public ActionEquipment MapCreate(ActionEquipmentCreateDto dto) {
+      return new ActionEquipment {
+        CounterState = dto.CounterState,
+        Key2 = dto.EquipmentId,
+        FuelUsed = dto.FuelUsed,
+      };
+    }
+
+    public ActionEquipmentUpdateDto MapPatch(ActionEquipment entity) {
+      return new ActionEquipmentUpdateDto {
+        CounterState = entity.CounterState,
+        FuelUsed = entity.FuelUsed,
+      };
     }
 
     public ActionEquipmentReadDto MapRead(ActionEquipment entity) {
-      throw new System.NotImplementedException();
+      return new ActionEquipmentReadDto {
+        CounterState = entity.CounterState,
+        EquipmentId = entity.Key2,
+        FuelUsed = entity.FuelUsed,
+      };
     }
 
-    public ActionEquipmentUpdateDto MapUpdate(ActionEquipment entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public ActionEquipment ReverseMapCreate(ActionEquipmentCreateDto entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public ActionEquipment ReverseMapRead(ActionEquipmentReadDto entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public ActionEquipment ReverseMapUpdate(ActionEquipmentUpdateDto entity) {
-      throw new System.NotImplementedException();
+    public ActionEquipment MapUpdate(ActionEquipmentUpdateDto dto, ActionEquipment entity) {
+      entity.CounterState = dto.CounterState;
+      entity.FuelUsed = dto.FuelUsed;
+      return entity;
     }
   }
 }

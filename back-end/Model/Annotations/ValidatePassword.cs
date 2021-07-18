@@ -12,17 +12,14 @@ namespace OpenOsp.Model.Annotations {
 
     public override bool IsValid(object value) {
       string password = (string)value;
-
       if (password.Length < 12) {
         ErrorMessage = "Password must be at least 12 characters long";
         return false;
       }
-
       // Regex upperCase = new Regex(@"[A-Z]");
       // Regex lowerCase = new Regex(@"[a-z]");
       // Regex numbers = new Regex(@"[\d]");
       // Regex specSym = new Regex(@"[@$!%*?&]");
-
       // if (!((Convert.ToInt32(upperCase.IsMatch(password)) +
       //     Convert.ToInt32(lowerCase.IsMatch(password)) +
       //     Convert.ToInt32(numbers.IsMatch(password)) +
@@ -30,7 +27,6 @@ namespace OpenOsp.Model.Annotations {
       //   ErrorMessage = "Password should satisfy at least two of the following rules: one lowercase letter, one upper case letter, one number, one special character (!, @, #, $, %, &)";
       //   return false;
       // }
-
       return true;
     }
   }

@@ -1,29 +1,60 @@
+using System.Linq;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
   public class ActionDtoMapper : IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> {
-    public ActionCreateDto MapCreate(Action entity) {
-      throw new System.NotImplementedException();
+    public Action MapCreate(ActionCreateDto dto) {
+      return new Action {
+        Type = dto.Type,
+        Location = dto.Location,
+        StartTime = dto.StartTime,
+        EndTime = dto.EndTime,
+        Members = dto.Members?.Select(e => new ActionMember {
+          Key2 = e.MemberId,
+          Role = e.Role
+        }).ToList(),
+        Equipment = dto.Equipment?.Select(e => new ActionEquipment {
+          Key2 = e.EquipmentId,
+          CounterState = e.CounterState,
+          FuelUsed = e.FuelUsed
+        }).ToList(),
+      };
+    }
+
+    public ActionUpdateDto MapPatch(Action entity) {
+      return new ActionUpdateDto {
+        Type = entity.Type,
+        Location = entity.Location,
+        StartTime = entity.StartTime,
+        EndTime = entity.EndTime,
+      };
     }
 
     public ActionReadDto MapRead(Action entity) {
-      throw new System.NotImplementedException();
+      return new ActionReadDto {
+        Id = entity.Key,
+        Type = entity.Type,
+        Location = entity.Location,
+        StartTime = entity.StartTime,
+        EndTime = entity.EndTime,
+        Members = entity.Members?.Select(e => new ActionMemberReadDto {
+          MemberId = e.Key2,
+          Role = e.Role,
+        }).ToList(),
+        Equipment = entity.Equipment?.Select(e => new ActionEquipmentReadDto {
+          EquipmentId = e.Key2,
+          CounterState = e.CounterState,
+          FuelUsed = e.FuelUsed
+        }).ToList(),
+      };
     }
 
-    public ActionUpdateDto MapUpdate(Action entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public Action ReverseMapCreate(ActionCreateDto entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public Action ReverseMapRead(ActionReadDto entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public Action ReverseMapUpdate(ActionUpdateDto entity) {
-      throw new System.NotImplementedException();
+    public Action MapUpdate(ActionUpdateDto dto, Action entity) {
+      entity.Type = dto.Type;
+      entity.Location = dto.Location;
+      entity.StartTime = dto.StartTime;
+      entity.EndTime = dto.EndTime;
+      return entity;
     }
   }
 }

@@ -13,11 +13,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Newtonsoft.Json.Serialization;
 
 using OpenOsp.Data.Contexts;
 using OpenOsp.Model.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace OpenOsp.WebApi {
   public class Startup {
@@ -29,24 +30,20 @@ namespace OpenOsp.WebApi {
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
+      /// Load configuration files
+      // services.Configure<Configuration>(Configuration.GetSection(""));
+      /// Basic server configuration
       services.AddCors();
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-      services.AddControllers().AddNewtonsoftJson();
-
+      services.AddMvc()
+        .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+      /// Database Context
       services.AddDbContext<AppDbContext>(options => {
         options.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), builder => {
           builder.MigrationsAssembly("OpenOsp.Data");
           builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        })
-        .EnableSensitiveDataLogging();
-
-        options.UseMySql(Configuration.GetConnectionString("MySql"), new MySqlServerVersion(new Version()), builder => {
-          builder.MigrationsAssembly("OpenOsp.Data");
-          builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        })
-        .EnableSensitiveDataLogging();
+        }).EnableSensitiveDataLogging();
       });
-
+      /// Identity users
       services.AddIdentityCore<User>(cfg => {
         cfg.User.RequireUniqueEmail = true;
         cfg.Password.RequireDigit = false;
@@ -55,12 +52,9 @@ namespace OpenOsp.WebApi {
         cfg.Password.RequireNonAlphanumeric = false;
         cfg.Password.RequiredLength = 12;
         cfg.SignIn.RequireConfirmedEmail = true;
-      })
-        .AddEntityFrameworkStores<AppDbContext>()
+      }).AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
-
-      // services.Configure<Configuration>(Configuration.GetSection(""));
-
+      /// Authentication with JWT
       services.AddAuthentication().AddJwtBearer(cfg => {
         cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters() {
           // ValidIssuer = Configuration[""],
@@ -73,8 +67,13 @@ namespace OpenOsp.WebApi {
           // ValidateLifetime = true
         };
       });
-
+      /// API Services
       // services.AddScoped<IService, Service>();
+      /// API Controllers
+      services.AddControllers()
+        .AddNewtonsoftJson(s => {
+          s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,13 +81,9 @@ namespace OpenOsp.WebApi {
       if (env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
       }
-
       app.UseHttpsRedirection();
-
       app.UseRouting();
-
       app.UseAuthorization();
-
       app.UseEndpoints(endpoints => {
         endpoints.MapControllers();
       });

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
   public class EquipmentUpdateDto {
-    [Required(ErrorMessage = "Name is required")]
+    [Required]
     [MaxLength(50)]
     public string Name { get; set; }
 

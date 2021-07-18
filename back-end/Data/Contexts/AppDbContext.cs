@@ -13,10 +13,15 @@ namespace OpenOsp.Data.Contexts
   public class AppDbContext : IdentityUserContext<User, int>
   {
     public virtual DbSet<OpenOsp.Model.Models.Action> Actions { get; set; }
+
     public virtual DbSet<ActionEquipment> ActionEquipment { get; set; }
+    
     public virtual DbSet<ActionMember> ActionMembers { get; set; }
+
     public virtual DbSet<Equipment> Equipment { get; set; }
+
     public virtual DbSet<Member> Members { get; set; }
+
     public override DbSet<User> Users { get; set; }
 
     public AppDbContext() : base() { }
@@ -26,7 +31,6 @@ namespace OpenOsp.Data.Contexts
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
-
       IList<IEntityConfiguration> entityConfigurations = new List<IEntityConfiguration> {
         new ActionConfiguration(),
         new ActionEquipmentConfiguration(),
@@ -35,7 +39,6 @@ namespace OpenOsp.Data.Contexts
         new MemberConfiguration(),
         new UserConfiguration()
       };
-
       foreach (var entityConfiguration in entityConfigurations)
       {
         entityConfiguration.AddConfiguration(builder);

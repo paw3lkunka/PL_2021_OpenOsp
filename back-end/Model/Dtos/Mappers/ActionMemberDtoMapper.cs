@@ -2,28 +2,29 @@ using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
   public class ActionMemberDtoMapper : IDtoMapper<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto> {
-    public ActionMemberCreateDto MapCreate(ActionMember entity) {
-      throw new System.NotImplementedException();
+    public ActionMember MapCreate(ActionMemberCreateDto dto) {
+      return new ActionMember {
+        Key2 = dto.MemberId,
+        Role = dto.Role,
+      };
+    }
+
+    public ActionMemberUpdateDto MapPatch(ActionMember entity) {
+      return new ActionMemberUpdateDto {
+        Role = entity.Role,
+      };
     }
 
     public ActionMemberReadDto MapRead(ActionMember entity) {
-      throw new System.NotImplementedException();
+        return new ActionMemberReadDto {
+        MemberId = entity.Key2,
+        Role = entity.Role,
+      };
     }
 
-    public ActionMemberUpdateDto MapUpdate(ActionMember entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public ActionMember ReverseMapCreate(ActionMemberCreateDto entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public ActionMember ReverseMapRead(ActionMemberReadDto entity) {
-      throw new System.NotImplementedException();
-    }
-
-    public ActionMember ReverseMapUpdate(ActionMemberUpdateDto entity) {
-      throw new System.NotImplementedException();
+    public ActionMember MapUpdate(ActionMemberUpdateDto dto, ActionMember entity) {
+      entity.Role = dto.Role;
+      return entity;
     }
   }
 }

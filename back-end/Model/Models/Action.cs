@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Model.Models {
-  public class Action {
+  public class Action : IHasKey<int> {
     [Key]
-    public int Id { get; set; }
+    [Column("id")]
+    public int Key { get; set; }
 
     [Required(ErrorMessage = "Action type is required")]
     public ActionType Type { get; set; }
@@ -24,7 +26,9 @@ namespace OpenOsp.Model.Models {
     public int UserId { get; set; }
 
     public virtual User User { get; set; }
+
     public virtual List<ActionMember> Members { get; set; }
-    public virtual IList<ActionEquipment> Equipment { get; set; }
+
+    public virtual List<ActionEquipment> Equipment { get; set; }
   }
 }

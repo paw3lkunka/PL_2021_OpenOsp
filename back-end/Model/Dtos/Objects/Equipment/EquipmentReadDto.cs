@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
-  public class EquipmentCreateDto {
-    [Required(ErrorMessage = "Name is required")]
+  public class EquipmentReadDto {
+    public int Id { get; set; }
+
+    [Required]
     [MaxLength(50)]
     public string Name { get; set; }
 

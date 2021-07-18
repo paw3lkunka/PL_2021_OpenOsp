@@ -1,0 +1,4 @@
+// TODO: Create generic Service functions 
+// TODO: Create special Services like UserService and ActionService
+// TODO: Create generic Controller
+// TODO: Create special Controllers
