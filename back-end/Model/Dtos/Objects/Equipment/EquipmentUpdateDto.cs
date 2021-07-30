@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
+  
   public class EquipmentUpdateDto {
+    
     [Required]
     [MaxLength(50)]
     public string Name { get; set; }
@@ -14,5 +16,7 @@ namespace OpenOsp.Model.Dtos {
 
     [MaxLength(15)]
     public string ReqistryNumber { get; set; }
+
   }
+
 }

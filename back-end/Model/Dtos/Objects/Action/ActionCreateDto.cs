@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Model.Dtos {
+  
   public class ActionCreateDto {
+
     [Required]
     public ActionType Type { get; set; }
 
@@ -20,5 +22,7 @@ namespace OpenOsp.Model.Dtos {
     public List<ActionMemberCreateDto> Members { get; set; }
 
     public List<ActionEquipmentCreateDto> Equipment { get; set; }
+
   }
+
 }

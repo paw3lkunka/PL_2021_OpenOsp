@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Data.Configurations {
+  
   internal class ActionEquipmentConfiguration : IEntityConfiguration {
+
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<ActionEquipment>(entity => {
         entity.HasKey(e => new { e.Key1, e.Key2 });
@@ -34,5 +36,7 @@ namespace OpenOsp.Data.Configurations {
       //   }
       // );
     }
+
   }
+
 }

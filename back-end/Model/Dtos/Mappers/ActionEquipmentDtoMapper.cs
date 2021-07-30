@@ -1,7 +1,9 @@
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
+
   public class ActionEquipmentDtoMapper : IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto> {
+
     public ActionEquipment MapCreate(ActionEquipmentCreateDto dto) {
       return new ActionEquipment {
         CounterState = dto.CounterState,
@@ -30,5 +32,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       entity.FuelUsed = dto.FuelUsed;
       return entity;
     }
+
   }
+
 }

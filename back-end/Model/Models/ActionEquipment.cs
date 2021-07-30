@@ -2,7 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenOsp.Model.Models {
+
   public class ActionEquipment : IHasKey<int, int> {
+
     [Column("action_id")]
     public int Key1 { get; set; }
 
@@ -16,5 +18,7 @@ namespace OpenOsp.Model.Models {
     public virtual Action Action { get; set; }
 
     public virtual Equipment Equipment { get; set; }
+
   }
+
 }

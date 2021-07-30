@@ -1,7 +1,9 @@
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
+
   public class ActionMemberDtoMapper : IDtoMapper<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto> {
+
     public ActionMember MapCreate(ActionMemberCreateDto dto) {
       return new ActionMember {
         Key2 = dto.MemberId,
@@ -26,5 +28,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       entity.Role = dto.Role;
       return entity;
     }
+
   }
+
 }

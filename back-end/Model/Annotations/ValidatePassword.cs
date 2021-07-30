@@ -3,12 +3,14 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Annotations {
+
   public class ValidatePassword : ValidationAttribute {
-    object[] ValidValues;
 
     public ValidatePassword(params object[] validValues) {
       ValidValues = validValues;
     }
+
+    object[] ValidValues;
 
     public override bool IsValid(object value) {
       string password = (string)value;
@@ -29,5 +31,7 @@ namespace OpenOsp.Model.Annotations {
       // }
       return true;
     }
+
   }
+
 }

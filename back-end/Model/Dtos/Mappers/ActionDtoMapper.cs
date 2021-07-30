@@ -2,7 +2,9 @@ using System.Linq;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
+
   public class ActionDtoMapper : IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> {
+
     public Action MapCreate(ActionCreateDto dto) {
       return new Action {
         Type = dto.Type,
@@ -56,5 +58,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       entity.EndTime = dto.EndTime;
       return entity;
     }
+
   }
+
 }

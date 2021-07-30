@@ -3,7 +3,9 @@ using OpenOsp.Model.Models;
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Data.Configurations {
+
   internal class ActionConfiguration : IEntityConfiguration {
+
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<Action>(entity => {
         entity.HasKey(e => e.Key);
@@ -23,7 +25,7 @@ namespace OpenOsp.Data.Configurations {
       builder.Entity<Action>()
         .HasOne(e => e.User)
         .WithMany(e => e.Actions)
-        .HasForeignKey(e => e.UserId)
+        .HasForeignKey(e => e.UserKey)
         .OnDelete(DeleteBehavior.NoAction);
       builder.Entity<Action>()
         .HasMany(e => e.Members)
@@ -44,5 +46,7 @@ namespace OpenOsp.Data.Configurations {
       //   }
       // );
     }
+
   }
+
 }

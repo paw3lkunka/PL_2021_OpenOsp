@@ -3,7 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenOsp.Model.Models {
-  public class Member {
+
+  public class Member : IHasKey<int>, IOwnedBy<int> {
+
     [Key]
     [Column("id")]
     public int Key { get; set; }
@@ -14,10 +16,13 @@ namespace OpenOsp.Model.Models {
 
     public string Pesel { get; set; }
 
-    public int UserId { get; set; }
+    [Required(ErrorMessage = "Action's owner id is required")]
+    public int UserKey { get; set; }
 
     public virtual User User { get; set; }
 
     public virtual List<ActionMember> Actions { get; set; }
+
   }
+
 }

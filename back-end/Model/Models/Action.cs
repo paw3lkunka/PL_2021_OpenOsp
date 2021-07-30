@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Model.Models {
-  public class Action : IHasKey<int> {
+
+  public class Action : IHasKey<int>, IOwnedBy<int> {
+
     [Key]
     [Column("id")]
     public int Key { get; set; }
@@ -23,12 +25,14 @@ namespace OpenOsp.Model.Models {
     public DateTime EndTime { get; set; }
 
     [Required(ErrorMessage = "Action's owner id is required")]
-    public int UserId { get; set; }
+    public int UserKey { get; set; }
 
     public virtual User User { get; set; }
 
     public virtual List<ActionMember> Members { get; set; }
 
     public virtual List<ActionEquipment> Equipment { get; set; }
+
   }
+
 }

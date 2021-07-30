@@ -1,7 +1,9 @@
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
+
   public class MemberDtoMapper : IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto> {
+    
     public Member MapCreate(MemberCreateDto dto) {
       return new Member {
         FirstName = dto.FirstName,
@@ -33,5 +35,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       entity.Pesel = dto.Pesel;
       return entity;
     }
+
   }
+
 }

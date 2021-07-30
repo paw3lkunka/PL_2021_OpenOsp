@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
+
   public class MemberReadDto {
+
     public int Id { get; set; }
 
     [Required]
@@ -15,5 +17,7 @@ namespace OpenOsp.Model.Dtos {
     [Required]
     [MinLength(11), MaxLength(11)]
     public string Pesel { get; set; }
+
   }
+
 }

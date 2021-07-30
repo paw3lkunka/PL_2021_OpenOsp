@@ -17,14 +17,19 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Newtonsoft.Json.Serialization;
 using OpenOsp.Data.Contexts;
 using OpenOsp.Model.Models;
+using OpenOsp.Model.Dtos;
+using OpenOsp.Model.Dtos.Mappers;
+using OpenOsp.WebApi.Services;
 
 namespace OpenOsp.WebApi {
+
   public class Startup {
-    public IConfiguration Configuration { get; }
 
     public Startup(IConfiguration configuration) {
       Configuration = configuration;
     }
+
+    public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
@@ -66,7 +71,9 @@ namespace OpenOsp.WebApi {
         };
       });
       /// API Services
-      // services.AddScoped<IService, Service>();
+      // Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto, int
+      services.AddScoped<IKeyService<Equipment, int>, KeyService<Equipment, int>>();
+      services.AddScoped<IKeyService<Member, int>, KeyService<Member, int>>();
       /// API Controllers
       services.AddControllers()
         .AddNewtonsoftJson(s => {
@@ -86,5 +93,7 @@ namespace OpenOsp.WebApi {
         endpoints.MapControllers();
       });
     }
+
   }
+
 }

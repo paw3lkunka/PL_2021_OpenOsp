@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using OpenOsp.Model.Enums;
 
 namespace OpenOsp.Model.Dtos {
+
   public class ActionReadDto {
+
     public int Id { get; set; }
 
     [Required]
@@ -22,5 +24,7 @@ namespace OpenOsp.Model.Dtos {
     public virtual List<ActionMemberReadDto> Members { get; set; }
 
     public virtual List<ActionEquipmentReadDto> Equipment { get; set; }
+
   }
+
 }

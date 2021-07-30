@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Data.Configurations {
+
   internal class MemberConfiguration : IEntityConfiguration {
+
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<Member>(entity => {
         entity.HasKey(e => e.Key);
@@ -19,7 +21,7 @@ namespace OpenOsp.Data.Configurations {
       builder.Entity<Member>()
         .HasOne(e => e.User)
         .WithMany(e => e.Members)
-        .HasForeignKey(e => e.UserId)
+        .HasForeignKey(e => e.UserKey)
         .OnDelete(DeleteBehavior.NoAction);
       builder.Entity<Member>()
         .HasMany(e => e.Actions)
@@ -35,5 +37,7 @@ namespace OpenOsp.Data.Configurations {
       //   }
       // );
     }
+
   }
+
 }

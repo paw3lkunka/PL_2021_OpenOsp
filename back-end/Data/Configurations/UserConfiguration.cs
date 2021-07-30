@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Data.Configurations {
+  
   internal class UserConfiguration : IEntityConfiguration {
+
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<User>(entity => {
         entity.HasKey(e => e.Id);
@@ -30,17 +32,17 @@ namespace OpenOsp.Data.Configurations {
       builder.Entity<User>()
         .HasMany(e => e.Actions)
         .WithOne(e => e.User)
-        .HasForeignKey(e => e.UserId)
+        .HasForeignKey(e => e.UserKey)
         .OnDelete(DeleteBehavior.Cascade);
       builder.Entity<User>()
         .HasMany(e => e.Equipment)
         .WithOne(e => e.User)
-        .HasForeignKey(e => e.UserId)
+        .HasForeignKey(e => e.UserKey)
         .OnDelete(DeleteBehavior.Cascade);
       builder.Entity<User>()
         .HasMany(e => e.Members)
         .WithOne(e => e.User)
-        .HasForeignKey(e => e.UserId)
+        .HasForeignKey(e => e.UserKey)
         .OnDelete(DeleteBehavior.Cascade);
     }
 
@@ -51,5 +53,7 @@ namespace OpenOsp.Data.Configurations {
       //   }
       // );
     }
+
   }
+
 }

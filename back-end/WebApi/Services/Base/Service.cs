@@ -5,13 +5,15 @@ using OpenOsp.Data.Contexts;
 using OpenOsp.WebApi.Exceptions;
 
 namespace OpenOsp.WebApi.Services {
+
   public class Service<T> : IService<T>
     where T : class {
-    protected readonly AppDbContext _context;
 
     public Service(AppDbContext context) {
       _context = context;
     }
+
+    protected readonly AppDbContext _context;
 
     public void Create(T entity) {
       if (entity == default(T)) {
@@ -43,5 +45,7 @@ namespace OpenOsp.WebApi.Services {
       }
       _context.Update<T>(entity);
     }
+
   }
+
 }

@@ -3,12 +3,14 @@ using System.Net.Mail;
 using System.ComponentModel.DataAnnotations;
 
 namespace OpenOsp.Model.Annotations {
+
   public class ValidateEmail : ValidationAttribute {
-    object[] ValidValues;
 
     public ValidateEmail(params object[] validValues) {
       ValidValues = validValues;
     }
+
+    object[] ValidValues;
 
     public override bool IsValid(object value) {
       try {
@@ -20,5 +22,7 @@ namespace OpenOsp.Model.Annotations {
         return false;
       }
     }
+
   }
+
 }
