@@ -1,0 +1,8 @@
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 2000,
+  "editorconfig.generateAuto": false,
+  "cSpell.words": [
+    "Dtos"
+  ]
+}
