@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OpenOsp.Api.Controllers {
 
+  [ApiController]
   [Route("[controller]")]
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class MembersController
@@ -15,8 +16,8 @@ namespace OpenOsp.Api.Controllers {
 
     public MembersController(
       IHasIdService<Member, int> service,
-      IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto> mapper)
-      : base(service, mapper) {
+      IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto> mapper
+    ) : base(service, mapper) {
     }
 
   }

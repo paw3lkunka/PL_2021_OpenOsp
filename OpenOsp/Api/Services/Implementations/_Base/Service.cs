@@ -4,6 +4,7 @@ using System.Linq;
 using OpenOsp.Data.Contexts;
 using OpenOsp.Api.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace OpenOsp.Api.Services {
 
@@ -20,14 +21,14 @@ namespace OpenOsp.Api.Services {
 
     public void Delete(T entity) => _context.Remove<T>(entity);
 
-    public virtual IEnumerable<T> ReadAll() {
-      return _context.Set<T>()
+    public virtual async Task<IEnumerable<T>> ReadAll() {
+      return await _context.Set<T>()
         .IgnoreQueryFilters()
-        .ToList();
+        .ToListAsync();
     }
 
-    public void SaveChanges() {
-      if (_context.SaveChanges() < 0) {
+    public async Task SaveChanges() {
+      if (await _context.SaveChangesAsync() < 0) {
         throw new DatabaseTransactionFailureException();
       }
     }

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OpenOsp.Api.Exceptions;
 using OpenOsp.Data.Contexts;
@@ -12,19 +13,19 @@ namespace OpenOsp.Api.Services {
     public ActionsService(AppDbContext context) : base(context) {
     }
 
-    public Action ReadExpanded(int id) {
+    public async Task<Action> ReadExpanded(int id) {
       try {
-        var entity = _context.Actions
+        var entity = await _context.Actions
           .Include(e => e.Members)
           .Include(e => e.Equipment)
-          .FirstOrDefault(e => e.Id.Equals(id));
+          .FirstOrDefaultAsync(e => e.Id.Equals(id));
         if (entity == default(Action)) {
           throw new UnauthorizedException();
         }
         return entity;
       }
       catch (UnauthorizedException) {
-        base.ReadById(id);
+        await base.ReadById(id);
         throw;
       }
     }

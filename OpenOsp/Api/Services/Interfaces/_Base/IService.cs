@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Api.Services {
@@ -10,11 +11,11 @@ namespace OpenOsp.Api.Services {
 
     void Delete(T entity);
 
-    IEnumerable<T> ReadAll();
+    Task<IEnumerable<T>> ReadAll();
 
     void Update(T entity);
 
-    void SaveChanges();
+    Task SaveChanges();
 
   }
 

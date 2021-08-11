@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using OpenOsp.Api.Services;
 using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Api.Exceptions;
+using System.Threading.Tasks;
 
 namespace OpenOsp.Api.Controllers {
 
@@ -20,7 +21,8 @@ namespace OpenOsp.Api.Controllers {
 
     public Controller(
       IService<T> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
+    ) {
       _service = service;
       _mapper = mapper;
     }
@@ -30,9 +32,9 @@ namespace OpenOsp.Api.Controllers {
     protected readonly IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> _mapper;
 
     [HttpGet]
-    public virtual ActionResult<IEnumerable<TReadDto>> ReadAll() {
+    public virtual async Task<ActionResult<IEnumerable<TReadDto>>> ReadAll() {
       try {
-        var entities = _service.ReadAll();
+        var entities = await _service.ReadAll();
         var dtos = entities.Select(e => _mapper.MapRead(e)).ToList();
         return Ok(dtos);
       }
@@ -45,9 +47,9 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPost]
-    public virtual ActionResult<TReadDto> Create(TCreateDto createDto) {
+    public virtual async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
       try {
-        var entity = CreateEntity(createDto);
+        var entity = await CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtRoute(null, readDto);
       }
@@ -57,26 +59,26 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 
-    protected T CreateEntity(T entity) {
+    protected async Task<T> CreateEntity(T entity) {
       _service.Create(entity);
-      _service.SaveChanges();
+      await _service.SaveChanges();
       return entity;
     }
 
-    protected virtual T CreateEntity(TCreateDto createDto) {
+    protected virtual async Task<T> CreateEntity(TCreateDto createDto) {
       if (!TryValidateModel(createDto)) {
         throw new ValidationProblemException();
       }
       var entity = _mapper.MapCreate(createDto);
-      return CreateEntity(entity);
+      return await CreateEntity(entity);
     }
 
     protected virtual ActionResult<TReadDto> ReadEntity(T entity) {
@@ -84,25 +86,25 @@ namespace OpenOsp.Api.Controllers {
       return Ok(readDto);
     }
 
-    protected virtual ActionResult UpdateEntity(TUpdateDto updateDto, T entity) {
+    protected virtual async Task<ActionResult> UpdateEntity(TUpdateDto updateDto, T entity) {
       try {
         if (!TryValidateModel(updateDto)) {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(updateDto, entity);
         _service.Update(entity);
-        _service.SaveChanges();
+        await _service.SaveChanges();
         return NoContent();
       }
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 
-    protected virtual ActionResult PatchEntity(JsonPatchDocument<TUpdateDto> patchDoc, T entity) {
+    protected virtual async Task<ActionResult> PatchEntity(JsonPatchDocument<TUpdateDto> patchDoc, T entity) {
       try {
         var entityToPatch = _mapper.MapPatch(entity);
         patchDoc.ApplyTo(entityToPatch);
@@ -111,25 +113,25 @@ namespace OpenOsp.Api.Controllers {
         }
         _mapper.MapUpdate(entityToPatch, entity);
         _service.Update(entity);
-        _service.SaveChanges();
+        await _service.SaveChanges();
         return NoContent();
       }
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 
-    protected virtual ActionResult DeleteEntity(T entity) {
+    protected virtual async Task<ActionResult> DeleteEntity(T entity) {
       try {
         _service.Delete(entity);
-        _service.SaveChanges();
+        await _service.SaveChanges();
         return NoContent();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 

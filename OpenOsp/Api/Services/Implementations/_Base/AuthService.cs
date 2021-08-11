@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OpenOsp.Api.Exceptions;
 using OpenOsp.Data.Contexts;
 using OpenOsp.Model.Models;
@@ -15,22 +17,22 @@ namespace OpenOsp.Api.Services {
     public AuthService(AppDbContext context) : base(context) {
     }
 
-    public override IEnumerable<T> ReadAll() {
-      return _context.Set<T>()
-        .ToList();
+    public override async Task<IEnumerable<T>> ReadAll() {
+      return await _context.Set<T>()
+        .ToListAsync();
     }
 
-    public override T ReadById(TId id) {
+    public override async Task<T> ReadById(TId id) {
       try {
-        var entity = _context.Set<T>()
-          .FirstOrDefault(e => e.Id.Equals(id));
+        var entity = await _context.Set<T>()
+          .FirstOrDefaultAsync(e => e.Id.Equals(id));
         if (entity == default(T)) {
           throw new UnauthorizedException();
         }
         return entity;
       }
       catch (UnauthorizedException) {
-        base.ReadById(id);
+        await base.ReadById(id);
         throw;
       }
     }
@@ -46,15 +48,15 @@ namespace OpenOsp.Api.Services {
     public AuthService(AppDbContext context) : base(context) {
     }
 
-    public override IEnumerable<T> ReadAll() {
-      return _context.Set<T>()
-        .ToList();
+    public override async Task<IEnumerable<T>> ReadAll() {
+      return await _context.Set<T>()
+        .ToListAsync();
     }
 
-    public override T ReadById(TId1 id1, TId2 id2) {
+    public override async Task<T> ReadById(TId1 id1, TId2 id2) {
       try {
-        var entity = _context.Set<T>()
-          .FirstOrDefault(e =>
+        var entity = await _context.Set<T>()
+          .FirstOrDefaultAsync(e =>
             e.Id1.Equals(id1)
             && e.Id2.Equals(id2)
           );
@@ -64,7 +66,7 @@ namespace OpenOsp.Api.Services {
         return entity;
       }
       catch (UnauthorizedException) {
-        base.ReadById(id1, id2);
+        await base.ReadById(id1, id2);
         throw;
       }
     }
@@ -81,15 +83,15 @@ namespace OpenOsp.Api.Services {
     public AuthService(AppDbContext context) : base(context) {
     }
 
-    public override IEnumerable<T> ReadAll() {
-      return _context.Set<T>()
-        .ToList();
+    public override async Task<IEnumerable<T>> ReadAll() {
+      return await _context.Set<T>()
+        .ToListAsync();
     }
 
-    public override T ReadById(TId1 id1, TId2 id2, TId3 id3) {
+    public override async Task<T> ReadById(TId1 id1, TId2 id2, TId3 id3) {
       try {
-        var entity = _context.Set<T>()
-          .FirstOrDefault(e =>
+        var entity = await _context.Set<T>()
+          .FirstOrDefaultAsync(e =>
             e.Id1.Equals(id1)
             && e.Id2.Equals(id2)
             && e.Id3.Equals(id3)
@@ -100,7 +102,7 @@ namespace OpenOsp.Api.Services {
         return entity;
       }
       catch (UnauthorizedException) {
-        base.ReadById(id1, id2, id3);
+        await base.ReadById(id1, id2, id3);
         throw;
       }
     }

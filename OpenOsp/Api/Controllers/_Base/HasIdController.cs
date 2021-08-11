@@ -8,6 +8,7 @@ using OpenOsp.Api.Services;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Api.Exceptions;
+using System.Threading.Tasks;
 
 namespace OpenOsp.Api.Controllers {
 
@@ -22,17 +23,17 @@ namespace OpenOsp.Api.Controllers {
 
     public HasIdController(
       IHasIdService<T, TId> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
-      : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
+    ) : base(service, mapper) {
       _service = service;
     }
 
     protected new readonly IHasIdService<T, TId> _service;
 
     [HttpGet("{id}")]
-    public virtual ActionResult<TReadDto> ReadById(TId id) {
+    public virtual async Task<ActionResult<TReadDto>> ReadById(TId id) {
       try {
-        var entity = _service.ReadById(id);
+        var entity = await _service.ReadById(id);
         return base.ReadEntity(entity);
       }
       catch (UnauthorizedException) {
@@ -47,9 +48,9 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPost]
-    public override ActionResult<TReadDto> Create(TCreateDto createDto) {
+    public override async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
       try {
-        var entity = base.CreateEntity(createDto);
+        var entity = await base.CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtRoute(nameof(ReadById), new { id = entity.Id }, readDto);
       }
@@ -59,8 +60,8 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
@@ -68,10 +69,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPut("{id}")]
-    public virtual ActionResult Update(TId id, TUpdateDto updateDto) {
+    public virtual async Task<ActionResult> Update(TId id, TUpdateDto updateDto) {
       try {
-        var entity = _service.ReadById(id);
-        return base.UpdateEntity(updateDto, entity);
+        var entity = await _service.ReadById(id);
+        return await base.UpdateEntity(updateDto, entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -85,10 +86,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPatch("{id}")]
-    public virtual ActionResult Patch(TId id, JsonPatchDocument<TUpdateDto> patchDoc) {
+    public virtual async Task<ActionResult> Patch(TId id, JsonPatchDocument<TUpdateDto> patchDoc) {
       try {
-        var entity = _service.ReadById(id);
-        return base.PatchEntity(patchDoc, entity);
+        var entity = await _service.ReadById(id);
+        return await base.PatchEntity(patchDoc, entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -102,10 +103,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpDelete("{id}")]
-    public virtual ActionResult Delete(TId id) {
+    public virtual async Task<ActionResult> Delete(TId id) {
       try {
-        var entity = _service.ReadById(id);
-        return base.DeleteEntity(entity);
+        var entity = await _service.ReadById(id);
+        return await base.DeleteEntity(entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -132,17 +133,17 @@ namespace OpenOsp.Api.Controllers {
 
     public HasIdController(
       IHasIdService<T, TId1, TId2> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
-      : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
+    ) : base(service, mapper) {
       _service = service;
     }
 
     protected new readonly IHasIdService<T, TId1, TId2> _service;
 
     [HttpGet("{id1}/{id2}")]
-    public virtual ActionResult<TReadDto> ReadById(TId1 id1, TId2 id2) {
+    public virtual async Task<ActionResult<TReadDto>> ReadById(TId1 id1, TId2 id2) {
       try {
-        var entity = _service.ReadById(id1, id2);
+        var entity = await _service.ReadById(id1, id2);
         return base.ReadEntity(entity);
       }
       catch (UnauthorizedException) {
@@ -157,9 +158,9 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPost]
-    public override ActionResult<TReadDto> Create(TCreateDto createDto) {
+    public override async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
       try {
-        var entity = base.CreateEntity(createDto);
+        var entity = await base.CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtRoute(nameof(ReadById),
           new { id1 = entity.Id1, id2 = entity.Id2 },
@@ -172,8 +173,8 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
@@ -181,10 +182,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPut("{id1}/{id2}")]
-    public virtual ActionResult Update(TId1 id1, TId2 id2, TUpdateDto updateDto) {
+    public virtual async Task<ActionResult> Update(TId1 id1, TId2 id2, TUpdateDto updateDto) {
       try {
-        var entity = _service.ReadById(id1, id2);
-        return base.UpdateEntity(updateDto, entity);
+        var entity = await _service.ReadById(id1, id2);
+        return await base.UpdateEntity(updateDto, entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -198,10 +199,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPatch("{id1}/{id2}")]
-    public virtual ActionResult Patch(TId1 id1, TId2 id2, JsonPatchDocument<TUpdateDto> patchDoc) {
+    public virtual async Task<ActionResult> Patch(TId1 id1, TId2 id2, JsonPatchDocument<TUpdateDto> patchDoc) {
       try {
-        var entity = _service.ReadById(id1, id2);
-        return base.PatchEntity(patchDoc, entity);
+        var entity = await _service.ReadById(id1, id2);
+        return await base.PatchEntity(patchDoc, entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -215,10 +216,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpDelete("{id1}/{id2}")]
-    public virtual ActionResult Delete(TId1 id1, TId2 id2) {
+    public virtual async Task<ActionResult> Delete(TId1 id1, TId2 id2) {
       try {
-        var entity = _service.ReadById(id1, id2);
-        return base.DeleteEntity(entity);
+        var entity = await _service.ReadById(id1, id2);
+        return await base.DeleteEntity(entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -246,17 +247,17 @@ namespace OpenOsp.Api.Controllers {
 
     public HasIdController(
       IHasIdService<T, TId1, TId2, TId3> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
-      : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
+    ) : base(service, mapper) {
       _service = service;
     }
 
     protected new readonly IHasIdService<T, TId1, TId2, TId3> _service;
 
     [HttpGet("{id1}/{id2}/{id3}")]
-    public virtual ActionResult<TReadDto> ReadById(TId1 id1, TId2 id2, TId3 id3) {
+    public virtual async Task<ActionResult<TReadDto>> ReadById(TId1 id1, TId2 id2, TId3 id3) {
       try {
-        var entity = _service.ReadById(id1, id2, id3);
+        var entity = await _service.ReadById(id1, id2, id3);
         return base.ReadEntity(entity);
       }
       catch (UnauthorizedException) {
@@ -271,9 +272,9 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPost]
-    public override ActionResult<TReadDto> Create(TCreateDto createDto) {
+    public override async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
       try {
-        var entity = base.CreateEntity(createDto);
+        var entity = await base.CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtRoute(
           nameof(ReadById),
@@ -287,8 +288,8 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+      catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
@@ -296,10 +297,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPut("{id1}/{id2}/{id3}")]
-    public virtual ActionResult Update(TId1 id1, TId2 id2, TId3 id3, TUpdateDto updateDto) {
+    public virtual async Task<ActionResult> Update(TId1 id1, TId2 id2, TId3 id3, TUpdateDto updateDto) {
       try {
-        var entity = _service.ReadById(id1, id2, id3);
-        return base.UpdateEntity(updateDto, entity);
+        var entity = await _service.ReadById(id1, id2, id3);
+        return await base.UpdateEntity(updateDto, entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -313,10 +314,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpPatch("{id1}/{id2}/{id3}")]
-    public virtual ActionResult Patch(TId1 id1, TId2 id2, TId3 id3, JsonPatchDocument<TUpdateDto> patchDoc) {
+    public virtual async Task<ActionResult> Patch(TId1 id1, TId2 id2, TId3 id3, JsonPatchDocument<TUpdateDto> patchDoc) {
       try {
-        var entity = _service.ReadById(id1, id2, id3);
-        return base.PatchEntity(patchDoc, entity);
+        var entity = await _service.ReadById(id1, id2, id3);
+        return await base.PatchEntity(patchDoc, entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -330,10 +331,10 @@ namespace OpenOsp.Api.Controllers {
     }
 
     [HttpDelete("{id1}/{id2}/{id3}")]
-    public virtual ActionResult Delete(TId1 id1, TId2 id2, TId3 id3) {
+    public virtual async Task<ActionResult> Delete(TId1 id1, TId2 id2, TId3 id3) {
       try {
-        var entity = _service.ReadById(id1, id2, id3);
-        return base.DeleteEntity(entity);
+        var entity = await _service.ReadById(id1, id2, id3);
+        return await base.DeleteEntity(entity);
       }
       catch (UnauthorizedException) {
         return Unauthorized();

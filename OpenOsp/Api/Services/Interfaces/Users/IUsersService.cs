@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace OpenOsp.Api.Services {
@@ -7,19 +8,19 @@ namespace OpenOsp.Api.Services {
     where T : IdentityUser<TId>
     where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
 
-    void Create(T user, string password);
+    Task Create(T user, string password);
 
-    T ReadById(TId id);
+    Task<T> ReadById(TId id);
 
-    T ReadByEmail(string email);
+    Task<T> ReadByEmail(string email);
 
-    void Delete(T user);
+    Task Delete(T user);
 
-    string GenerateActivationCode(T user);
+    Task<string> GetEmailConfirmationToken(T user);
 
-    void ActivateAccount(T user, string code);
+    Task ConfirmEmail(T user, string token);
 
-    string GenerateAuthenticationToken(T user, string password);
+    Task<string> GetAuthenticationToken(T user, string password);
 
   }
 
