@@ -14,8 +14,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenOsp.Data.Contexts;
 using OpenOsp.Model.Models;
+using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Api.Services;
 using Newtonsoft.Json.Serialization;
+using OpenOsp.Model.Dtos;
+using OpenOsp.Api.Settings;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace OpenOsp {
   public class Startup {
@@ -28,16 +33,19 @@ namespace OpenOsp {
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
       /// Load configuration files
-      // services.Configure<Configuration>(Configuration.GetSection(""));
+      services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+      services.Configure<EmailSettings>(Configuration.GetSection("Email"));
       /// Basic server configuration
       services.AddCors();
       services.AddMvc()
-        .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+        .SetCompatibilityVersion(CompatibilityVersion.Latest);
       /// Database Context
       services.AddDbContext<AppDbContext>(options => {
-        options.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), builder => {
-          builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        }).EnableSensitiveDataLogging();
+        options.UseNpgsql(
+          Configuration.GetConnectionString("PostgreSql"),
+          builder => builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
+        )
+        .EnableSensitiveDataLogging(false);
       });
       /// Identity users
       services.AddIdentityCore<User>(cfg => {
@@ -48,28 +56,38 @@ namespace OpenOsp {
         cfg.Password.RequireNonAlphanumeric = false;
         cfg.Password.RequiredLength = 12;
         cfg.SignIn.RequireConfirmedEmail = true;
-      }).AddEntityFrameworkStores<AppDbContext>()
-        .AddDefaultTokenProviders();
+      })
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders()
+        .AddUserManager<UserManager<User>>()
+        .AddSignInManager<SignInManager<User>>();
       /// Authentication with JWT
-      services.AddAuthentication().AddJwtBearer(cfg => {
-        cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters() {
-          // ValidIssuer = Configuration[""],
-          // ValidateIssuer = true,
-          // ValidAudience = Configuration[""],
-          // ValidateAudience = true,
-          // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration[""])),
-          // RequireSignedTokens = true,
-          // RequireExpirationTime = true,
-          // ValidateLifetime = true
-        };
-      });
+      services.AddAuthentication()
+        .AddJwtBearer(cfg => {
+          cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters() {
+            ValidIssuer = Configuration["Jwt:Issuer"],
+            ValidateIssuer = true,
+            ValidAudience = Configuration["Jwt:Audience"],
+            ValidateAudience = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+            RequireSignedTokens = true,
+            RequireExpirationTime = true,
+            ValidateLifetime = true
+          };
+        });
       /// API Services
-      // Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto, int
+      services.AddScoped<IUsersService<User, int>, UsersService<User, int>>();
       services.AddScoped<IActionsService, ActionsService>();
       services.AddScoped<IHasIdService<ActionEquipment, int, int>, AuthService<ActionEquipment, int, int>>();
       services.AddScoped<IHasIdService<ActionMember, int, int>, AuthService<ActionMember, int, int>>();
       services.AddScoped<IHasIdService<Equipment, int>, AuthService<Equipment, int>>();
       services.AddScoped<IHasIdService<Member, int>, AuthService<Member, int>>();
+      /// DTO Mappers
+      services.AddScoped<IDtoMapper<Model.Models.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
+      services.AddScoped<IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto>, ActionEquipmentDtoMapper>();
+      services.AddScoped<IDtoMapper<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto>, ActionMemberDtoMapper>();
+      services.AddScoped<IDtoMapper<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto>, EquipmentDtoMapper>();
+      services.AddScoped<IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto>, MemberDtoMapper>();
       /// API Controllers
       services.AddControllers()
         .AddNewtonsoftJson(s => {

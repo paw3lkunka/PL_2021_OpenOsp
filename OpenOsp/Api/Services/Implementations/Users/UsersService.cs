@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using OpenOsp.Api.Settings;
+using Microsoft.Extensions.Options;
 
 namespace OpenOsp.Api.Services {
 
@@ -19,11 +20,11 @@ namespace OpenOsp.Api.Services {
     public UsersService(
       UserManager<T> userManager,
       SignInManager<T> signInManager,
-      JwtSettings jwtSettings
+      IOptions<JwtSettings> jwtSettings
     ) {
       _userManager = userManager;
       _signInManager = signInManager;
-      _jwtSettings = jwtSettings;
+      _jwtSettings = jwtSettings.Value;
     }
 
     private readonly UserManager<T> _userManager;

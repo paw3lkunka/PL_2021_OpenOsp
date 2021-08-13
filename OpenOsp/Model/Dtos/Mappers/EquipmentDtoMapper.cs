@@ -2,7 +2,7 @@ using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {
 
-  public class EquipmentDtoReader : IDtoMapper<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto> {
+  public class EquipmentDtoMapper : IDtoMapper<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto> {
 
     public Equipment MapCreate(EquipmentCreateDto dto) {
       return new Equipment {

@@ -18,6 +18,8 @@ namespace OpenOsp.Data.Contexts {
 
     public AppDbContext() : base() { }
 
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
     public AppDbContext(
       DbContextOptions<AppDbContext> options,
       IUserClaimsService userClaims

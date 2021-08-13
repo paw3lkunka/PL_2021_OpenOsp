@@ -21,8 +21,8 @@ namespace OpenOsp.Api.Controllers {
     public ActionsController(
       IActionsService service,
       IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> mapper,
-      AuthController<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto, int, int> actionEquipment,
-      AuthController<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto, int, int> actionMembers
+      ActionEquipmentController actionEquipment,
+      ActionMembersController actionMembers
     ) : base(service, mapper) {
       _service = service;
       _actionEquipment = actionEquipment;
@@ -31,9 +31,9 @@ namespace OpenOsp.Api.Controllers {
 
     private new readonly IActionsService _service;
 
-    AuthController<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto, int, int> _actionEquipment;
+    ActionEquipmentController _actionEquipment;
 
-    AuthController<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto, int, int> _actionMembers;
+    ActionMembersController _actionMembers;
 
     [HttpGet("expanded/{id}")]
     public async Task<ActionResult<ActionReadDto>> ReadExpanded(int id) {
