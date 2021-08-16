@@ -82,6 +82,7 @@ namespace OpenOsp {
       services.AddScoped<IHasIdService<ActionMember, int, int>, AuthService<ActionMember, int, int>>();
       services.AddScoped<IHasIdService<Equipment, int>, AuthService<Equipment, int>>();
       services.AddScoped<IHasIdService<Member, int>, AuthService<Member, int>>();
+      services.AddScoped<IEmailsService, EmailsService>();
       /// DTO Mappers
       services.AddScoped<IDtoMapper<Model.Models.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
       services.AddScoped<IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto>, ActionEquipmentDtoMapper>();

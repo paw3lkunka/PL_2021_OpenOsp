@@ -9,6 +9,8 @@ using System.Text;
 using System.Security.Claims;
 using OpenOsp.Api.Settings;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Web;
 
 namespace OpenOsp.Api.Services {
 
@@ -63,10 +65,10 @@ namespace OpenOsp.Api.Services {
       }
     }
 
-    public async Task<string> GetEmailConfirmationToken(T user) => await _userManager.GenerateEmailConfirmationTokenAsync(user);
+    public async Task<string> GetEmailConfirmationToken(T user) => HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));
 
     public async Task ConfirmEmail(T user, string token) {
-      var result = await _userManager.ConfirmEmailAsync(user, token);
+      var result = await _userManager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(token));
       if (!result.Succeeded) {
         throw new DatabaseTransactionFailureException();
       }

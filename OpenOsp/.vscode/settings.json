@@ -3,7 +3,11 @@
   "files.autoSaveDelay": 2000,
   "editorconfig.generateAuto": false,
   "cSpell.words": [
+    "ASPNETCORE",
     "Dtos",
-    "Npgsql"
+    "Hmac",
+    "Npgsql",
+    "gmail",
+    "openosp"
   ]
 }

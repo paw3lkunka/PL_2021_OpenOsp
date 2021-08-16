@@ -13,12 +13,16 @@ namespace OpenOsp.Api.Controllers {
   public class UsersController : ControllerBase {
 
     public UsersController(
-      IUsersService<User, int> usersService
+      IUsersService<User, int> usersService,
+      IEmailsService emailsService
     ) {
       _usersService = usersService;
+      _emailsService = emailsService;
     }
 
     private readonly IUsersService<User, int> _usersService;
+
+    private readonly IEmailsService _emailsService;
 
     [HttpPost("login")]
     public async Task<ActionResult<string>> LogIn([FromBody] UserLoginVM vm) {
@@ -39,6 +43,9 @@ namespace OpenOsp.Api.Controllers {
       catch (DatabaseTransactionFailureException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
     }
 
     [HttpPost("register")]
@@ -51,12 +58,35 @@ namespace OpenOsp.Api.Controllers {
           Email = vm.Email,
         };
         await _usersService.Create(user, vm.Password);
+        var token = _usersService.GetEmailConfirmationToken(user);
+        var link = Url.Action(
+          "Verify",
+          "Users",
+          new { uid = user.Id, token = token },
+          protocol: HttpContext.Request.Scheme
+        );
+        await _emailsService.SendVerificationEmail(user.Email, link);
         return Ok();
       }
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
       catch (DatabaseTransactionFailureException) {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
+    [HttpPost("verify")]
+    public async Task<ActionResult> Verify([FromQuery] int uid, [FromQuery] string token) {
+      try {
+        var user = await _usersService.ReadById(uid);
+        await _usersService.ConfirmEmail(user, token);
+        return Ok();
+      }
+      catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
