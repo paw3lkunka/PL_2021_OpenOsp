@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace OpenOsp.Api.Controllers {
 
   [ApiController]
-  [Route("[controller]")]
-  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class EquipmentController
     : AuthController<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto, int> {
 

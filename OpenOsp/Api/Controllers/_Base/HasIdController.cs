@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace OpenOsp.Api.Controllers {
 
-  [Route("[controller]")]
   public class HasIdController<T, TCreateDto, TReadDto, TUpdateDto, TId>
     : Controller<T, TCreateDto, TReadDto, TUpdateDto>
     where T : class, IHasId<TId>
@@ -60,7 +59,7 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
@@ -121,7 +120,6 @@ namespace OpenOsp.Api.Controllers {
 
   }
 
-  [Route("[controller]")]
   public class HasIdController<T, TCreateDto, TReadDto, TUpdateDto, TId1, TId2>
     : Controller<T, TCreateDto, TReadDto, TUpdateDto>
     where T : class, IHasId<TId1, TId2>
@@ -173,7 +171,7 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
@@ -234,7 +232,6 @@ namespace OpenOsp.Api.Controllers {
 
   }
 
-  [Route("[controller]")]
   public class HasIdController<T, TCreateDto, TReadDto, TUpdateDto, TId1, TId2, TId3>
     : Controller<T, TCreateDto, TReadDto, TUpdateDto>
     where T : class, IHasId<TId1, TId2, TId3>
@@ -288,7 +285,7 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {

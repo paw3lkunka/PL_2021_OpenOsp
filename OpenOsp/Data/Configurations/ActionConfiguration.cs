@@ -25,17 +25,14 @@ namespace OpenOsp.Data.Configurations {
       builder.Entity<Action>()
         .HasOne(e => e.User)
         .WithMany(e => e.Actions)
-        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.NoAction);
       builder.Entity<Action>()
         .HasMany(e => e.Members)
         .WithOne(e => e.Action)
-        .HasForeignKey(e => e.Id1)
         .OnDelete(DeleteBehavior.Cascade);
       builder.Entity<Action>()
         .HasMany(e => e.Equipment)
         .WithOne(e => e.Action)
-        .HasForeignKey(e => e.Id1)
         .OnDelete(DeleteBehavior.Cascade);
     }
 

@@ -19,7 +19,7 @@ namespace OpenOsp.Api.Services {
 
     public async Task SendVerificationEmail(string email, string link) {
       var body = $@"
-        <h4>Welcome to OpenOSP!</h4>
+        <h2>Welcome to OpenOSP!</h2>
         <p>We are happy to have you here so we can fight some fire together :D <p>
         <p>Please click <a href=""{link}"">this link</a> to confirm your email :)</p>
         ";
@@ -27,11 +27,12 @@ namespace OpenOsp.Api.Services {
     }
 
     public async Task SendEmail(string email, string subject, string body) {
-      using (var client = new SmtpClient(_emailSettings.Server)) {
+      using (var client = new SmtpClient()) {
+        client.Host = _emailSettings.Server;
         client.Port = _emailSettings.Port;
         client.DeliveryMethod = SmtpDeliveryMethod.Network;
-        client.UseDefaultCredentials = false;
         client.EnableSsl = true;
+        client.UseDefaultCredentials = false;
         client.Credentials = new NetworkCredential(_emailSettings.Address, _emailSettings.Password);
         await client.SendMailAsync(new MailMessage(_emailSettings.Address, email) {
           From = new MailAddress(_emailSettings.Address, _emailSettings.Name),

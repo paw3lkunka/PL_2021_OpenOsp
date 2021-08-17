@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using OpenOsp.Model.Models;
@@ -8,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using OpenOsp.Api.Settings;
+using OpenOsp.Api.Enums;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Web;
@@ -38,14 +40,19 @@ namespace OpenOsp.Api.Services {
     public async Task Create(T user, string password) {
       var result = await _userManager.CreateAsync(user, password);
       if (!result.Succeeded) {
-        throw new DatabaseTransactionFailureException();
+        throw new DbTransactionException<T>(
+          DbTransactionType.Create, 
+          result.Errors
+            .Select(e => $"{e.Code}: {e.Description}")
+            .ToList()
+        );
       }
     }
 
     public async Task<T> ReadById(TId id) {
       var user = await _userManager.FindByIdAsync(id.ToString());
       if (user == default(T)) {
-        throw new NotFoundException();
+        throw new NotFoundException<T,TId>(id);
       }
       return user;
     }
@@ -53,7 +60,7 @@ namespace OpenOsp.Api.Services {
     public async Task<T> ReadByEmail(string email) {
       var user = await _userManager.FindByEmailAsync(email);
       if (user == default(T)) {
-        throw new NotFoundException();
+        throw new NotFoundException<T, string>(email);
       }
       return user;
     }
@@ -61,7 +68,7 @@ namespace OpenOsp.Api.Services {
     public async Task Delete(T user) {
       var result = await _userManager.DeleteAsync(user);
       if (!result.Succeeded) {
-        throw new DatabaseTransactionFailureException();
+        throw new DbTransactionException<T>(DbTransactionType.Delete);
       }
     }
 
@@ -70,7 +77,7 @@ namespace OpenOsp.Api.Services {
     public async Task ConfirmEmail(T user, string token) {
       var result = await _userManager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(token));
       if (!result.Succeeded) {
-        throw new DatabaseTransactionFailureException();
+        throw new DbTransactionException<T>();
       }
     }
 
@@ -81,10 +88,10 @@ namespace OpenOsp.Api.Services {
       }
       var claimsIdentity = new ClaimsIdentity(
         new Claim[] {
-          new Claim(JwtRegisteredClaimNames.Sub, user.Email),
           new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+          new Claim(JwtRegisteredClaimNames.Sub, user.Email),
           new Claim(JwtRegisteredClaimNames.UniqueName, user.Email),
-          new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+          new Claim("uid", user.Id.ToString()),
         },
         "Token"
       );

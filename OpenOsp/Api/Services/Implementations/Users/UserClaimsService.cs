@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Http;
 
 namespace OpenOsp.Api.Services {
 
-  public class UserClaimsService : IUserClaimsService {
+  public class UserClaimsService<TId> : IUserClaimsService<TId> 
+    where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
 
     public UserClaimsService(IHttpContextAccessor accessor) {
       var id = accessor.HttpContext?.User.Claims
-        .SingleOrDefault(c => c.Type.Equals(JwtRegisteredClaimNames.NameId))?.Value;
-      UserId = Int32.Parse(id);
+        .SingleOrDefault(c => c.Type.Equals("uid"))?.Value;
+      if(id == default(string)) {
+        return;
+      }
+      UserId = (TId) Convert.ChangeType(id, typeof(TId));
     }
 
-    public int UserId { get; private set; }
+    public TId UserId { get; private set; }
 
   }
 

@@ -2,9 +2,10 @@ using System;
 
 namespace OpenOsp.Api.Services {
 
-  public interface IUserClaimsService {
+  public interface IUserClaimsService<TId>
+    where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
 
-    int UserId { get; }
+    TId UserId { get; }
 
   }
 

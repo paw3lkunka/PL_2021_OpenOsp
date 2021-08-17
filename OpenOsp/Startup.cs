@@ -21,6 +21,7 @@ using OpenOsp.Model.Dtos;
 using OpenOsp.Api.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace OpenOsp {
   public class Startup {
@@ -77,6 +78,7 @@ namespace OpenOsp {
         });
       /// API Services
       services.AddScoped<IUsersService<User, int>, UsersService<User, int>>();
+      services.AddScoped<IUserClaimsService<int>, UserClaimsService<int>>();
       services.AddScoped<IActionsService, ActionsService>();
       services.AddScoped<IHasIdService<ActionEquipment, int, int>, AuthService<ActionEquipment, int, int>>();
       services.AddScoped<IHasIdService<ActionMember, int, int>, AuthService<ActionMember, int, int>>();

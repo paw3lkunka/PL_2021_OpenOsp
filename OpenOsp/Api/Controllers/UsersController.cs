@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenOsp.Api.Exceptions;
@@ -10,6 +11,7 @@ namespace OpenOsp.Api.Controllers {
 
   [ApiController]
   [Route("[controller]")]
+  [AllowAnonymous]
   public class UsersController : ControllerBase {
 
     public UsersController(
@@ -40,7 +42,7 @@ namespace OpenOsp.Api.Controllers {
       catch (NotFoundException) {
         return BadRequest("Invalid email.");
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
@@ -55,10 +57,11 @@ namespace OpenOsp.Api.Controllers {
           throw new ValidationProblemException();
         }
         var user = new User {
+          UserName = vm.UserName,
           Email = vm.Email,
         };
         await _usersService.Create(user, vm.Password);
-        var token = _usersService.GetEmailConfirmationToken(user);
+        var token = await _usersService.GetEmailConfirmationToken(user);
         var link = Url.Action(
           "Verify",
           "Users",
@@ -71,20 +74,23 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
-        return StatusCode(StatusCodes.Status500InternalServerError);
+      catch (DbTransactionException ex) {
+        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 
-    [HttpPost("verify")]
+    [HttpGet("verify")]
     public async Task<ActionResult> Verify([FromQuery] int uid, [FromQuery] string token) {
       try {
         var user = await _usersService.ReadById(uid);
         await _usersService.ConfirmEmail(user, token);
         return Ok();
+      }
+      catch (DbTransactionException ex) {
+        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);

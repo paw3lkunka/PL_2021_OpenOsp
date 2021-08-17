@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 namespace OpenOsp.Api.Controllers {
 
   [ApiController]
-  [Route("[controller]")]
-  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class ActionsController
     : AuthController<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto, int> {
 

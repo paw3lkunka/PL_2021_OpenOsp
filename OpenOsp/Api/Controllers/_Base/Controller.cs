@@ -59,7 +59,7 @@ namespace OpenOsp.Api.Controllers {
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
       catch {
@@ -68,8 +68,7 @@ namespace OpenOsp.Api.Controllers {
     }
 
     protected async Task<T> CreateEntity(T entity) {
-      _service.Create(entity);
-      await _service.SaveChanges();
+      await _service.CreateAsync(entity);
       return entity;
     }
 
@@ -92,14 +91,13 @@ namespace OpenOsp.Api.Controllers {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(updateDto, entity);
-        _service.Update(entity);
-        await _service.SaveChanges();
+        await _service.UpdateAsync(entity);
         return NoContent();
       }
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
@@ -112,25 +110,23 @@ namespace OpenOsp.Api.Controllers {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(entityToPatch, entity);
-        _service.Update(entity);
-        await _service.SaveChanges();
+        await _service.UpdateAsync(entity);
         return NoContent();
       }
       catch (ValidationProblemException) {
         return ValidationProblem();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
 
     protected virtual async Task<ActionResult> DeleteEntity(T entity) {
       try {
-        _service.Delete(entity);
-        await _service.SaveChanges();
+        await _service.DeleteAsync(entity);
         return NoContent();
       }
-      catch (DatabaseTransactionFailureException) {
+      catch (DbTransactionException) {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }

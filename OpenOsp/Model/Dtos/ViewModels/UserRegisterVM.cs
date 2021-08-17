@@ -7,7 +7,7 @@ namespace OpenOsp.Model.Dtos.ViewModels {
 
     [Required(ErrorMessage = "Username is required")]
     [RegularExpression(@"^[a-zA-Z0-9 ''-'\s]{1,20}$", ErrorMessage = "Name pattern error: use up to 20 alphanumeric signs")]
-    public string Username { get; set; }
+    public string UserName { get; set; }
 
     [Required(ErrorMessage = "Email is required")]
     [ValidateEmail]

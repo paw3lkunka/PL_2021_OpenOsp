@@ -11,6 +11,8 @@ using OpenOsp.Api.Services;
 using OpenOsp.Model.Models;
 using OpenOsp.Data.Configurations;
 using OpenOsp.Api.Exceptions;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace OpenOsp.Data.Contexts {
 
@@ -22,7 +24,7 @@ namespace OpenOsp.Data.Contexts {
 
     public AppDbContext(
       DbContextOptions<AppDbContext> options,
-      IUserClaimsService userClaims
+      IUserClaimsService<int> userClaims
     ) : base(options) {
       _userId = userClaims.UserId;
     }
@@ -67,7 +69,7 @@ namespace OpenOsp.Data.Contexts {
         .HasQueryFilter(e => e.Action.UserId.Equals(_userId));
     }
 
-    public override int SaveChanges() {
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) {
       if (_userId == default(int)) {
         throw new UnauthorizedException();
       }
@@ -79,7 +81,7 @@ namespace OpenOsp.Data.Contexts {
             ownedEntity.UserId = _userId;
           }
         });
-      return base.SaveChanges();
+      return await base.SaveChangesAsync(cancellationToken);
     }
 
   }

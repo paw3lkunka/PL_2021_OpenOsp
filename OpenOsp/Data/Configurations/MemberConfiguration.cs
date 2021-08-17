@@ -21,12 +21,10 @@ namespace OpenOsp.Data.Configurations {
       builder.Entity<Member>()
         .HasOne(e => e.User)
         .WithMany(e => e.Members)
-        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.NoAction);
       builder.Entity<Member>()
         .HasMany(e => e.Actions)
         .WithOne(e => e.Member)
-        .HasForeignKey(e => e.Id2)
         .OnDelete(DeleteBehavior.Cascade);
     }
 

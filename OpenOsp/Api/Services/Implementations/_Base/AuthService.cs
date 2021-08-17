@@ -12,7 +12,7 @@ namespace OpenOsp.Api.Services {
   public class AuthService<T, TId>
     : HasIdService<T, TId>
     where T : class, IHasId<TId>
-    where TId : IEquatable<TId>, IComparable<TId> {
+    where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
 
     public AuthService(AppDbContext context) : base(context) {
     }
@@ -42,8 +42,8 @@ namespace OpenOsp.Api.Services {
   public class AuthService<T, TId1, TId2>
     : HasIdService<T, TId1, TId2>
     where T : class, IHasId<TId1, TId2>
-    where TId1 : IEquatable<TId1>, IComparable<TId1>
-    where TId2 : IEquatable<TId2>, IComparable<TId2> {
+    where TId1 : IEquatable<TId1>, IComparable<TId1>, IConvertible
+    where TId2 : IEquatable<TId2>, IComparable<TId2>, IConvertible {
 
     public AuthService(AppDbContext context) : base(context) {
     }

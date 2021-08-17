@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace OpenOsp.Api.Controllers {
 
-  [Route("[controller]")]
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class AuthController<T, TCreateDto, TReadDto, TUpdateDto, TId>
     : HasIdController<T, TCreateDto, TReadDto, TUpdateDto, TId>
@@ -31,7 +30,6 @@ namespace OpenOsp.Api.Controllers {
 
   }
 
-  [Route("[controller]")]
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class AuthController<T, TCreateDto, TReadDto, TUpdateDto, TId1, TId2>
     : HasIdController<T, TCreateDto, TReadDto, TUpdateDto, TId1, TId2>
@@ -50,7 +48,6 @@ namespace OpenOsp.Api.Controllers {
 
   }
 
-  [Route("[controller]")]
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class AuthController<T, TCreateDto, TReadDto, TUpdateDto, TId1, TId2, TId3>
     : HasIdController<T, TCreateDto, TReadDto, TUpdateDto, TId1, TId2, TId3>

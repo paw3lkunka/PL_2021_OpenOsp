@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OpenOsp.Api.Controllers {
 
-  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class ActionEquipmentController
     : AuthController<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto, int, int> {
 
