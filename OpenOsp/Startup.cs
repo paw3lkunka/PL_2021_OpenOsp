@@ -22,14 +22,21 @@ using OpenOsp.Api.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace OpenOsp {
   public class Startup {
-    public Startup(IConfiguration configuration) {
+    public Startup(
+      IConfiguration configuration,
+      IWebHostEnvironment env
+    ) {
       Configuration = configuration;
+      _env = env;
     }
 
     public IConfiguration Configuration { get; }
+
+    private readonly IWebHostEnvironment _env;
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
@@ -97,11 +104,16 @@ namespace OpenOsp {
           s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         })
         .AddControllersAsServices();
+      /// HTTPS Redirection
+      services.AddHttpsRedirection(options => {
+        options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
+        options.HttpsPort = _env.IsDevelopment() ? 5001 : 443;
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-      if (env.IsDevelopment()) {
+    public void Configure(IApplicationBuilder app) {
+      if (_env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
       }
       app.UseHttpsRedirection();

@@ -70,17 +70,14 @@ namespace OpenOsp.Data.Contexts {
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) {
-      if (_userId == default(int)) {
+      var addedOwnedEntities = ChangeTracker.Entries()
+        .Where(e => e.State.Equals(EntityState.Added) && e.Entity is IOwnedBy<int>)
+        .Select(e => e.Entity as IOwnedBy<int>)
+        .ToList();
+      if(addedOwnedEntities.Count > 0 && _userId == default(int)) {
         throw new UnauthorizedException();
       }
-      ChangeTracker.Entries()
-        .Where(e => e.State.Equals(EntityState.Added))
-        .ToList()
-        .ForEach(e => {
-          if (e is IOwnedBy<int> ownedEntity) {
-            ownedEntity.UserId = _userId;
-          }
-        });
+      addedOwnedEntities.ForEach(e => e.UserId = _userId);
       return await base.SaveChangesAsync(cancellationToken);
     }
 

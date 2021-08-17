@@ -51,7 +51,7 @@ namespace OpenOsp.Api.Controllers {
       try {
         var entity = await CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
-        return CreatedAtRoute(null, readDto);
+        return CreatedAtAction(null, readDto);
       }
       catch (UnauthorizedException) {
         return Unauthorized();

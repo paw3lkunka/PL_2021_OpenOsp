@@ -51,7 +51,7 @@ namespace OpenOsp.Api.Controllers {
       try {
         var entity = await base.CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
-        return CreatedAtRoute(nameof(ReadById), new { id = entity.Id }, readDto);
+        return CreatedAtAction(nameof(ReadById), new { id = entity.Id }, readDto);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -160,7 +160,7 @@ namespace OpenOsp.Api.Controllers {
       try {
         var entity = await base.CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
-        return CreatedAtRoute(nameof(ReadById),
+        return CreatedAtAction(nameof(ReadById),
           new { id1 = entity.Id1, id2 = entity.Id2 },
           readDto
         );
@@ -273,7 +273,7 @@ namespace OpenOsp.Api.Controllers {
       try {
         var entity = await base.CreateEntity(createDto);
         var readDto = _mapper.MapRead(entity);
-        return CreatedAtRoute(
+        return CreatedAtAction(
           nameof(ReadById),
           new { id1 = entity.Id1, id2 = entity.Id2, id3 = entity.Id3 },
           readDto
