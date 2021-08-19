@@ -1,4 +1,4 @@
-namespace OpenOsp.Api.Enums {
+namespace OpenOsp.Server.Enums {
   public enum DbTransactionType {
     None,
     Create,

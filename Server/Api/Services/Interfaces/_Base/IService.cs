@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OpenOsp.Api.Enums;
+using OpenOsp.Server.Enums;
 using OpenOsp.Model.Models;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public interface IService<T> where T : class {
 

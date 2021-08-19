@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenOsp.Api.Exceptions {
+namespace OpenOsp.Server.Exceptions {
 
   public class UnauthorizedException : Exception {
 

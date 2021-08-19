@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenOsp.Data.Contexts;
-using OpenOsp.Api.Enums;
-using OpenOsp.Api.Exceptions;
+using OpenOsp.Server.Data.Contexts;
+using OpenOsp.Server.Enums;
+using OpenOsp.Server.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public class Service<T> : IService<T>
     where T : class {

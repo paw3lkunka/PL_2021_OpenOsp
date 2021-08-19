@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Dtos;
-using OpenOsp.Api.Services;
+using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Dtos.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace OpenOsp.Api.Controllers {
+namespace OpenOsp.Server.Api.Controllers {
 
   public class ActionEquipmentController
     : AuthController<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto, int, int> {

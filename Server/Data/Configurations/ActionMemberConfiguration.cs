@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Enums;
 
-namespace OpenOsp.Data.Configurations {
+namespace OpenOsp.Server.Data.Configurations {
 
   internal class ActionMemberConfiguration : IEntityConfiguration {
 

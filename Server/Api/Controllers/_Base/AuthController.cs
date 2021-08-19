@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 
-using OpenOsp.Api.Services;
+using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Dtos.Mappers;
-using OpenOsp.Api.Exceptions;
+using OpenOsp.Server.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace OpenOsp.Api.Controllers {
+namespace OpenOsp.Server.Api.Controllers {
 
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class AuthController<T, TCreateDto, TReadDto, TUpdateDto, TId>

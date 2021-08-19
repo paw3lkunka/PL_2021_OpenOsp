@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
-using OpenOsp.Api.Settings;
+using OpenOsp.Server.Settings;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public class EmailsService : IEmailsService {
 

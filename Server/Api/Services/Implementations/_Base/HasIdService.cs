@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
-using OpenOsp.Data.Contexts;
+using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Model.Models;
-using OpenOsp.Api.Exceptions;
+using OpenOsp.Server.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public class HasIdService<T, TId>
     : Service<T>, IHasIdService<T, TId>

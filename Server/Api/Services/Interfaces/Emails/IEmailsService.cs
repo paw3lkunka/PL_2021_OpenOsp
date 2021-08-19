@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public interface IEmailsService {
 

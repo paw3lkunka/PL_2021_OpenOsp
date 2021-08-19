@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace OpenOsp.Data.Migrations
+namespace OpenOsp.Server.Data.Migrations
 {
     public partial class ReInit : Migration
     {

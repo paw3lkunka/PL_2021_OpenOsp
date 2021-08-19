@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 
-using OpenOsp.Api.Services;
+using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Dtos.Mappers;
-using OpenOsp.Api.Exceptions;
+using OpenOsp.Server.Exceptions;
 using System.Threading.Tasks;
 
-namespace OpenOsp.Api.Controllers {
+namespace OpenOsp.Server.Api.Controllers {
 
   [Route("[controller]")]
   public class Controller<T, TCreateDto, TReadDto, TUpdateDto> : ControllerBase

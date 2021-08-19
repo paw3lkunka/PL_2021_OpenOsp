@@ -3,18 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using OpenOsp.Model.Models;
-using OpenOsp.Api.Exceptions;
+using OpenOsp.Server.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
-using OpenOsp.Api.Settings;
-using OpenOsp.Api.Enums;
+using OpenOsp.Server.Settings;
+using OpenOsp.Server.Enums;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Web;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public class UsersService<T, TId>
     : IUsersService<T, TId>

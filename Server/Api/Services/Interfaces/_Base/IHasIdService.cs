@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using OpenOsp.Model.Models;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public interface IHasIdService<T, TId> : IService<T>
     where T : class, IHasId<TId>

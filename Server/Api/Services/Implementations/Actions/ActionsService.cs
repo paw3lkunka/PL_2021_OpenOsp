@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using OpenOsp.Api.Exceptions;
-using OpenOsp.Data.Contexts;
+using OpenOsp.Server.Exceptions;
+using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Model.Models;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public class ActionsService
     : HasIdService<Action, int>, IActionsService {

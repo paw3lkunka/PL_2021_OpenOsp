@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace OpenOsp.Data.Configurations {
+namespace OpenOsp.Server.Data.Configurations {
 
   internal interface IEntityConfiguration {
 

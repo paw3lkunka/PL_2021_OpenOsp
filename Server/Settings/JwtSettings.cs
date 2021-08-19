@@ -1,4 +1,4 @@
-namespace OpenOsp.Api.Settings {
+namespace OpenOsp.Server.Settings {
 
   public class JwtSettings {
 

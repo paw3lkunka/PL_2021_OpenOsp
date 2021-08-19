@@ -2,12 +2,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OpenOsp.Api.Exceptions;
-using OpenOsp.Api.Services;
+using OpenOsp.Server.Exceptions;
+using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Dtos.ViewModels;
 using OpenOsp.Model.Models;
 
-namespace OpenOsp.Api.Controllers {
+namespace OpenOsp.Server.Api.Controllers {
 
   [ApiController]
   [Route("[controller]")]

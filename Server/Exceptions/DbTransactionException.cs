@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using OpenOsp.Api.Enums;
+using OpenOsp.Server.Enums;
 
-namespace OpenOsp.Api.Exceptions {
+namespace OpenOsp.Server.Exceptions {
 
   public class DbTransactionException : Exception {
 

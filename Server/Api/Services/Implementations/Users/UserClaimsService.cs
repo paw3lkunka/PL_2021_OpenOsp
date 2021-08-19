@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace OpenOsp.Api.Services {
+namespace OpenOsp.Server.Api.Services {
 
   public class UserClaimsService<TId> : IUserClaimsService<TId> 
     where TId : IEquatable<TId>, IComparable<TId>, IConvertible {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OpenOsp.Model.Models;
 
-namespace OpenOsp.Data.Configurations {
+namespace OpenOsp.Server.Data.Configurations {
 
   internal class ActionEquipmentConfiguration : IEntityConfiguration {
 

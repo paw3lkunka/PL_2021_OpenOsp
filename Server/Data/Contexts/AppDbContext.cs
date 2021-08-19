@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-using OpenOsp.Api.Services;
+using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Models;
-using OpenOsp.Data.Configurations;
-using OpenOsp.Api.Exceptions;
+using OpenOsp.Server.Data.Configurations;
+using OpenOsp.Server.Exceptions;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace OpenOsp.Data.Contexts {
+namespace OpenOsp.Server.Data.Contexts {
 
   public class AppDbContext : IdentityUserContext<User, int> {
 
