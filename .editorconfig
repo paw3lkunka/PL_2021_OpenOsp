@@ -8,9 +8,9 @@ root = true
 indent_style = space
 # (Please don't specify an indent_size here; that has too many unintended consequences.)
 
-[{GNUM,M,m,}akefile]
-indent_style = tab
-indent_size = 8
+# Web front-end
+[*.{html,htm,css,scss}]
+indent_size = 2
 
 # Code files
 [*.{cs,csx,vb,vbx}]

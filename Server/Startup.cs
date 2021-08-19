@@ -25,7 +25,9 @@ using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Server.Settings;
 
 namespace OpenOsp.Server {
+
   public class Startup {
+    
     public Startup(
       IConfiguration configuration,
       IWebHostEnvironment env
@@ -109,6 +111,8 @@ namespace OpenOsp.Server {
         options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
         options.HttpsPort = _env.IsDevelopment() ? 5001 : 443;
       });
+      /// Blazor WebAssembly
+      services.AddRazorPages();
       /// Swagger
       services.AddSwaggerGen(c => {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenOsp.Server", Version = "v1" });
@@ -119,15 +123,24 @@ namespace OpenOsp.Server {
     public void Configure(IApplicationBuilder app) {
       if (_env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
+        app.UseWebAssemblyDebugging();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OpenOsp.Server v1"));
+      }
+      else {
+        app.UseHsts();
       }
       app.UseHttpsRedirection();
       app.UseRouting();
       app.UseAuthorization();
+      app.UseBlazorFrameworkFiles();
+      app.UseStaticFiles();
       app.UseEndpoints(endpoints => {
         endpoints.MapControllers();
+        endpoints.MapFallbackToFile("{*path:nonfile}", "index.html");
       });
     }
+
   }
+
 }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 regex='PackageReference Include="([^"]*)" Version="([^"]*)"'
 find . -name "*.*proj" | while read proj
 do

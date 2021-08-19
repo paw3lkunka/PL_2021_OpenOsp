@@ -4,8 +4,10 @@
   "editorconfig.generateAuto": false,
   "cSpell.words": [
     "ASPNETCORE",
+    "Blazor",
     "Dtos",
     "Hmac",
+    "Hsts",
     "Npgsql",
     "gmail",
     "openosp"

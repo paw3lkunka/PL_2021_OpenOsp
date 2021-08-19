@@ -10,7 +10,7 @@ using OpenOsp.Model.Models;
 namespace OpenOsp.Server.Api.Controllers {
 
   [ApiController]
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   [AllowAnonymous]
   public class UsersController : ControllerBase {
 

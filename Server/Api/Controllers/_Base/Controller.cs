@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OpenOsp.Server.Api.Controllers {
 
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class Controller<T, TCreateDto, TReadDto, TUpdateDto> : ControllerBase
     where T : class
     where TCreateDto : class
