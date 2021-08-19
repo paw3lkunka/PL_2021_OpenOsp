@@ -21,7 +21,6 @@ using OpenOsp.Model.Dtos;
 using OpenOsp.Api.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 using System.Net;
 
 namespace OpenOsp {
