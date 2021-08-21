@@ -1,0 +1,16 @@
+Microsoft.AspNetCore.Authentication
+Microsoft.AspNetCore.Authentication.JwtBearer
+Microsoft.AspNetCore.Components.WebAssembly.Server
+Microsoft.AspNetCore.Cors
+Microsoft.AspNetCore.Identity
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
+Microsoft.AspNetCore.JsonPatch
+Microsoft.AspNetCore.Mvc.NewtonsoftJson
+Microsoft.EntityFrameworkCore.Design
+Microsoft.EntityFrameworkCore.Relational
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.Extensions.Configuration.Json
+Microsoft.Extensions.Identity.Stores
+Microsoft.IdentityModel.Tokens
+Npgsql.EntityFrameworkCore.PostgreSQL
+Swashbuckle.AspNetCore

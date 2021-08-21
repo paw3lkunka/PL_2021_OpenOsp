@@ -9,7 +9,7 @@ indent_style = space
 # (Please don't specify an indent_size here; that has too many unintended consequences.)
 
 # Web front-end
-[*.{html,htm,css,scss}]
+[*.{html,htm,css,scss,razor}]
 indent_size = 2
 
 # Code files

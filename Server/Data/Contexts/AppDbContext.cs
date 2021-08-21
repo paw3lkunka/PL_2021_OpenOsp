@@ -74,7 +74,7 @@ namespace OpenOsp.Server.Data.Contexts {
         .Where(e => e.State.Equals(EntityState.Added) && e.Entity is IOwnedBy<int>)
         .Select(e => e.Entity as IOwnedBy<int>)
         .ToList();
-      if(addedOwnedEntities.Count > 0 && _userId == default(int)) {
+      if (addedOwnedEntities.Count > 0 && _userId == default(int)) {
         throw new UnauthorizedException();
       }
       addedOwnedEntities.ForEach(e => e.UserId = _userId);

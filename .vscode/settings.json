@@ -5,11 +5,15 @@
   "cSpell.words": [
     "ASPNETCORE",
     "Blazor",
+    "Brotli",
     "Dtos",
     "Hmac",
     "Hsts",
     "Npgsql",
+    "dotnetjs",
+    "dotnetwasm",
     "gmail",
-    "openosp"
+    "openosp",
+    "wasm"
   ]
 }

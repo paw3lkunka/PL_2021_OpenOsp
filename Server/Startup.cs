@@ -20,6 +20,7 @@ using Newtonsoft.Json.Serialization;
 using OpenOsp.Model.Dtos;
 using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Model.Models;
+using OpenOsp.Server.Api.Controllers;
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Server.Settings;
@@ -27,7 +28,7 @@ using OpenOsp.Server.Settings;
 namespace OpenOsp.Server {
 
   public class Startup {
-    
+
     public Startup(
       IConfiguration configuration,
       IWebHostEnvironment env
@@ -104,8 +105,9 @@ namespace OpenOsp.Server {
       services.AddControllers()
         .AddNewtonsoftJson(s => {
           s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-        })
-        .AddControllersAsServices();
+        });
+      services.AddScoped<ActionEquipmentController>();
+      services.AddScoped<ActionMembersController>();
       /// HTTPS Redirection
       services.AddHttpsRedirection(options => {
         options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;

@@ -41,7 +41,7 @@ namespace OpenOsp.Server.Api.Services {
       var result = await _userManager.CreateAsync(user, password);
       if (!result.Succeeded) {
         throw new DbTransactionException<T>(
-          DbTransactionType.Create, 
+          DbTransactionType.Create,
           result.Errors
             .Select(e => $"{e.Code}: {e.Description}")
             .ToList()
@@ -52,7 +52,7 @@ namespace OpenOsp.Server.Api.Services {
     public async Task<T> ReadById(TId id) {
       var user = await _userManager.FindByIdAsync(id.ToString());
       if (user == default(T)) {
-        throw new NotFoundException<T,TId>(id);
+        throw new NotFoundException<T, TId>(id);
       }
       return user;
     }

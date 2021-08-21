@@ -13,17 +13,17 @@ namespace OpenOsp.Server.Exceptions {
     public DbTransactionException(string message) : base(message) {
     }
 
-    public DbTransactionException(DbTransactionType type, string entityName, int rows, List<string> errors) 
+    public DbTransactionException(DbTransactionType type, string entityName, int rows, List<string> errors)
       : this(CreateMessage(type, entityName, rows, errors)) {
     }
 
-    public DbTransactionException(DbTransactionType type, string entityName, int rows) 
+    public DbTransactionException(DbTransactionType type, string entityName, int rows)
       : this(type, entityName, rows, null) {
     }
 
     private static string CreateMessage(DbTransactionType type, string entityName, int rows) {
       var message = $"Could not ";
-      switch(type) {
+      switch (type) {
         case DbTransactionType.None:
           message += "process";
           break;
@@ -62,19 +62,19 @@ namespace OpenOsp.Server.Exceptions {
       : this(type, rows, null) {
     }
 
-    public DbTransactionException(DbTransactionType type, List<string> errors) 
+    public DbTransactionException(DbTransactionType type, List<string> errors)
       : this(type, 1, errors) {
     }
 
-    public DbTransactionException(DbTransactionType type) 
+    public DbTransactionException(DbTransactionType type)
       : this(type, 1) {
     }
 
-    public DbTransactionException(List<string> errors) 
+    public DbTransactionException(List<string> errors)
       : this(DbTransactionType.None, 1, errors) {
     }
 
-    public DbTransactionException() 
+    public DbTransactionException()
       : this(DbTransactionType.None, 1) {
     }
 

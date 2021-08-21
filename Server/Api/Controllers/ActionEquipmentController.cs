@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OpenOsp.Server.Api.Controllers {
 
+  [NonController]
   public class ActionEquipmentController
     : AuthController<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto, int, int> {
 
