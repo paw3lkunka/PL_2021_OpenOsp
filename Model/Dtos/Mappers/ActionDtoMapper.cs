@@ -1,4 +1,5 @@
 using System.Linq;
+
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Model.Dtos.Mappers {

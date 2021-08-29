@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+
 using OpenOsp.Model.Annotations;
 
 namespace OpenOsp.Model.Dtos.ViewModels {

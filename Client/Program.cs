@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Fluxor;
+using MudBlazor.Services;
 
 namespace OpenOsp.Client {
 
@@ -18,10 +18,7 @@ namespace OpenOsp.Client {
       builder.RootComponents.Add<App>("#app");
       /// Services
       builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-      builder.Services.AddFluxor(cfg => {
-        cfg.ScanAssemblies(typeof(Program).Assembly);
-        cfg.UseReduxDevTools();
-      });
+      builder.Services.AddMudServices();
       /// Build
       await builder.Build().RunAsync();
     }

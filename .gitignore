@@ -280,6 +280,7 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+package-lock.json
 
 # Visual Studio 6 build log
 *.plg
@@ -300,9 +301,9 @@ _Pvt_Extensions
 
 # Paket dependency manager
 .paket/
-.paket/paket.exe
 paket-files/
 packages/
+paket.lock
 
 # FAKE - F# Make
 .fake/
@@ -443,7 +444,12 @@ $RECYCLE.BIN/
 ##
 ## Visual Studio Code
 ##
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# CSS
+normalize.min.css
+tailwind.min.css

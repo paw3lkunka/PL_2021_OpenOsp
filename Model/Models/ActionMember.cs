@@ -1,4 +1,5 @@
 using OpenOsp.Model.Enums;
+
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenOsp.Model.Models {

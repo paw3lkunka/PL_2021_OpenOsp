@@ -1,6 +1,4 @@
 Microsoft.AspNetCore.Components.WebAssembly
 Microsoft.AspNetCore.Components.WebAssembly.DevServer
 System.Net.Http.Json
-Fluxor.Blazor.Web
-Fluxor.Blazor.Web.ReduxDevTools
-System.Reactive
+MudBlazor

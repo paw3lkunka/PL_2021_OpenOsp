@@ -1,24 +1,22 @@
 source https://www.nuget.org/api/v2
 
-nuget Fluxor.Blazor.Web
-nuget Fluxor.Blazor.Web.ReduxDevTools
-nuget Microsoft.AspNetCore.Authentication 2.2.0
-nuget Microsoft.AspNetCore.Authentication.JwtBearer 5.0.9
-nuget Microsoft.AspNetCore.Components.WebAssembly 5.0.9
-nuget Microsoft.AspNetCore.Components.WebAssembly.DevServer 5.0.9
-nuget Microsoft.AspNetCore.Components.WebAssembly.Server 5.0.9
-nuget Microsoft.AspNetCore.Cors 2.2.0
-nuget Microsoft.AspNetCore.Identity 2.2.0
-nuget Microsoft.AspNetCore.Identity.EntityFrameworkCore 5.0.9
-nuget Microsoft.AspNetCore.JsonPatch 5.0.9
-nuget Microsoft.AspNetCore.Mvc.NewtonsoftJson 5.0.9
-nuget Microsoft.EntityFrameworkCore.Design 5.0.9
-nuget Microsoft.EntityFrameworkCore.Relational 5.0.9
-nuget Microsoft.EntityFrameworkCore.Tools 5.0.9
-nuget Microsoft.Extensions.Configuration.Json 5.0.0
-nuget Microsoft.Extensions.Identity.Stores 5.0.9
-nuget Microsoft.IdentityModel.Tokens 6.12.1
-nuget Npgsql.EntityFrameworkCore.PostgreSQL 5.0.7
-nuget Swashbuckle.AspNetCore 6.1.5
-nuget System.Net.Http.Json 5.0.0
-nuget System.Reactive
+nuget Microsoft.AspNetCore.Authentication >= 2.2.0
+nuget Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.9
+nuget Microsoft.AspNetCore.Components.WebAssembly >= 5.0.9
+nuget Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 5.0.9
+nuget Microsoft.AspNetCore.Components.WebAssembly.Server >= 5.0.9
+nuget Microsoft.AspNetCore.Cors >= 2.2.0
+nuget Microsoft.AspNetCore.Identity >= 2.2.0
+nuget Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.9
+nuget Microsoft.AspNetCore.JsonPatch >= 5.0.9
+nuget Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 5.0.9
+nuget Microsoft.EntityFrameworkCore.Design >= 5.0.9
+nuget Microsoft.EntityFrameworkCore.Relational >= 5.0.9
+nuget Microsoft.EntityFrameworkCore.Tools >= 5.0.9
+nuget Microsoft.Extensions.Configuration.Json >= 5.0.0
+nuget Microsoft.Extensions.Identity.Stores >= 5.0.9
+nuget Microsoft.IdentityModel.Tokens >= 6.12.1
+nuget MudBlazor >= 5.1.2
+nuget Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.7
+nuget Swashbuckle.AspNetCore >= 6.1.5
+nuget System.Net.Http.Json >= 5.0.0
