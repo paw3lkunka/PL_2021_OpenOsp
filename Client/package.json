@@ -3,7 +3,6 @@
   "author": "Paul B. Kunka",
   "description": "OpenOSP is a free software for firefighter's HQ management.",
   "scripts": {
-    "normalizecss": "postcss ./node_modules/normalize.css/normalize.css -o ./wwwroot/css/normalize.min.css",
     "tailwindcss": "cross-env TAILWIND_MODE=build postcss ./Styles/tailwind.css -o ./wwwroot/css/tailwind.min.css"
   },
   "dependencies": {
@@ -11,7 +10,6 @@
     "cross-env": "^7.0.3",
     "cssnano": "^5.0.8",
     "daisyui": "^1.14.0",
-    "normalize.css": "^8.0.1",
     "postcss": "^8.3.6",
     "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.2.7"

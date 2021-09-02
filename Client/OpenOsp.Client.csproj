@@ -20,11 +20,6 @@
     <Exec Command="npm install" />
     <Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
   </Target>
-  <!-- Copy normalize.css to wwwroot -->
-  <Target Name="NormalizeCSS" BeforeTargets="Compile" >
-    <Exec Command="npm run normalizecss" />
-    <!-- <Copy SourceFiles="./NodeJs/node_modules/normalize.css/normalize.css" DestinationFolder="./wwwroot/css/" /> -->
-  </Target>
   <!-- Generate tailwind.css -->
   <Target Name="TailwindCSS" BeforeTargets="Compile" >
     <Exec Command="npm run tailwindcss" />
