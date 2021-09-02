@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenOsp.Server.Exceptions;
 using OpenOsp.Server.Api.Services;
-using OpenOsp.Model.Dtos.ViewModels;
 using OpenOsp.Model.Models;
+using OpenOsp.Model.Dtos;
 
 namespace OpenOsp.Server.Api.Controllers {
 
@@ -27,13 +27,13 @@ namespace OpenOsp.Server.Api.Controllers {
     private readonly IEmailsService _emailsService;
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> LogIn([FromBody] UserLoginVM vm) {
+    public async Task<ActionResult<string>> LogIn([FromBody] UserLoginDto dto) {
       try {
-        if (!TryValidateModel(vm)) {
+        if (!TryValidateModel(dto)) {
           throw new ValidationProblemException();
         }
-        var user = await _usersService.ReadByEmail(vm.Email);
-        var token = await _usersService.GetAuthenticationToken(user, vm.Password);
+        var user = await _usersService.ReadByEmail(dto.Email);
+        var token = await _usersService.GetAuthenticationToken(user, dto.Password);
         return Ok(token);
       }
       catch (ValidationProblemException) {
@@ -51,16 +51,16 @@ namespace OpenOsp.Server.Api.Controllers {
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult> Register([FromBody] UserRegisterVM vm) {
+    public async Task<ActionResult> Register([FromBody] UserRegisterDto dto) {
       try {
-        if (!TryValidateModel(vm)) {
+        if (!TryValidateModel(dto)) {
           throw new ValidationProblemException();
         }
         var user = new User {
-          UserName = vm.UserName,
-          Email = vm.Email,
+          UserName = dto.UserName,
+          Email = dto.Email,
         };
-        await _usersService.Create(user, vm.Password);
+        await _usersService.Create(user, dto.Password);
         var token = await _usersService.GetEmailConfirmationToken(user);
         var link = Url.Action(
           "Verify",

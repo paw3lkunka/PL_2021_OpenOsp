@@ -7,9 +7,10 @@
     <ProjectReference Include="..\Model\OpenOsp.Model.csproj" />
     <ProjectReference Include="..\Client\OpenOsp.Client.csproj" />
   </ItemGroup>
-  <!-- Watch for *.razor files changes too -->
+  <!-- Watch for index.html and *.razor files changes too -->
   <ItemGroup>
     <Watch Include="../Client/**/*.razor" />
+    <Watch Include="../Client/Styles/**/*.css" />
   </ItemGroup>
   <!-- Paket -->
   <Import Project="..\.paket\Paket.Restore.targets" />

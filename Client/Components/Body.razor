@@ -1,0 +1,19 @@
+@inherits LayoutComponentBase
+
+<div class="drawer w-auto min-h-screen text-base-content">
+  <input id="navdrawer" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content min-h-screen items-stretch">
+    <div class="hero min-h-screen flex flex-col bg-firefighters">
+      <div class="hero-overlay bg-opacity-70" />
+      <Header />
+      <main class="hero-content w-auto max-w-screen-lg mx-2 my-1 p-5">
+        @Body
+      </main>
+    </div>
+    <Footer />
+  </div>
+  <div class="drawer-side">
+    <label for="navdrawer" class="drawer-overlay" />
+    <Nav class="p-4 overflow-y-auto menu w-80 bg-base-100" />
+  </div>
+</div>
