@@ -1,0 +1,43 @@
+@using OpenOsp.Model.Dtos
+
+<EditForm Model="@dto" OnValidSubmit="HandleLogin">
+  <DataAnnotationsValidator />
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Email</span>
+    </label>
+    <InputText @bind-Value="dto.Email" type="email" placeholder="your@email.com" class="input input-bordered" />
+    <label class="label">
+      <div class="label-text-alt mx-2 text-error">
+        <ValidationMessage For="() => dto.Email" />
+      </div>
+    </label>
+  </div>
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Password</span>
+    </label>
+    <InputText @bind-Value="dto.Password" type="password" placeholder="password" class="input input-bordered" />
+    <label class="label">
+      <a href="/" class="label-text-alt link-hover">Forgot password?</a>
+      <div class="label-text-alt mx-2 text-error">
+        <ValidationMessage For="() => dto.Password" />
+      </div>
+    </label>
+    <label class="label label-text-alt text-error">
+    </label>
+  </div>
+  <div class="form-control mt-6">
+    <button type="submit" class="btn btn-primary">Log in</button>
+  </div>
+</EditForm>
+
+@code {
+
+  private UserLoginDto dto = new UserLoginDto();
+
+  private void HandleLogin() {
+    Console.WriteLine($"{dto.Email} with password {dto.Password}.");
+  }
+
+}

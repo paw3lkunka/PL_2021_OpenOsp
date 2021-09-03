@@ -9,8 +9,8 @@
   </ItemGroup>
   <!-- Watch for index.html and *.razor files changes too -->
   <ItemGroup>
+    <Watch Include="../Client/wwwroot/index.html" />
     <Watch Include="../Client/**/*.razor" />
-    <Watch Include="../Client/Styles/**/*.css" />
   </ItemGroup>
   <!-- Paket -->
   <Import Project="..\.paket\Paket.Restore.targets" />
