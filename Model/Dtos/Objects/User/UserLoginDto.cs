@@ -6,10 +6,10 @@ namespace OpenOsp.Model.Dtos {
 
   public class UserLoginDto {
 
-    [Required, EmailAddress, MinLength(3)]
+    [Required, EmailAddress]
     public string Email { get; set; }
 
-    [Required, ValidatePassword, MinLength(3)]
+    [Required, ValidatePassword]
     public string Password { get; set; }
 
   }

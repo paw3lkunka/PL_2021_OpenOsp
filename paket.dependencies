@@ -1,5 +1,7 @@
 source https://www.nuget.org/api/v2
 
+nuget Blazored.FormExtensions
+nuget Blazored.LocalStorage
 nuget Microsoft.AspNetCore.Authentication >= 2.2.0
 nuget Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.9
 nuget Microsoft.AspNetCore.Components.WebAssembly >= 5.0.9

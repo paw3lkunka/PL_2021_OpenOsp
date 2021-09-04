@@ -1,0 +1,29 @@
+@using OpenOsp.Client.Enums
+
+<div class="card w-full max-w-sm mx-2 flex-shrink-0 shadow-2xl bg-base-200 bg-opacity-95">
+  <div class="card-body">
+    <div class="card-title w-full flex flex-row">
+      <button @onclick=OnLoginBtnClick disabled="@(mode.Equals(AuthCardMode.Login))" class="btn btn-secondary flex-grow">Log in</button>
+      <div class="divider divider-vertical" />
+      <button @onclick=OnRegisterBtnClick disabled="@(mode.Equals(AuthCardMode.Register))" class="btn btn-accent flex-grow">Register</button>
+    </div>
+    @switch(mode) {
+      case AuthCardMode.Login:
+        <Login />
+        break;
+      case AuthCardMode.Register:
+        <Register />
+        break;
+    }
+  </div>
+</div>
+
+@code {
+
+  private AuthCardMode mode { get; set; } = AuthCardMode.Login;
+
+  private void OnLoginBtnClick() => mode = AuthCardMode.Login;
+
+  private void OnRegisterBtnClick() => mode = AuthCardMode.Register;
+
+}

@@ -1,5 +1,12 @@
 NUGET
   remote: https://www.nuget.org/api/v2
+    Blazored.FormExtensions (1.0)
+      Microsoft.AspNetCore.Components (>= 3.0) - restriction: >= netstandard2.0
+      Microsoft.AspNetCore.Components.Web (>= 3.0) - restriction: >= netstandard2.0
+      Microsoft.Extensions.Localization (>= 3.0) - restriction: >= netstandard2.0
+    Blazored.LocalStorage (4.1.5)
+      Microsoft.AspNetCore.Components.Web (>= 3.1.14) - restriction: && (< net5.0) (>= netstandard2.1)
+      Microsoft.AspNetCore.Components.Web (>= 5.0.5) - restriction: >= net5.0
     Humanizer.Core (2.11.10) - restriction: >= netstandard2.1
     Microsoft.AspNetCore.Authentication (2.2)
       Microsoft.AspNetCore.Authentication.Core (>= 2.2) - restriction: >= netstandard2.0
@@ -28,13 +35,13 @@ NUGET
     Microsoft.AspNetCore.Authorization.Policy (2.2) - restriction: && (< netcoreapp3.0) (>= netstandard2.0)
       Microsoft.AspNetCore.Authentication.Abstractions (>= 2.2) - restriction: >= netstandard2.0
       Microsoft.AspNetCore.Authorization (>= 2.2) - restriction: >= netstandard2.0
-    Microsoft.AspNetCore.Components (5.0.9) - restriction: >= net5.0
+    Microsoft.AspNetCore.Components (5.0.9) - restriction: >= netstandard2.0
       Microsoft.AspNetCore.Authorization (>= 5.0.9) - restriction: >= net5.0
       Microsoft.AspNetCore.Components.Analyzers (>= 5.0.9) - restriction: >= net5.0
     Microsoft.AspNetCore.Components.Analyzers (5.0.9) - restriction: >= net5.0
     Microsoft.AspNetCore.Components.Forms (5.0.9) - restriction: >= net5.0
       Microsoft.AspNetCore.Components (>= 5.0.9) - restriction: >= net5.0
-    Microsoft.AspNetCore.Components.Web (5.0.9) - restriction: >= net5.0
+    Microsoft.AspNetCore.Components.Web (5.0.9) - restriction: >= netstandard2.0
       Microsoft.AspNetCore.Components (>= 5.0.9) - restriction: >= net5.0
       Microsoft.AspNetCore.Components.Forms (>= 5.0.9) - restriction: >= net5.0
       Microsoft.Extensions.DependencyInjection (>= 5.0.2) - restriction: >= net5.0
@@ -206,7 +213,7 @@ NUGET
       System.Text.Json (>= 5.0) - restriction: || (>= net461) (&& (< net5.0) (>= netstandard2.1)) (&& (>= netstandard2.0) (< netstandard2.1))
     Microsoft.Extensions.DependencyInjection (5.0.2) - restriction: || (&& (< netcoreapp3.0) (>= netstandard2.0)) (>= netstandard2.1)
       Microsoft.Extensions.DependencyInjection.Abstractions (>= 5.0) - restriction: || (>= net461) (&& (>= netcoreapp2.1) (< netstandard2.1)) (&& (< netcoreapp2.1) (>= netstandard2.0) (< netstandard2.1)) (&& (< netcoreapp2.1) (>= netstandard2.1)) (>= netcoreapp3.0)
-    Microsoft.Extensions.DependencyInjection.Abstractions (5.0) - restriction: >= netstandard2.0
+    Microsoft.Extensions.DependencyInjection.Abstractions (5.0) - restriction: || (>= net461) (>= netstandard2.0)
     Microsoft.Extensions.DependencyModel (5.0) - restriction: && (< netcoreapp3.0) (>= netstandard2.0)
       System.Buffers (>= 4.5.1) - restriction: || (&& (>= monoandroid) (< netstandard1.3)) (>= monotouch) (&& (< net451) (< netcoreapp2.0) (>= netstandard2.0) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)) (>= net461) (&& (< netcoreapp2.0) (>= xamarinios)) (&& (< netcoreapp2.0) (>= xamarinmac)) (&& (< netstandard2.0) (>= xamarintvos)) (&& (< netstandard2.0) (>= xamarinwatchos))
       System.Memory (>= 4.5.4) - restriction: || (&& (< monoandroid) (>= netcoreapp2.0) (< netcoreapp2.1) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)) (&& (< net451) (< netcoreapp2.0) (>= netstandard2.0) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)) (>= net461) (>= uap10.1)
@@ -238,12 +245,12 @@ NUGET
       Microsoft.Extensions.Caching.Abstractions (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.Identity.Core (>= 5.0.9) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.Logging (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)
-    Microsoft.Extensions.Localization (5.0.9) - restriction: && (< netcoreapp3.0) (>= netstandard2.0)
+    Microsoft.Extensions.Localization (5.0.9) - restriction: >= netstandard2.0
       Microsoft.Extensions.DependencyInjection.Abstractions (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.Localization.Abstractions (>= 5.0.9) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.Logging.Abstractions (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.Options (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)
-    Microsoft.Extensions.Localization.Abstractions (5.0.9) - restriction: || (&& (>= net461) (>= netstandard2.0)) (&& (< netcoreapp3.0) (>= netstandard2.0))
+    Microsoft.Extensions.Localization.Abstractions (5.0.9) - restriction: >= netstandard2.0
     Microsoft.Extensions.Logging (5.0) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.DependencyInjection (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)
       Microsoft.Extensions.DependencyInjection.Abstractions (>= 5.0) - restriction: || (>= net461) (>= netstandard2.0)

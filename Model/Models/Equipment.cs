@@ -7,7 +7,6 @@ namespace OpenOsp.Model.Models {
   public class Equipment : IHasId<int>, IOwnedBy<int> {
 
     [Key]
-    [Column("id")]
     public int Id { get; set; }
 
     public string Name { get; set; }
@@ -18,7 +17,7 @@ namespace OpenOsp.Model.Models {
 
     public string RegistryNumber { get; set; }
 
-    [Required(ErrorMessage = "Action's owner id is required")]
+    [Required, Display(Name = "Equipment owner's id")]
     public int UserId { get; set; }
 
     public virtual User User { get; set; }

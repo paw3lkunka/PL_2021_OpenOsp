@@ -14,6 +14,7 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.Property(e => e.Id2)
           .HasColumnName("member_id");
         entity.Property(e => e.Role)
+          .IsRequired()
           .HasDefaultValue(ActionMemberRole.Member);
       });
       builder.Entity<ActionMember>()

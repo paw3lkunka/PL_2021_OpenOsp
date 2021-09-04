@@ -1,5 +1,6 @@
 using OpenOsp.Model.Enums;
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenOsp.Model.Models {
@@ -12,6 +13,7 @@ namespace OpenOsp.Model.Models {
     [Column("member_id")]
     public int Id2 { get; set; }
 
+    [Required]
     public ActionMemberRole Role { get; set; }
 
     public virtual Action Action { get; set; }

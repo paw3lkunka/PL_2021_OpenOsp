@@ -9,23 +9,27 @@ namespace OpenOsp.Model.Models {
 
   public class Action : IHasId<int>, IOwnedBy<int> {
 
+    [Display(Name = "Action's id")]
     [Key]
-    [Column("id")]
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "Action type is required")]
+    [Display(Name = "Action's type")]
+    [Required]
     public ActionType Type { get; set; }
 
     [MaxLength(50)]
     public string Location { get; set; }
 
-    [Required(ErrorMessage = "Start time is required")]
+    [Display(Name = "Start time")]
+    [Required]
     public DateTime StartTime { get; set; }
 
-    [Required(ErrorMessage = "End time is required")]
+    [Display(Name = "End time")]
+    [Required]
     public DateTime EndTime { get; set; }
 
-    [Required(ErrorMessage = "Action's owner id is required")]
+    [Display(Name = "Action owner's id")]
+    [Required]
     public int UserId { get; set; }
 
     public virtual User User { get; set; }

@@ -2,20 +2,10 @@
 
 <EditForm Model="@dto" OnValidSubmit="HandleLogin">
   <DataAnnotationsValidator />
+  <LabeledInputText @bind-Value="dto.Email" type="email" placeholder="your@email.com" />
   <div class="form-control">
     <label class="label">
-      <span class="label-text">Email</span>
-    </label>
-    <InputText @bind-Value="dto.Email" type="email" placeholder="your@email.com" class="input input-bordered" />
-    <label class="label">
-      <div class="label-text-alt mx-2 text-error">
-        <ValidationMessage For="() => dto.Email" />
-      </div>
-    </label>
-  </div>
-  <div class="form-control">
-    <label class="label">
-      <span class="label-text">Password</span>
+      <LabelText For="() => dto.Password" class="label-text" />
     </label>
     <InputText @bind-Value="dto.Password" type="password" placeholder="password" class="input input-bordered" />
     <label class="label">
@@ -23,8 +13,6 @@
       <div class="label-text-alt mx-2 text-error">
         <ValidationMessage For="() => dto.Password" />
       </div>
-    </label>
-    <label class="label label-text-alt text-error">
     </label>
   </div>
   <div class="form-control mt-6">
@@ -37,7 +25,7 @@
   private UserLoginDto dto = new UserLoginDto();
 
   private void HandleLogin() {
-    Console.WriteLine($"{dto.Email} with password {dto.Password}.");
+    Console.WriteLine($"{dto.Email} and {dto.Password}");
   }
 
 }

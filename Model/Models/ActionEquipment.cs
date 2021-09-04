@@ -11,8 +11,12 @@ namespace OpenOsp.Model.Models {
     [Column("equipment_id")]
     public int Id2 { get; set; }
 
+    [Display(Name = "Fuel used")]
+    [Range(0.0, float.MaxValue, ErrorMessage = "The field {0} must be greater than {1}.")]
     public float FuelUsed { get; set; }
 
+    [Display(Name = "Counter State")]
+    [Range(0.0, float.MaxValue, ErrorMessage = "The field {0} must be greater than {1}.")]
     public int CounterState { get; set; }
 
     public virtual Action Action { get; set; }
