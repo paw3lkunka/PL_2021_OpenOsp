@@ -1,28 +1,33 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Models {
 
   public class Member : IHasId<int>, IOwnedBy<int> {
 
     [Key]
+    [Required]
     public int Id { get; set; }
 
+    [Required, MaxLength(25), Name]
     public string FirstName { get; set; }
 
-    [MaxLength(25), Display(Name = "PESEL")]
+    [Required, MaxLength(25), Name]
     public string LastName { get; set; }
 
-    [MinLength(11), MaxLength(11), Display(Name = "PESEL")]
+    [Display(Name = "PESEL"), Column(TypeName = "varchar(11)")]
+    [Required, MaxLength(11), Pesel]
     public string Pesel { get; set; }
 
-    [Required, Display(Name = "Member owner's id")]
+    [Display(Name = "Member owner's id"), Column("owner_id")]
+    [Required]
     public int UserId { get; set; }
 
     public virtual User User { get; set; }
 
-    public virtual List<ActionMember> Actions { get; set; }
+    public virtual IEnumerable<ActionMember> Actions { get; set; }
 
   }
 

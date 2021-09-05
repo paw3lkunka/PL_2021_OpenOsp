@@ -35,8 +35,7 @@ namespace OpenOsp.Server.Api.Controllers {
     public virtual async Task<ActionResult<IEnumerable<TReadDto>>> ReadAll() {
       try {
         var entities = await _service.ReadAll();
-        var dtos = entities.Select(e => _mapper.MapRead(e)).ToList();
-        return Ok(dtos);
+        return ReadEntities(entities);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -83,6 +82,11 @@ namespace OpenOsp.Server.Api.Controllers {
     protected virtual ActionResult<TReadDto> ReadEntity(T entity) {
       var readDto = _mapper.MapRead(entity);
       return Ok(readDto);
+    }
+    
+    protected virtual ActionResult<IEnumerable<TReadDto>> ReadEntities(IEnumerable<T> entities) {
+      var readDtos = entities.Select(e => _mapper.MapRead(e)).ToList();
+      return Ok(readDtos);
     }
 
     protected virtual async Task<ActionResult> UpdateEntity(TUpdateDto updateDto, T entity) {

@@ -10,8 +10,10 @@ namespace OpenOsp.Server.Data.Configurations {
       builder.Entity<ActionMember>(entity => {
         entity.HasKey(e => new { e.Id1, e.Id2 });
         entity.Property(e => e.Id1)
+          .IsRequired()
           .HasColumnName("action_id");
         entity.Property(e => e.Id2)
+          .IsRequired()
           .HasColumnName("member_id");
         entity.Property(e => e.Role)
           .IsRequired()

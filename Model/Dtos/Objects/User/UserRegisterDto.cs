@@ -1,19 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 
-using OpenOsp.Model.Annotations;
+using OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
 
   public class UserRegisterDto {
 
-    [Required, Display(Name = "Username")]
-    [RegularExpression(@"^[a-zA-Z0-9 ''-'\s]{1,20}$", ErrorMessage = "Username can consist of up to 20 alphanumeric signs")]
+    [Display(Name = "Username")]
+    [Required, Username]
     public string UserName { get; set; }
 
+    [Display(Name = "E-mail")]
     [Required, EmailAddress]
     public string Email { get; set; }
 
-    [Required, ValidatePassword]
+    [Required, Password]
     public string Password { get; set; }
 
     [Required, Display(Name = "Password confirmation")]

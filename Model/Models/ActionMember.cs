@@ -7,14 +7,16 @@ namespace OpenOsp.Model.Models {
 
   public class ActionMember : IHasId<int, int> {
 
-    [Column("action_id")]
+    [Display(Name = "Action's id"), Column("action_id")]
+    [Required]
     public int Id1 { get; set; }
 
-    [Column("member_id")]
+    [Display(Name = "Member's id"),Column("member_id")]
+    [Required]
     public int Id2 { get; set; }
 
     [Required]
-    public ActionMemberRole Role { get; set; }
+    public ActionMemberRole Role { get; set; } = ActionMemberRole.Member;
 
     public virtual Action Action { get; set; }
 

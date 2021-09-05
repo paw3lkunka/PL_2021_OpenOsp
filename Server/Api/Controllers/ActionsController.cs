@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Dtos;
@@ -8,7 +10,6 @@ using OpenOsp.Server.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
-using System.Threading.Tasks;
 
 namespace OpenOsp.Server.Api.Controllers {
 
@@ -17,40 +18,23 @@ namespace OpenOsp.Server.Api.Controllers {
     : AuthController<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto, int> {
 
     public ActionsController(
-      IActionsService service,
+      IHasIdService<Action, int> service,
       IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> mapper,
       ActionEquipmentController actionEquipment,
       ActionMembersController actionMembers
     ) : base(service, mapper) {
-      _service = service;
       _actionEquipment = actionEquipment;
       _actionMembers = actionMembers;
     }
-
-    private new readonly IActionsService _service;
 
     ActionEquipmentController _actionEquipment;
 
     ActionMembersController _actionMembers;
 
-    [HttpGet("expanded/{id}")]
-    public async Task<ActionResult<ActionReadDto>> ReadExpanded(int id) {
-      try {
-        var entity = await _service.ReadExpanded(id);
-        return base.ReadEntity(entity);
-      }
-      catch (UnauthorizedException) {
-        return Unauthorized();
-      }
-      catch (NotFoundException) {
-        return NotFound();
-      }
-      catch {
-        return StatusCode(StatusCodes.Status500InternalServerError);
-      }
-    }
-
     /// ActionEquipment
+    [HttpGet("{id1}/equipment")]
+    public async Task<ActionResult<IEnumerable<ActionEquipmentReadDto>>> ReadEquipment(int id1) => await _actionEquipment.ReadById(id1);
+    
     [HttpGet("{id1}/equipment/{id2}")]
     public async Task<ActionResult<ActionEquipmentReadDto>> ReadEquipment(int id1, int id2) => await _actionEquipment.ReadById(id1, id2);
 
@@ -67,6 +51,9 @@ namespace OpenOsp.Server.Api.Controllers {
     public async Task<ActionResult> DeleteEquipment(int id1, int id2) => await _actionEquipment.Delete(id1, id2);
 
     /// ActionMembers
+    [HttpGet("{id1}/members")]
+    public async Task<ActionResult<IEnumerable<ActionMemberReadDto>>> ReadMembers(int id1) => await _actionMembers.ReadById(id1);
+    
     [HttpGet("{id1}/members/{id2}")]
     public async Task<ActionResult<ActionMemberReadDto>> ReadMember(int id1, int id2) => await _actionMembers.ReadById(id1, id2);
 

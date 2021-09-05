@@ -40,7 +40,7 @@ namespace OpenOsp.Server.Exceptions {
           message += "delete";
           break;
       }
-      message += $" {((rows > 1) ? rows : "the")} {(entityName == null ? "" : entityName + " ")}{((rows > 1) ? "entities" : "entity")}";
+      message += $" {((rows > 1) ? rows : "the")} {(entityName == null ? string.Empty : entityName + " ")}{((rows > 1) ? "entities" : "entity")}";
       return message + " due to the database transaction failure.";
     }
 
@@ -52,7 +52,8 @@ namespace OpenOsp.Server.Exceptions {
 
   }
 
-  public class DbTransactionException<T> : DbTransactionException {
+  public class DbTransactionException<T> : DbTransactionException 
+    where T : class {
 
     public DbTransactionException(DbTransactionType type, int rows, List<string> errors)
       : base(type, typeof(T).Name, rows, errors) {

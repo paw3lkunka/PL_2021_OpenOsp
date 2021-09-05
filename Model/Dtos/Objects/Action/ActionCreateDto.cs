@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using OpenOsp.Model.Enums;
+using OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
 
@@ -11,18 +12,20 @@ namespace OpenOsp.Model.Dtos {
     [Required]
     public ActionType Type { get; set; }
 
-    [MaxLength(50)]
+    [Required, MaxLength(50)]
     public string Location { get; set; }
 
+    [Display(Name = "Start time")]
     [Required]
     public DateTime StartTime { get; set; }
 
-    [Required]
+    [Display(Name = "End time")]
+    [Required, DateGreaterEqual("StartTime")]
     public DateTime EndTime { get; set; }
 
-    public List<ActionMemberCreateDto> Members { get; set; }
+    public virtual IEnumerable<ActionMemberCreateDto> Members { get; set; }
 
-    public List<ActionEquipmentCreateDto> Equipment { get; set; }
+    public virtual IEnumerable<ActionEquipmentCreateDto> Equipment { get; set; }
 
   }
 

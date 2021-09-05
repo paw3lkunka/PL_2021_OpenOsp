@@ -1,21 +1,19 @@
 using System.ComponentModel.DataAnnotations;
+using OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
 
   public class EquipmentCreateDto {
 
-    [Required]
-    [MaxLength(50)]
-    public string Name { get; set; }
-
-    [MaxLength(30)]
+    [Required, MaxLength(25), Name]
     public string Brand { get; set; }
 
-    [MaxLength(30)]
+    [Required, MaxLength(25), Name]
     public string Model { get; set; }
 
-    [MaxLength(15)]
-    public string ReqistryNumber { get; set; }
+    [Display(Name ="Registry number")]
+    [Required, RegistryNumber]
+    public string RegistryNumber { get; set; }
 
   }
 

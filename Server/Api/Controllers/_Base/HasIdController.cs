@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -138,6 +139,23 @@ namespace OpenOsp.Server.Api.Controllers {
 
     protected new readonly IHasIdService<T, TId1, TId2> _service;
 
+    [HttpGet("{id1}")]
+    public virtual async Task<ActionResult<IEnumerable<TReadDto>>> ReadById(TId1 id1) {
+      try {
+        var entities = await _service.ReadById(id1);
+        return base.ReadEntities(entities);
+      }
+      catch (UnauthorizedException) {
+        return Unauthorized();
+      }
+      catch (NotFoundException) {
+        return NotFound();
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
     [HttpGet("{id1}/{id2}")]
     public virtual async Task<ActionResult<TReadDto>> ReadById(TId1 id1, TId2 id2) {
       try {
@@ -250,6 +268,40 @@ namespace OpenOsp.Server.Api.Controllers {
     }
 
     protected new readonly IHasIdService<T, TId1, TId2, TId3> _service;
+
+    [HttpGet("{id1}")]
+    public virtual async Task<ActionResult<IEnumerable<TReadDto>>> ReadById(TId1 id1) {
+      try {
+        var entities = await _service.ReadById(id1);
+        return base.ReadEntities(entities);
+      }
+      catch (UnauthorizedException) {
+        return Unauthorized();
+      }
+      catch (NotFoundException) {
+        return NotFound();
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
+    [HttpGet("{id1}/{id2}")]
+    public virtual async Task<ActionResult<IEnumerable<TReadDto>>> ReadById(TId1 id1, TId2 id2) {
+      try {
+        var entities = await _service.ReadById(id1, id2);
+        return base.ReadEntities(entities);
+      }
+      catch (UnauthorizedException) {
+        return Unauthorized();
+      }
+      catch (NotFoundException) {
+        return NotFound();
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
 
     [HttpGet("{id1}/{id2}/{id3}")]
     public virtual async Task<ActionResult<TReadDto>> ReadById(TId1 id1, TId2 id2, TId3 id3) {

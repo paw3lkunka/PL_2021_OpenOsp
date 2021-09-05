@@ -8,8 +8,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       return new Equipment {
         Brand = dto.Brand,
         Model = dto.Model,
-        Name = dto.Name,
-        RegistryNumber = dto.ReqistryNumber,
+        RegistryNumber = dto.RegistryNumber,
       };
     }
 
@@ -17,8 +16,7 @@ namespace OpenOsp.Model.Dtos.Mappers {
       return new EquipmentUpdateDto {
         Brand = entity.Brand,
         Model = entity.Model,
-        Name = entity.Name,
-        ReqistryNumber = entity.RegistryNumber,
+        RegistryNumber = entity.RegistryNumber,
       };
     }
 
@@ -27,16 +25,14 @@ namespace OpenOsp.Model.Dtos.Mappers {
         Brand = entity.Brand,
         Id = entity.Id,
         Model = entity.Model,
-        Name = entity.Name,
-        ReqistryNumber = entity.RegistryNumber,
+        RegistryNumber = entity.RegistryNumber,
       };
     }
 
     public Equipment MapUpdate(EquipmentUpdateDto dto, Equipment entity) {
       entity.Brand = dto.Brand;
       entity.Model = dto.Model;
-      entity.Name = dto.Name;
-      entity.RegistryNumber = dto.ReqistryNumber;
+      entity.RegistryNumber = dto.RegistryNumber;
       return entity;
     }
 

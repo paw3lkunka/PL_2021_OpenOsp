@@ -10,12 +10,13 @@ namespace OpenOsp.Server.Data.Configurations {
       builder.Entity<Action>(entity => {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id)
-          .ValueGeneratedOnAdd()
-          .HasColumnName("id");
+          .IsRequired()
+          .ValueGeneratedOnAdd();
         entity.Property(e => e.Type)
-          .HasDefaultValue(ActionType.Fire)
-          .IsRequired();
+          .IsRequired()
+          .HasDefaultValue(ActionType.Fire);
         entity.Property(e => e.Location)
+          .IsRequired()
           .HasMaxLength(50);
         entity.Property(e => e.StartTime)
           .IsRequired();

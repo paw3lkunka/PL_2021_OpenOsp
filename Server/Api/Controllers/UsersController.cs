@@ -6,6 +6,7 @@ using OpenOsp.Server.Exceptions;
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Dtos;
+using OpenOsp.Model.Dtos.Mappers;
 
 namespace OpenOsp.Server.Api.Controllers {
 
@@ -15,14 +16,18 @@ namespace OpenOsp.Server.Api.Controllers {
   public class UsersController : ControllerBase {
 
     public UsersController(
-      IUsersService<User, int> usersService,
+      IUserService<User, int> service,
+      IUserDtoMapper mapper,
       IEmailsService emailsService
     ) {
-      _usersService = usersService;
+      _service = service;
+      _mapper = mapper;
       _emailsService = emailsService;
     }
 
-    private readonly IUsersService<User, int> _usersService;
+    private readonly IUserService<User, int> _service;
+    
+    private readonly IUserDtoMapper _mapper;
 
     private readonly IEmailsService _emailsService;
 
@@ -32,8 +37,8 @@ namespace OpenOsp.Server.Api.Controllers {
         if (!TryValidateModel(dto)) {
           throw new ValidationProblemException();
         }
-        var user = await _usersService.ReadByEmail(dto.Email);
-        var token = await _usersService.GetAuthenticationToken(user, dto.Password);
+        var user = await _service.ReadByEmail(dto.Email);
+        var token = await _service.GetAuthenticationToken(user, dto.Password);
         return Ok(token);
       }
       catch (ValidationProblemException) {
@@ -56,12 +61,9 @@ namespace OpenOsp.Server.Api.Controllers {
         if (!TryValidateModel(dto)) {
           throw new ValidationProblemException();
         }
-        var user = new User {
-          UserName = dto.UserName,
-          Email = dto.Email,
-        };
-        await _usersService.Create(user, dto.Password);
-        var token = await _usersService.GetEmailConfirmationToken(user);
+        var user = _mapper.MapRegister(dto);
+        await _service.Create(user, dto.Password);
+        var token = await _service.GetEmailConfirmationToken(user);
         var link = Url.Action(
           "Verify",
           "Users",
@@ -85,8 +87,8 @@ namespace OpenOsp.Server.Api.Controllers {
     [HttpGet("verify")]
     public async Task<ActionResult> Verify([FromQuery] int uid, [FromQuery] string token) {
       try {
-        var user = await _usersService.ReadById(uid);
-        await _usersService.ConfirmEmail(user, token);
+        var user = await _service.ReadById(uid);
+        await _service.ConfirmEmail(user, token);
         return Ok();
       }
       catch (DbTransactionException ex) {

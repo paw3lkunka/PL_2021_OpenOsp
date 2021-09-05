@@ -16,12 +16,12 @@ using System.Web;
 
 namespace OpenOsp.Server.Api.Services {
 
-  public class UsersService<T, TId>
-    : IUsersService<T, TId>
+  public class UserService<T, TId>
+    : IUserService<T, TId>
     where T : IdentityUser<TId>
     where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
 
-    public UsersService(
+    public UserService(
       UserManager<T> userManager,
       SignInManager<T> signInManager,
       IOptions<JwtSettings> jwtSettings

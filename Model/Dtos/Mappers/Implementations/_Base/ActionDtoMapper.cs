@@ -40,15 +40,6 @@ namespace OpenOsp.Model.Dtos.Mappers {
         Location = entity.Location,
         StartTime = entity.StartTime,
         EndTime = entity.EndTime,
-        Members = entity.Members?.Select(e => new ActionMemberReadDto {
-          MemberId = e.Id2,
-          Role = e.Role,
-        }).ToList(),
-        Equipment = entity.Equipment?.Select(e => new ActionEquipmentReadDto {
-          EquipmentId = e.Id2,
-          CounterState = e.CounterState,
-          FuelUsed = e.FuelUsed
-        }).ToList(),
       };
     }
 

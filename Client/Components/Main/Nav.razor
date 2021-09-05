@@ -1,5 +1,5 @@
 <!-- TODO: Make navdrawer hide after click in the link -->
-<nav class="@Class">
+<nav @attributes="@AdditionalAttributes">
   <a href="/" class="btn btn-ghost rounded-btn lg:btn-sm">
     Home
   </a>
@@ -7,14 +7,20 @@
     User Panel
   </a>
   <a href="/" class="btn btn-ghost rounded-btn lg:btn-sm">
-    About
+    <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
+      About
+    </span>
   </a>
   <a href="/" class="btn btn-ghost rounded-btn lg:btn-sm">
-    Contact Us
+    <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
+      Contact Us
+    </span>
   </a>
 </nav>
 
 @code {
-  [Parameter]
-  public string Class { get; set; }
+
+  [Parameter(CaptureUnmatchedValues = true)]
+  public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
+
 }

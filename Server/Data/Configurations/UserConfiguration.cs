@@ -14,6 +14,7 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.Property(e => e.ConcurrencyStamp)
           .HasMaxLength(85);
         entity.Property(e => e.Email)
+          .IsRequired()
           .HasMaxLength(85);
         entity.Property(e => e.NormalizedEmail)
           .HasMaxLength(85);
@@ -26,8 +27,10 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.Property(e => e.SecurityStamp)
           .HasMaxLength(85);
         entity.Property(e => e.UserName)
+          .IsRequired()
           .HasMaxLength(30);
         entity.Property(e => e.EmailConfirmed)
+          .IsRequired()
           .HasDefaultValue(false);
       });
       builder.Entity<User>()

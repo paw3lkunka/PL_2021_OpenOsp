@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace OpenOsp.Server.Api.Services {
 
-  public interface IUsersService<T, TId>
+  public interface IUserService<T, TId>
     where T : IdentityUser<TId>
     where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
 

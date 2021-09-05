@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using OpenOsp.Model.Enums;
+using OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Models {
 
   public class Action : IHasId<int>, IOwnedBy<int> {
 
-    [Display(Name = "Action's id")]
     [Key]
+    [Required]
     public int Id { get; set; }
 
-    [Display(Name = "Action's type")]
     [Required]
-    public ActionType Type { get; set; }
+    public ActionType Type { get; set; } = ActionType.Fire;
 
-    [MaxLength(50)]
+    [Required, MaxLength(50)]
     public string Location { get; set; }
 
     [Display(Name = "Start time")]
@@ -25,18 +25,18 @@ namespace OpenOsp.Model.Models {
     public DateTime StartTime { get; set; }
 
     [Display(Name = "End time")]
-    [Required]
+    [Required, DateGreaterEqual("StartTime")]
     public DateTime EndTime { get; set; }
 
-    [Display(Name = "Action owner's id")]
+    [Display(Name = "Owner's id"), Column("owner_id")]
     [Required]
     public int UserId { get; set; }
 
     public virtual User User { get; set; }
 
-    public virtual List<ActionMember> Members { get; set; }
+    public virtual IEnumerable<ActionMember> Members { get; set; }
 
-    public virtual List<ActionEquipment> Equipment { get; set; }
+    public virtual IEnumerable<ActionEquipment> Equipment { get; set; }
 
   }
 

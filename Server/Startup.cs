@@ -90,20 +90,21 @@ namespace OpenOsp.Server {
           };
         });
       /// API Services
-      services.AddScoped<IUsersService<User, int>, UsersService<User, int>>();
-      services.AddScoped<IUserClaimsService<int>, UserClaimsService<int>>();
-      services.AddScoped<IActionsService, ActionsService>();
+      services.AddScoped<IHasIdService<OpenOsp.Model.Models.Action, int>, AuthService<OpenOsp.Model.Models.Action, int>>();
       services.AddScoped<IHasIdService<ActionEquipment, int, int>, AuthService<ActionEquipment, int, int>>();
       services.AddScoped<IHasIdService<ActionMember, int, int>, AuthService<ActionMember, int, int>>();
       services.AddScoped<IHasIdService<Equipment, int>, AuthService<Equipment, int>>();
       services.AddScoped<IHasIdService<Member, int>, AuthService<Member, int>>();
       services.AddScoped<IEmailsService, EmailsService>();
+      services.AddScoped<IUserService<User, int>, UserService<User, int>>();
+      services.AddScoped<IUserClaimsService<int>, UserClaimsService<int>>();
       /// DTO Mappers
-      services.AddScoped<IDtoMapper<Model.Models.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
+      services.AddScoped<IDtoMapper<OpenOsp.Model.Models.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
       services.AddScoped<IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto>, ActionEquipmentDtoMapper>();
       services.AddScoped<IDtoMapper<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto>, ActionMemberDtoMapper>();
       services.AddScoped<IDtoMapper<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto>, EquipmentDtoMapper>();
       services.AddScoped<IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto>, MemberDtoMapper>();
+      services.AddScoped<IUserDtoMapper, UserDtoMapper>();
       /// API Controllers
       services.AddControllers()
         .AddNewtonsoftJson(s => {

@@ -45,7 +45,7 @@ namespace OpenOsp.Server.Data.Contexts {
 
     protected override void OnModelCreating(ModelBuilder builder) {
       base.OnModelCreating(builder);
-      IList<IEntityConfiguration> entityConfigurations = new List<IEntityConfiguration> {
+      IEnumerable<IEntityConfiguration> entityConfigurations = new List<IEntityConfiguration> {
         new ActionConfiguration(),
         new ActionEquipmentConfiguration(),
         new ActionMemberConfiguration(),
