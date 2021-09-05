@@ -8,8 +8,8 @@ root = true
 indent_style = space
 # (Please don't specify an indent_size here; that has too many unintended consequences.)
 
-# Web front-end
-[*.{html,htm,css,scss,razor,js}]
+# Indent size 2 everywhere it needs to be
+[*.{html,htm,css,scss,razor,js,cake}]
 indent_size = 2
 
 # Code files

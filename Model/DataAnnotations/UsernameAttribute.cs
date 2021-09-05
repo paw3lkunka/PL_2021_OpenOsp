@@ -13,7 +13,7 @@ namespace OpenOsp.Model.DataAnnotations {
     public override bool IsValid(object value) {
       var isValid = base.IsValid(value);
       if(!isValid) {
-        ErrorMessage = @"The {0} field must consist of 3 up to 16 alphanumeric and '-', '_' signs";
+        ErrorMessage = @"The {0} field must consist of at least 3 and up to 16 alphanumeric or '-', '_' signs";
       }
       return isValid;
     }

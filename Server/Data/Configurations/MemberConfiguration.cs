@@ -8,6 +8,7 @@ namespace OpenOsp.Server.Data.Configurations {
 
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<Member>(entity => {
+        /// Properties
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id)
           .IsRequired()
@@ -25,15 +26,14 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.Property(e => e.UserId)
           .HasColumnName("OwnerId")
           .IsRequired();
+        /// Relations
+        entity.HasOne(e => e.User)
+          .WithMany(e => e.Members)
+          .OnDelete(DeleteBehavior.NoAction);
+        entity.HasMany(e => e.Actions)
+          .WithOne(e => e.Member)
+          .OnDelete(DeleteBehavior.Cascade);
       });
-      builder.Entity<Member>()
-        .HasOne(e => e.User)
-        .WithMany(e => e.Members)
-        .OnDelete(DeleteBehavior.NoAction);
-      builder.Entity<Member>()
-        .HasMany(e => e.Actions)
-        .WithOne(e => e.Member)
-        .OnDelete(DeleteBehavior.Cascade);
     }
 
     public void SeedData(ModelBuilder builder) {

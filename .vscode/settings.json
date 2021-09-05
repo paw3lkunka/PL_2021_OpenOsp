@@ -15,5 +15,6 @@
     "gmail",
     "openosp",
     "wasm"
-  ]
+  ],
+  "razor.disableBlazorDebugPrompt": true
 }

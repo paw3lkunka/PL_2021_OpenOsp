@@ -1,22 +1,22 @@
 {
-  "name": "openosp",
+  "name": "openosp-blazor-wasm",
   "author": "Paul B. Kunka",
   "description": "OpenOSP is a free software for firefighter's HQ management.",
   "scripts": {
     "tailwindcss": "cross-env TAILWIND_MODE=build postcss ./Styles/tailwind.css -o ./wwwroot/css/tailwind.min.css"
   },
-  "dependencies": {
-    "autoprefixer": "^10.3.3",
-    "bulma-calendar": "^6.1.12",
+  "main": "./wwwroot/index.html",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^10.3.4",
     "cross-env": "^7.0.3",
     "cssnano": "^5.0.8",
     "daisyui": "^1.14.0",
     "postcss": "^8.3.6",
     "postcss-cli": "^8.3.1",
-    "tailwindcss": "^2.2.7",
+    "tailwindcss": "^2.2.9",
     "tailwindcss-textshadow": "^2.1.3"
-  },
-  "main": "./wwwroot/index.html",
-  "version": "1.0.0",
-  "license": "GPL-3.0-or-later"
+  }
 }

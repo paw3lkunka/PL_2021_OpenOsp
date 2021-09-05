@@ -8,6 +8,7 @@ namespace OpenOsp.Server.Data.Configurations {
 
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<ActionMember>(entity => {
+        /// Properties
         entity.HasKey(e => new { e.Id1, e.Id2 });
         entity.Property(e => e.Id1)
           .HasColumnName("ActionId")
@@ -18,17 +19,16 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.Property(e => e.Role)
           .IsRequired()
           .HasDefaultValue(ActionMemberRole.Member);
+        /// Relations
+        entity.HasOne(e => e.Action)
+          .WithMany(e => e.Members)
+          .HasForeignKey(e => e.Id1)
+          .OnDelete(DeleteBehavior.NoAction);
+        entity.HasOne(e => e.Member)
+          .WithMany(e => e.Actions)
+          .HasForeignKey(e => e.Id2)
+          .OnDelete(DeleteBehavior.NoAction);
       });
-      builder.Entity<ActionMember>()
-        .HasOne(e => e.Action)
-        .WithMany(e => e.Members)
-        .HasForeignKey(e => e.Id1)
-        .OnDelete(DeleteBehavior.NoAction);
-      builder.Entity<ActionMember>()
-        .HasOne(e => e.Member)
-        .WithMany(e => e.Actions)
-        .HasForeignKey(e => e.Id2)
-        .OnDelete(DeleteBehavior.NoAction);
     }
 
     public void SeedData(ModelBuilder builder) {

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly" >
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <NpmLastInstall>./node_modules/.last-install</NpmLastInstall>
     <!-- <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest> -->
+    <NpmLastInstall>./node_modules/.last-install</NpmLastInstall>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\OpenOsp.Model.csproj" />
   </ItemGroup>
-  <!-- Check if npm is installed -->
-  <Target Name="NpmCheck" BeforeTargets="NpmInstall" >
+  <!-- ServiceWorker for PWA -->
+  <!-- <ItemGroup>
+    <ServiceWorker Include=".\wwwroot\service-worker.js" PublishedContent=".\wwwroot\service-worker.published.js" />
+  </ItemGroup> -->
+  <!-- NodeJs -->
+  <Target Name="NpmCheck" BeforeTargets="NpmInstall">
     <Exec Command="npm -v" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
     </Exec>
     <Error Condition="'$(ErrorCode)' != '0'" Text="NPM not found. Please install Node.js and npm first." />
   </Target>
-  <!-- Install node modules -->
-  <Target Name="NpmInstall" BeforeTargets="TailwindCSS" Inputs="./package.json" Outputs="$(NpmLastInstall)" >
-    <Exec Command="npm install" />
+  <!-- Install node_modules -->
+  <Target Name="NpmInstall" BeforeTargets="TailwindCSS" Inputs="./package.json" Outputs="$(NpmLastInstall)">
+    <Exec Command="npm ci" />
     <Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
   </Target>
   <!-- Generate tailwind.css -->
-  <Target Name="TailwindCSS" BeforeTargets="Compile" >
+  <Target Name="TailwindCSS" BeforeTargets="Compile">
     <Exec Command="npm run tailwindcss" />
   </Target>
-  <!-- ServiceWorker for PWA -->
-  <!-- <ItemGroup>
-    <ServiceWorker Include=".\wwwroot\service-worker.js" PublishedContent=".\wwwroot\service-worker.published.js" />
-  </ItemGroup> -->
   <!-- Paket -->
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
