@@ -2,7 +2,18 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "build",
+			"label": "base",
+      "command": "npm",
+			"args": [
+        "run",
+        "build"
+			],
+      "options": {
+        "cwd": "${workspaceFolder}/Server/"
+      }
+		},
+		{
+			"label": "process-build",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -14,10 +25,11 @@
 			"problemMatcher": "$msCompile",
       "options": {
         "cwd": "${workspaceFolder}/Server/"
-      }
+      },
+      "dependsOn": "base"
 		},
 		{
-			"label": "publish",
+			"label": "process-publish",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -29,10 +41,11 @@
 			"problemMatcher": "$msCompile",
       "options": {
         "cwd": "${workspaceFolder}/Server/"
-      }
+      },
+      "dependsOn": "base"
 		},
 		{
-			"label": "watch",
+			"label": "process-watch",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -45,7 +58,23 @@
       "problemMatcher": "$msCompile",
       "options": {
         "cwd": "${workspaceFolder}/Server/"
-      }
-		}
+      },
+      "dependsOn": "base"
+		},
+    {
+      "label": "build",
+      "dependsOn": ["base", "process-build"],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "publish",
+      "dependsOn": ["base", "process-publish"],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "watch",
+      "dependsOn": ["base", "process-watch"],
+      "dependsOrder": "sequence"
+    },
 	]
 }

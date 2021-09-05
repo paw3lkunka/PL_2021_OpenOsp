@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "npm run build && dotnet run -p ./Server/OpenOsp.Server.csproj",
+    "watch": "npm run build && dotnet watch run -p ./Server/OpenOsp.Server.csproj",
     "build": "npm run restore && dotnet build",
     "restore": "npm ci && dotnet tool restore && dotnet paket restore && dotnet restore",
     "clean": "shx rm -rf ./*/bin/ && shx rm -rf ./{.paket,packages,paket-files} && shx rm -rf ./Client/node_modules && shx rm -rf ./Client/wwwroot/css/{normalize.min.css,tailwind.min.css} && dotnet paket clear-cache && shx rm -rf ./node_modules",
