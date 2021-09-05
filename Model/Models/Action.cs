@@ -17,7 +17,7 @@ namespace OpenOsp.Model.Models {
     [Required]
     public ActionType Type { get; set; } = ActionType.Fire;
 
-    [Required, MaxLength(50)]
+    [Required, MaxLength(64)]
     public string Location { get; set; }
 
     [Display(Name = "Start time")]
@@ -28,7 +28,7 @@ namespace OpenOsp.Model.Models {
     [Required, DateGreaterEqual("StartTime")]
     public DateTime EndTime { get; set; }
 
-    [Display(Name = "Owner's id"), Column("owner_id")]
+    [Display(Name = "Owner's id"), Column("OwnerId")]
     [Required]
     public int UserId { get; set; }
 

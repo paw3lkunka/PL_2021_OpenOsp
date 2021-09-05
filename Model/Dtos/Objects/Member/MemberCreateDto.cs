@@ -5,10 +5,10 @@ namespace OpenOsp.Model.Dtos {
 
   public class MemberCreateDto {
 
-    [Required, MaxLength(25), Name]
+    [Required, MaxLength(24), Name]
     public string FirstName { get; set; }
 
-    [Required, MaxLength(25), Name]
+    [Required, MaxLength(24), Name]
     public string LastName { get; set; }
 
     [Display(Name = "PESEL")]

@@ -11,18 +11,20 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id)
           .IsRequired()
-          .ValueGeneratedOnAdd()
-          .HasColumnName("id");
+          .ValueGeneratedOnAdd();
         entity.Property(e => e.FirstName)
           .IsRequired()
-          .HasMaxLength(25);
+          .HasMaxLength(24);
         entity.Property(e => e.LastName)
           .IsRequired()
-          .HasMaxLength(25);
+          .HasMaxLength(24);
         entity.Property(e => e.Pesel)
-          .HasColumnType("varchar(11)")
+          .HasColumnType("char(11)")
           .IsRequired()
           .HasMaxLength(11);
+        entity.Property(e => e.UserId)
+          .HasColumnName("OwnerId")
+          .IsRequired();
       });
       builder.Entity<Member>()
         .HasOne(e => e.User)

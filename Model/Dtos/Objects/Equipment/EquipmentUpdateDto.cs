@@ -5,10 +5,10 @@ namespace OpenOsp.Model.Dtos {
 
   public class EquipmentUpdateDto {
 
-    [Required, MaxLength(25), Name]
+    [Required, MaxLength(24), Name]
     public string Brand { get; set; }
 
-    [Required, MaxLength(25), Name]
+    [Required, MaxLength(24), Name]
     public string Model { get; set; }
 
     [Display(Name ="Registry number")]

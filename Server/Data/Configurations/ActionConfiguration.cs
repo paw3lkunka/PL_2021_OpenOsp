@@ -17,10 +17,13 @@ namespace OpenOsp.Server.Data.Configurations {
           .HasDefaultValue(ActionType.Fire);
         entity.Property(e => e.Location)
           .IsRequired()
-          .HasMaxLength(50);
+          .HasMaxLength(64);
         entity.Property(e => e.StartTime)
           .IsRequired();
         entity.Property(e => e.EndTime)
+          .IsRequired();
+        entity.Property(e => e.UserId)
+          .HasColumnName("OwnerId")
           .IsRequired();
       });
       builder.Entity<Action>()

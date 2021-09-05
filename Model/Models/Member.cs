@@ -11,17 +11,17 @@ namespace OpenOsp.Model.Models {
     [Required]
     public int Id { get; set; }
 
-    [Required, MaxLength(25), Name]
+    [Required, MaxLength(24), Name]
     public string FirstName { get; set; }
 
-    [Required, MaxLength(25), Name]
+    [Required, MaxLength(24), Name]
     public string LastName { get; set; }
 
-    [Display(Name = "PESEL"), Column(TypeName = "varchar(11)")]
+    [Display(Name = "PESEL"), Column(TypeName = "char(11)")]
     [Required, MaxLength(11), Pesel]
     public string Pesel { get; set; }
 
-    [Display(Name = "Member owner's id"), Column("owner_id")]
+    [Display(Name = "Member owner's id"), Column("OwnerId")]
     [Required]
     public int UserId { get; set; }
 

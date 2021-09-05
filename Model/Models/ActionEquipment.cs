@@ -6,11 +6,11 @@ namespace OpenOsp.Model.Models {
 
   public class ActionEquipment : IHasId<int, int> {
 
-    [Display(Name = "Action's id"), Column("action_id")]
+    [Display(Name = "Action's id"), Column("ActionId")]
     [Required]
     public int Id1 { get; set; }
 
-    [Display(Name = "Equipment's id"), Column("equipment_id")]
+    [Display(Name = "Equipment's id"), Column("EquipmentId")]
     [Required]
     public int Id2 { get; set; }
 

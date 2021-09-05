@@ -11,24 +11,18 @@ namespace OpenOsp.Server.Data.Configurations {
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id)
           .ValueGeneratedOnAdd();
-        entity.Property(e => e.ConcurrencyStamp)
-          .HasMaxLength(85);
         entity.Property(e => e.Email)
           .IsRequired()
-          .HasMaxLength(85);
+          .HasMaxLength(256);
         entity.Property(e => e.NormalizedEmail)
-          .HasMaxLength(85);
+          .HasMaxLength(256);
         entity.Property(e => e.NormalizedUserName)
-          .HasMaxLength(30);
-        entity.Property(e => e.PasswordHash)
-          .HasMaxLength(85);
+          .HasMaxLength(16);
         entity.Property(e => e.PhoneNumber)
-          .HasMaxLength(20);
-        entity.Property(e => e.SecurityStamp)
-          .HasMaxLength(85);
+          .HasMaxLength(32);
         entity.Property(e => e.UserName)
           .IsRequired()
-          .HasMaxLength(30);
+          .HasMaxLength(16);
         entity.Property(e => e.EmailConfirmed)
           .IsRequired()
           .HasDefaultValue(false);

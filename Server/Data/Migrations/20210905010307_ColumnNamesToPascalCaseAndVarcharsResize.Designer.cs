@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OpenOsp.Server.Data.Contexts;
@@ -9,9 +10,10 @@ using OpenOsp.Server.Data.Contexts;
 namespace OpenOsp.Server.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210905010307_ColumnNamesToPascalCaseAndVarcharsResize")]
+    partial class ColumnNamesToPascalCaseAndVarcharsResize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +220,7 @@ namespace OpenOsp.Server.Data.Migrations
                     b.Property<string>("Pesel")
                         .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("char(11)");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")

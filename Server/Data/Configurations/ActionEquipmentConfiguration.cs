@@ -10,14 +10,14 @@ namespace OpenOsp.Server.Data.Configurations {
       builder.Entity<ActionEquipment>(entity => {
         entity.HasKey(e => new { e.Id1, e.Id2 });
         entity.Property(e => e.Id1)
-          .IsRequired()
-          .HasColumnName("action_id");
+          .HasColumnName("ActionId")
+          .IsRequired();
         entity.Property(e => e.Id2)
-          .IsRequired()
-          .HasColumnName("equipment_id");
+          .HasColumnName("EquipmentId")
+          .IsRequired();
         entity.Property(e => e.CounterState)
           .IsRequired()
-          .HasDefaultValue(0.0f);
+          .HasDefaultValue(0);
         entity.Property(e => e.FuelUsed)
           .IsRequired()
           .HasDefaultValue(0.0f);

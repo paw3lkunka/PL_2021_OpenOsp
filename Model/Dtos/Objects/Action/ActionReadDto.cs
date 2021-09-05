@@ -15,7 +15,7 @@ namespace OpenOsp.Model.Dtos {
     [Required]
     public ActionType Type { get; set; } = ActionType.Fire;
 
-    [Required, MaxLength(50)]
+    [Required, MaxLength(64)]
     public string Location { get; set; }
 
     [Display(Name = "Start time")]

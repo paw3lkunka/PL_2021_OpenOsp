@@ -13,7 +13,7 @@ namespace OpenOsp.Model.DataAnnotations {
     public override bool IsValid(object value) {
       var isValid = base.IsValid(value);
       if(!isValid) {
-        ErrorMessage = "The {0} field must consist exactly of 11 digits";
+        ErrorMessage = "The {0} field must consist of exactly 11 digits";
       }
       return isValid;
     }

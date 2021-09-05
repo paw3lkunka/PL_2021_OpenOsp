@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OpenOsp.Server.Data.Contexts;
@@ -9,9 +10,10 @@ using OpenOsp.Server.Data.Contexts;
 namespace OpenOsp.Server.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210905003057_ValidationAndOptimalization")]
+    partial class ValidationAndOptimalization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,8 +96,8 @@ namespace OpenOsp.Server.Data.Migrations
 
                     b.Property<string>("Location")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp without time zone");
@@ -107,7 +109,7 @@ namespace OpenOsp.Server.Data.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
-                        .HasColumnName("OwnerId");
+                        .HasColumnName("owner_id");
 
                     b.HasKey("Id");
 
@@ -120,11 +122,11 @@ namespace OpenOsp.Server.Data.Migrations
                 {
                     b.Property<int>("Id1")
                         .HasColumnType("integer")
-                        .HasColumnName("ActionId");
+                        .HasColumnName("action_id");
 
                     b.Property<int>("Id2")
                         .HasColumnType("integer")
-                        .HasColumnName("EquipmentId");
+                        .HasColumnName("equipment_id");
 
                     b.Property<int>("CounterState")
                         .ValueGeneratedOnAdd()
@@ -147,11 +149,11 @@ namespace OpenOsp.Server.Data.Migrations
                 {
                     b.Property<int>("Id1")
                         .HasColumnType("integer")
-                        .HasColumnName("ActionId");
+                        .HasColumnName("action_id");
 
                     b.Property<int>("Id2")
                         .HasColumnType("integer")
-                        .HasColumnName("MemberId");
+                        .HasColumnName("member_id");
 
                     b.Property<int>("Role")
                         .ValueGeneratedOnAdd()
@@ -170,26 +172,27 @@ namespace OpenOsp.Server.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Brand")
                         .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("character varying(24)");
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)");
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("character varying(24)");
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)");
 
                     b.Property<string>("RegistryNumber")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("varchar(16)");
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
-                        .HasColumnName("OwnerId");
+                        .HasColumnName("owner_id");
 
                     b.HasKey("Id");
 
@@ -203,26 +206,27 @@ namespace OpenOsp.Server.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("character varying(24)");
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("character varying(24)");
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)");
 
                     b.Property<string>("Pesel")
                         .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("char(11)");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
-                        .HasColumnName("OwnerId");
+                        .HasColumnName("owner_id");
 
                     b.HasKey("Id");
 
@@ -243,12 +247,13 @@ namespace OpenOsp.Server.Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasMaxLength(85)
+                        .HasColumnType("character varying(85)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasMaxLength(85)
+                        .HasColumnType("character varying(85)");
 
                     b.Property<bool>("EmailConfirmed")
                         .ValueGeneratedOnAdd()
@@ -262,33 +267,35 @@ namespace OpenOsp.Server.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasMaxLength(85)
+                        .HasColumnType("character varying(85)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasMaxLength(85)
+                        .HasColumnType("character varying(85)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasMaxLength(85)
+                        .HasColumnType("character varying(85)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.HasKey("Id");
 

@@ -7,11 +7,11 @@ namespace OpenOsp.Model.Models {
 
   public class ActionMember : IHasId<int, int> {
 
-    [Display(Name = "Action's id"), Column("action_id")]
+    [Display(Name = "Action's id"), Column("ActionId")]
     [Required]
     public int Id1 { get; set; }
 
-    [Display(Name = "Member's id"),Column("member_id")]
+    [Display(Name = "Member's id"),Column("MemberId")]
     [Required]
     public int Id2 { get; set; }
 
