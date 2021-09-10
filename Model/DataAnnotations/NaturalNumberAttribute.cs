@@ -8,14 +8,7 @@ namespace OpenOsp.Model.DataAnnotations {
 
     public NaturalNumberAttribute() 
       : base(0, int.MaxValue) {
-    }
-
-    public override bool IsValid(object value) {
-      var isValid = base.IsValid(value);
-      if(!isValid) {
-        ErrorMessage = "The {0} field value must be greater or equal zero";
-      }
-      return isValid;
+      ErrorMessage = "{0} value must be greater or equal zero";
     }
 
   }

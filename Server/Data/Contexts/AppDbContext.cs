@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Models;
 using OpenOsp.Server.Data.Configurations;

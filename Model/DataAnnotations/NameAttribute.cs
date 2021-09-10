@@ -8,14 +8,7 @@ namespace OpenOsp.Model.DataAnnotations {
 
     public NameAttribute() 
       : base(@"/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u") {
-    }
-
-    public override bool IsValid(object value) {
-      var isValid = base.IsValid(value);
-      if(!isValid) {
-        ErrorMessage = @"The {0} field is not a valid name";
-      }
-      return isValid;
+      ErrorMessage = @"{0} is not a valid name";
     }
 
   }

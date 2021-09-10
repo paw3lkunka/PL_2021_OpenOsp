@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,12 +16,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
 using Newtonsoft.Json.Serialization;
-
 using OpenOsp.Model.Dtos;
 using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Model.Models;
+using OspM = OpenOsp.Model.Models;
 using OpenOsp.Server.Api.Controllers;
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Server.Data.Contexts;
@@ -44,7 +42,7 @@ namespace OpenOsp.Server {
 
     private readonly IWebHostEnvironment _env;
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+    /// This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
       /// Load configuration files
       services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
@@ -90,7 +88,7 @@ namespace OpenOsp.Server {
           };
         });
       /// API Services
-      services.AddScoped<IHasIdService<OpenOsp.Model.Models.Action, int>, AuthService<OpenOsp.Model.Models.Action, int>>();
+      services.AddScoped<IHasIdService<OspM.Action, int>, AuthService<OpenOsp.Model.Models.Action, int>>();
       services.AddScoped<IHasIdService<ActionEquipment, int, int>, AuthService<ActionEquipment, int, int>>();
       services.AddScoped<IHasIdService<ActionMember, int, int>, AuthService<ActionMember, int, int>>();
       services.AddScoped<IHasIdService<Equipment, int>, AuthService<Equipment, int>>();
@@ -99,7 +97,7 @@ namespace OpenOsp.Server {
       services.AddScoped<IUserService<User, int>, UserService<User, int>>();
       services.AddScoped<IUserClaimsService<int>, UserClaimsService<int>>();
       /// DTO Mappers
-      services.AddScoped<IDtoMapper<OpenOsp.Model.Models.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
+      services.AddScoped<IDtoMapper<OspM.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
       services.AddScoped<IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto>, ActionEquipmentDtoMapper>();
       services.AddScoped<IDtoMapper<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto>, ActionMemberDtoMapper>();
       services.AddScoped<IDtoMapper<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto>, EquipmentDtoMapper>();
@@ -125,7 +123,7 @@ namespace OpenOsp.Server {
       });
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app) {
       if (_env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();

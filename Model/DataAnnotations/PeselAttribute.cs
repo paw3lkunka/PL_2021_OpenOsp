@@ -8,14 +8,7 @@ namespace OpenOsp.Model.DataAnnotations {
 
     public PeselAttribute() 
       : base(@"^\d{11}$") {
-    }
-
-    public override bool IsValid(object value) {
-      var isValid = base.IsValid(value);
-      if(!isValid) {
-        ErrorMessage = "The {0} field must consist of exactly 11 digits";
-      }
-      return isValid;
+      ErrorMessage = "{0} must consist of exactly 11 digits";
     }
 
   }

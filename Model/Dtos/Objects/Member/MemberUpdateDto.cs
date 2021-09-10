@@ -1,18 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 using OpenOsp.Model.DataAnnotations;
+using OspDA = OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
 
   public class MemberUpdateDto {
 
-    [Required, MaxLength(24), Name]
+    [OspDA.Required, OspDA.MaxLength(24), Name]
     public string FirstName { get; set; }
 
-    [Required, MaxLength(24), Name]
+    [OspDA.Required, OspDA.MaxLength(24), Name]
     public string LastName { get; set; }
 
     [Display(Name = "PESEL")]
-    [Required, Pesel]
+    [OspDA.Required, Pesel]
     public string Pesel { get; set; }
 
   }

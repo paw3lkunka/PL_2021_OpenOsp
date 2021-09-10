@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Server.Data.Configurations {

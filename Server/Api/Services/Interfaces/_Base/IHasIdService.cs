@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Server.Api.Services {

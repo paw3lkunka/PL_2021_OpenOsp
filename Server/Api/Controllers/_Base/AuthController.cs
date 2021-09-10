@@ -1,9 +1,7 @@
 using System;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
-
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Model.Models;
 using OpenOsp.Model.Dtos.Mappers;

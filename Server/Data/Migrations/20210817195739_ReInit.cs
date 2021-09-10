@@ -1,7 +1,5 @@
 ﻿using System;
-
 using Microsoft.EntityFrameworkCore.Migrations;
-
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace OpenOsp.Server.Data.Migrations {
