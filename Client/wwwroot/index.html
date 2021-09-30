@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="w-full h-full">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -14,6 +15,7 @@
   <!-- Manifest -->
   <link rel="manifest" href="./manifest.json">
 </head>
+
 <body class="w-full h-full">
   <!-- App's html -->
   <div id="app" class="w-full h-full">
@@ -34,7 +36,7 @@
         if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
           return (async function () {
             const response = await fetch(defaultUri + '.br', { cache: 'no-cache' });
-            if (!response.ok) {
+            if (response.ok === false) {
               throw new Error(response.statusText);
             }
             const originalResponseBuffer = await response.arrayBuffer();
@@ -43,12 +45,12 @@
             const contentType = (type === 'dotnetwasm') ? 'application/wasm' : 'application/octet-stream';
             return new Response(
               decompressedResponseArray,
-              { headers: { 'content-type': contentType } }
-            );
+              { headers: { 'content-type': contentType } });
           })();
         }
       }
     });
   </script>
 </body>
+
 </html>

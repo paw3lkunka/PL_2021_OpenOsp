@@ -21,8 +21,8 @@ namespace OpenOsp.Server.Api.Controllers {
       IHasIdService<Action, int> service,
       IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> mapper,
       ActionEquipmentController actionEquipment,
-      ActionMembersController actionMembers
-    ) : base(service, mapper) {
+      ActionMembersController actionMembers)
+      : base(service, mapper) {
       _actionEquipment = actionEquipment;
       _actionMembers = actionMembers;
     }
@@ -38,8 +38,8 @@ namespace OpenOsp.Server.Api.Controllers {
     [HttpGet("{id1}/equipment/{id2}")]
     public async Task<ActionResult<ActionEquipmentReadDto>> ReadEquipment(int id1, int id2) => await _actionEquipment.ReadById(id1, id2);
 
-    [HttpPost("equipment")]
-    public async Task<ActionResult<ActionEquipmentReadDto>> CreateEquipment(ActionEquipmentCreateDto createDto) => await _actionEquipment.Create(createDto);
+    [HttpPost("{id1}/equipment")]
+    public async Task<ActionResult<ActionEquipmentReadDto>> CreateEquipment(int id1, ActionEquipmentCreateDto createDto) => await _actionEquipment.Create(id1, createDto);
 
     [HttpPut("{id1}/equipment/{id2}")]
     public async Task<ActionResult> UpdateEquipment(int id1, int id2, ActionEquipmentUpdateDto updateDto) => await _actionEquipment.Update(id1, id2, updateDto);
@@ -57,8 +57,8 @@ namespace OpenOsp.Server.Api.Controllers {
     [HttpGet("{id1}/members/{id2}")]
     public async Task<ActionResult<ActionMemberReadDto>> ReadMember(int id1, int id2) => await _actionMembers.ReadById(id1, id2);
 
-    [HttpPost("members")]
-    public async Task<ActionResult<ActionMemberReadDto>> CreateMembers(ActionMemberCreateDto createDto) => await _actionMembers.Create(createDto);
+    [HttpPost("{id1}/members")]
+    public async Task<ActionResult<ActionMemberReadDto>> CreateMembers(int id1, ActionMemberCreateDto createDto) => await _actionMembers.Create(id1, createDto);
 
     [HttpPut("{id1}/members/{id2}")]
     public async Task<ActionResult> UpdateMembers(int id1, int id2, ActionMemberUpdateDto updateDto) => await _actionMembers.Update(id1, id2, updateDto);

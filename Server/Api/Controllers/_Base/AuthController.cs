@@ -22,8 +22,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public AuthController(
       IHasIdService<T, TId> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
+      : base(service, mapper) {
     }
 
   }
@@ -40,8 +40,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public AuthController(
       IHasIdService<T, TId1, TId2> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
+      : base(service, mapper) {
     }
 
   }
@@ -59,8 +59,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public AuthController(
       IHasIdService<T, TId1, TId2, TId3> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
+      : base(service, mapper) {
     }
 
   }

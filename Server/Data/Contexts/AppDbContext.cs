@@ -23,8 +23,8 @@ namespace OpenOsp.Server.Data.Contexts {
 
     public AppDbContext(
       DbContextOptions<AppDbContext> options,
-      IUserClaimsService<int> userClaims
-    ) : base(options) {
+      IUserClaimsService<int> userClaims)
+      : base(options) {
       _userId = userClaims.UserId;
     }
 

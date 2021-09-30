@@ -74,8 +74,7 @@ namespace OpenOsp.Server.Api.Services {
         var entity = await _context.Set<T>()
           .FirstOrDefaultAsync(e =>
             e.Id1.Equals(id1)
-            && e.Id2.Equals(id2)
-          );
+            && e.Id2.Equals(id2));
         if (entity == default(T)) {
           throw new UnauthorizedException();
         }
@@ -145,8 +144,7 @@ namespace OpenOsp.Server.Api.Services {
           .FirstOrDefaultAsync(e =>
             e.Id1.Equals(id1)
             && e.Id2.Equals(id2)
-            && e.Id3.Equals(id3)
-          );
+            && e.Id3.Equals(id3));
         if (entity == default(T)) {
           throw new UnauthorizedException();
         }

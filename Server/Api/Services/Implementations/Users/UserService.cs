@@ -24,8 +24,7 @@ namespace OpenOsp.Server.Api.Services {
     public UserService(
       UserManager<T> userManager,
       SignInManager<T> signInManager,
-      IOptions<JwtSettings> jwtSettings
-    ) {
+      IOptions<JwtSettings> jwtSettings) {
       _userManager = userManager;
       _signInManager = signInManager;
       _jwtSettings = jwtSettings.Value;
@@ -39,7 +38,7 @@ namespace OpenOsp.Server.Api.Services {
 
     public async Task Create(T user, string password) {
       var result = await _userManager.CreateAsync(user, password);
-      if (!result.Succeeded) {
+      if (result.Succeeded == false) {
         throw new DbTransactionException<T>(
           DbTransactionType.Create,
           result.Errors
@@ -67,7 +66,7 @@ namespace OpenOsp.Server.Api.Services {
 
     public async Task Delete(T user) {
       var result = await _userManager.DeleteAsync(user);
-      if (!result.Succeeded) {
+      if (result.Succeeded == false) {
         throw new DbTransactionException<T>(DbTransactionType.Delete);
       }
     }
@@ -76,14 +75,14 @@ namespace OpenOsp.Server.Api.Services {
 
     public async Task ConfirmEmail(T user, string token) {
       var result = await _userManager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(token));
-      if (!result.Succeeded) {
+      if (result.Succeeded == false) {
         throw new DbTransactionException<T>();
       }
     }
 
     public async Task<string> GetAuthenticationToken(T user, string password) {
       var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, false);
-      if (!signInResult.Succeeded) {
+      if (signInResult.Succeeded == false) {
         throw new UnauthorizedException();
       }
       var claimsIdentity = new ClaimsIdentity(

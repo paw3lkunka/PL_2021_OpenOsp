@@ -18,8 +18,7 @@ namespace OpenOsp.Server.Api.Controllers {
     public UsersController(
       IUserService<User, int> service,
       IUserDtoMapper mapper,
-      IEmailsService emailsService
-    ) {
+      IEmailsService emailsService) {
       _service = service;
       _mapper = mapper;
       _emailsService = emailsService;
@@ -34,7 +33,7 @@ namespace OpenOsp.Server.Api.Controllers {
     [HttpPost("login")]
     public async Task<ActionResult<string>> LogIn([FromBody] UserLoginDto dto) {
       try {
-        if (!TryValidateModel(dto)) {
+        if (TryValidateModel(dto) == false) {
           throw new ValidationProblemException();
         }
         var user = await _service.ReadByEmail(dto.Email);
@@ -58,7 +57,7 @@ namespace OpenOsp.Server.Api.Controllers {
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromBody] UserRegisterDto dto) {
       try {
-        if (!TryValidateModel(dto)) {
+        if (TryValidateModel(dto) == false) {
           throw new ValidationProblemException();
         }
         var user = _mapper.MapRegister(dto);
@@ -68,8 +67,7 @@ namespace OpenOsp.Server.Api.Controllers {
           "Verify",
           "Users",
           new { uid = user.Id, token = token },
-          protocol: HttpContext.Request.Scheme
-        );
+          protocol: HttpContext.Request.Scheme);
         await _emailsService.SendVerificationEmail(user.Email, link);
         return Ok();
       }

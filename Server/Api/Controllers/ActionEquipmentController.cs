@@ -14,8 +14,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public ActionEquipmentController(
       IHasIdService<ActionEquipment, int, int> service,
-      IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto> mapper)
+      : base(service, mapper) {
     }
 
   }

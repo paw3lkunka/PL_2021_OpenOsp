@@ -1,0 +1,35 @@
+@page "/userpanel"
+@using OpenOsp.Client.Enums
+
+<div class="card min-w-screen-md shadow-2xl bg-base-200 bg-opacity-95">
+  <div class="tabs w-full">
+    <div @onclick=OnMembersTabClick class="tab tab-lg tab-lifted @((mode == UserPanelMode.Members) ? "tab-active" : string.Empty)">Members</div>
+    <div @onclick=OnEquipmentTabClick class="tab tab-lg tab-lifted @((mode == UserPanelMode.Equipment) ? "tab-active" : string.Empty)">Equipment</div>
+    <div @onclick=OnActionsTabClick class="tab tab-lg tab-lifted @((mode == UserPanelMode.Actions) ? "tab-active" : string.Empty)">Actions</div>
+  </div>
+  <div class="card-body bg-base-100">
+    @switch(mode) {
+      case UserPanelMode.Members:
+        <MembersTables />
+        break;
+      case UserPanelMode.Equipment:
+        <EquipmentTables />
+        break;
+      case UserPanelMode.Actions:
+        <ActionsTable />
+        break;
+    }
+  </div>
+</div>
+
+@code {
+
+  private UserPanelMode mode { get; set; } = UserPanelMode.Members;
+
+  private void OnMembersTabClick() => mode = UserPanelMode.Members;
+
+  private void OnEquipmentTabClick() => mode = UserPanelMode.Equipment;
+
+  private void OnActionsTabClick() => mode = UserPanelMode.Actions;
+
+}

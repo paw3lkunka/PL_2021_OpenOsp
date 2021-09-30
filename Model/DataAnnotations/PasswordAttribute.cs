@@ -12,13 +12,6 @@ namespace OpenOsp.Model.DataAnnotations {
       ErrorMessage = @"{0} must be at least 12 and up to 30 characters long. Forbidden characters: '/' and '\'";
     }
 
-    public override bool IsValid(object value) {
-      var isValid = base.IsValid(value);
-      if(!isValid) {
-      }
-      return isValid;
-    }
-
   }
 
 }

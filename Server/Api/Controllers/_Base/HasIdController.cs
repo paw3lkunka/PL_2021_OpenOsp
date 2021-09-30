@@ -21,8 +21,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public HasIdController(
       IHasIdService<T, TId> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
+      : base(service, mapper) {
       _service = service;
     }
 
@@ -130,8 +130,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public HasIdController(
       IHasIdService<T, TId1, TId2> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
+      : base(service, mapper) {
       _service = service;
     }
 
@@ -171,15 +171,19 @@ namespace OpenOsp.Server.Api.Controllers {
       }
     }
 
-    [HttpPost]
-    public override async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
+    [HttpPost("{id1}")]
+    public virtual async Task<ActionResult<TReadDto>> Create(TId1 id1, TCreateDto createDto) {
       try {
-        var entity = await base.CreateEntity(createDto);
+        if (TryValidateModel(createDto) == false) {
+          throw new ValidationProblemException();
+        }
+        var entity = _mapper.MapCreate(createDto);
+        entity.Id1 = id1;
+        entity = await base.CreateEntity(entity);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtAction(nameof(ReadById),
           new { id1 = entity.Id1, id2 = entity.Id2 },
-          readDto
-        );
+          readDto);
       }
       catch (UnauthorizedException) {
         return Unauthorized();
@@ -260,8 +264,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public HasIdController(
       IHasIdService<T, TId1, TId2, TId3> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper)
+      : base(service, mapper) {
       _service = service;
     }
 
@@ -318,16 +322,21 @@ namespace OpenOsp.Server.Api.Controllers {
       }
     }
 
-    [HttpPost]
-    public override async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
+    [HttpPost("{id1}/{id2}")]
+    public virtual async Task<ActionResult<TReadDto>> Create(TId1 id1, TId2 id2, TCreateDto createDto) {
       try {
-        var entity = await base.CreateEntity(createDto);
+        if (TryValidateModel(createDto) == false) {
+          throw new ValidationProblemException();
+        }
+        var entity = _mapper.MapCreate(createDto);
+        entity.Id1 = id1;
+        entity.Id2 = id2;
+        entity = await base.CreateEntity(entity);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtAction(
           nameof(ReadById),
           new { id1 = entity.Id1, id2 = entity.Id2, id3 = entity.Id3 },
-          readDto
-        );
+          readDto);
       }
       catch (UnauthorizedException) {
         return Unauthorized();

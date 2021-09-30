@@ -54,8 +54,7 @@ namespace OpenOsp.Server.Api.Services {
         .IgnoreQueryFilters()
         .FirstOrDefaultAsync(e =>
           e.Id1.Equals(id1)
-          && e.Id2.Equals(id2)
-        );
+          && e.Id2.Equals(id2));
       if (entity == default(T)) {
         throw new NotFoundException<T, TId1, TId2>(id1, id2);
       }
@@ -105,8 +104,7 @@ namespace OpenOsp.Server.Api.Services {
         .FirstOrDefaultAsync(e =>
           e.Id1.Equals(id1)
           && e.Id2.Equals(id2)
-          && e.Id3.Equals(id3)
-        );
+          && e.Id3.Equals(id3));
       if (entity == default(T)) {
         throw new NotFoundException<T>();
       }

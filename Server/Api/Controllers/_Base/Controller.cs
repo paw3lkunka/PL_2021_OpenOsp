@@ -19,8 +19,7 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public Controller(
       IService<T> service,
-      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper
-    ) {
+      IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> mapper) {
       _service = service;
       _mapper = mapper;
     }
@@ -70,7 +69,7 @@ namespace OpenOsp.Server.Api.Controllers {
     }
 
     protected virtual async Task<T> CreateEntity(TCreateDto createDto) {
-      if (!TryValidateModel(createDto)) {
+      if (TryValidateModel(createDto) == false) {
         throw new ValidationProblemException();
       }
       var entity = _mapper.MapCreate(createDto);
@@ -89,7 +88,7 @@ namespace OpenOsp.Server.Api.Controllers {
 
     protected virtual async Task<ActionResult> UpdateEntity(TUpdateDto updateDto, T entity) {
       try {
-        if (!TryValidateModel(updateDto)) {
+        if (TryValidateModel(updateDto) == false) {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(updateDto, entity);
@@ -108,7 +107,7 @@ namespace OpenOsp.Server.Api.Controllers {
       try {
         var entityToPatch = _mapper.MapPatch(entity);
         patchDoc.ApplyTo(entityToPatch);
-        if (!TryValidateModel(entityToPatch)) {
+        if (TryValidateModel(entityToPatch) == false) {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(entityToPatch, entity);

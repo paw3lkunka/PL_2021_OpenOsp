@@ -14,8 +14,8 @@ namespace OpenOsp.Server.Api.Controllers {
 
     public MembersController(
       IHasIdService<Member, int> service,
-      IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto> mapper
-    ) : base(service, mapper) {
+      IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto> mapper)
+      : base(service, mapper) {
     }
 
   }

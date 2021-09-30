@@ -46,8 +46,7 @@ namespace OpenOsp.Server.Exceptions {
 
     public NotFoundException(TId1 id1, TId2 id2, bool multiple)
       : base($"{typeof(T).Name}{(multiple ? " entities" : string.Empty)} identified by {(string)Convert.ChangeType(id1, typeof(string))}"
-        + $" and {(string)Convert.ChangeType(id1, typeof(string))} could not be found"
-      ) {
+        + $" and {(string)Convert.ChangeType(id1, typeof(string))} could not be found") {
     }
 
     public NotFoundException(TId1 id1, TId2 id2) 

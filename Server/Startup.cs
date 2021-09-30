@@ -32,8 +32,7 @@ namespace OpenOsp.Server {
 
     public Startup(
       IConfiguration configuration,
-      IWebHostEnvironment env
-    ) {
+      IWebHostEnvironment env) {
       Configuration = configuration;
       _env = env;
     }
@@ -110,21 +109,33 @@ namespace OpenOsp.Server {
         });
       services.AddScoped<ActionEquipmentController>();
       services.AddScoped<ActionMembersController>();
+      /// Blazor WebAssembly
+      services.AddRazorPages();
       /// HTTPS Redirection
       services.AddHttpsRedirection(options => {
         options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
         options.HttpsPort = _env.IsDevelopment() ? 5001 : 443;
       });
-      /// Blazor WebAssembly
-      services.AddRazorPages();
-      /// Swagger
-      services.AddSwaggerGen(c => {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenOsp.Server", Version = "v1" });
-      });
+      /// Development-only and Production-only services
+      if(_env.IsDevelopment()) {
+        /// Swagger
+        services.AddSwaggerGen(c => {
+          c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenOsp.Server", Version = "v1" });
+        });
+      }
+      else {
+        /// HSTS (HTTP Secure Transport Security)
+        services.AddHsts(options => {
+          options.MaxAge = new TimeSpan(30, 0, 0, 0);
+          options.IncludeSubDomains = true;
+          options.Preload = true;
+        });
+      }
     }
 
     /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app) {
+      app.UseHttpsRedirection();
       if (_env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
         app.UseWebAssemblyDebugging();
@@ -134,7 +145,6 @@ namespace OpenOsp.Server {
       else {
         app.UseHsts();
       }
-      app.UseHttpsRedirection();
       app.UseRouting();
       app.UseAuthorization();
       app.UseBlazorFrameworkFiles();
