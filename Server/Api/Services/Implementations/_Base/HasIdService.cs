@@ -61,6 +61,13 @@ namespace OpenOsp.Server.Api.Services {
       return entity;
     }
 
+    public virtual async Task<int> ReadCount(TId1 id1) {
+      return await _context.Set<T>()
+        .IgnoreQueryFilters()
+        .Where(e => e.Id1.Equals(id1))
+        .CountAsync();
+    }
+
   }
 
   public class HasIdService<T, TId1, TId2, TId3>
@@ -111,6 +118,23 @@ namespace OpenOsp.Server.Api.Services {
       return entity;
     }
 
-  }
+    public virtual async Task<int> ReadCount(TId1 id1) {
+      return await _context.Set<T>()
+        .IgnoreQueryFilters()
+        .Where(e => e.Id1.Equals(id1))
+        .CountAsync();
+    }
 
+    public virtual async Task<int> ReadCount(TId1 id1, TId2 id2) {
+      return await _context.Set<T>()
+        .IgnoreQueryFilters()
+        .Where(e => 
+          e.Id1.Equals(id1)
+          && e.Id2.Equals(id2)
+        )
+        .CountAsync();
+    }
+
+  }
+  
 }

@@ -34,6 +34,9 @@ namespace OpenOsp.Server.Api.Controllers {
     /// ActionEquipment
     [HttpGet("{id1}/equipment")]
     public async Task<ActionResult<IEnumerable<ActionEquipmentReadDto>>> ReadEquipment(int id1) => await _actionEquipment.ReadById(id1);
+
+    [HttpGet("{id1}/equipment/count")]
+    public async Task<ActionResult<int>> ReadEquipmentCount(int id1) => await _actionEquipment.ReadCount(id1);
     
     [HttpGet("{id1}/equipment/{id2}")]
     public async Task<ActionResult<ActionEquipmentReadDto>> ReadEquipment(int id1, int id2) => await _actionEquipment.ReadById(id1, id2);
@@ -53,6 +56,9 @@ namespace OpenOsp.Server.Api.Controllers {
     /// ActionMembers
     [HttpGet("{id1}/members")]
     public async Task<ActionResult<IEnumerable<ActionMemberReadDto>>> ReadMembers(int id1) => await _actionMembers.ReadById(id1);
+    
+    [HttpGet("{id1}/members/count")]
+    public async Task<ActionResult<int>> ReadMembersCount(int id1) => await _actionMembers.ReadCount(id1);
     
     [HttpGet("{id1}/members/{id2}")]
     public async Task<ActionResult<ActionMemberReadDto>> ReadMember(int id1, int id2) => await _actionMembers.ReadById(id1, id2);

@@ -42,6 +42,19 @@ namespace OpenOsp.Server.Api.Controllers {
       }
     }
 
+    [HttpGet("count")]
+    public virtual async Task<ActionResult<int>> ReadCount() {
+      try {
+        return await _service.ReadCount();
+      }
+      catch (UnauthorizedException) {
+        return Unauthorized();
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
     [HttpPost]
     public virtual async Task<ActionResult<TReadDto>> Create(TCreateDto createDto) {
       try {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+
+using OpenOsp.Model.Filters;
 using OpenOsp.Server.Exceptions;
 using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Model.Models;
@@ -22,6 +24,13 @@ namespace OpenOsp.Server.Api.Services {
         .ToListAsync();
     }
 
+    public override async Task<IEnumerable<T>> ReadAll(PaginationFilter pagination) {
+      return await _context.Set<T>()
+        .Skip((pagination.PageIndex - 1) * pagination.PageSize)
+        .Take(pagination.PageSize)
+        .ToListAsync();
+    }
+
     public override async Task<T> ReadById(TId id) {
       try {
         var entity = await _context.Set<T>()
@@ -37,6 +46,8 @@ namespace OpenOsp.Server.Api.Services {
       }
     }
 
+    public override async Task<int> ReadCount() => await _context.Set<T>().CountAsync();
+
   }
 
   public class AuthService<T, TId1, TId2>
@@ -50,6 +61,13 @@ namespace OpenOsp.Server.Api.Services {
 
     public override async Task<IEnumerable<T>> ReadAll() {
       return await _context.Set<T>()
+        .ToListAsync();
+    }
+    
+    public override async Task<IEnumerable<T>> ReadAll(PaginationFilter pagination) {
+      return await _context.Set<T>()
+        .Skip((pagination.PageIndex - 1) * pagination.PageSize)
+        .Take(pagination.PageSize)
         .ToListAsync();
     }
 
@@ -86,6 +104,12 @@ namespace OpenOsp.Server.Api.Services {
       }
     }
 
+    public override async Task<int> ReadCount(TId1 id1) {
+      return await _context.Set<T>()
+        .Where(e => e.Id1.Equals(id1))
+        .CountAsync();
+    }
+
   }
 
   public class AuthService<T, TId1, TId2, TId3>
@@ -100,6 +124,13 @@ namespace OpenOsp.Server.Api.Services {
 
     public override async Task<IEnumerable<T>> ReadAll() {
       return await _context.Set<T>()
+        .ToListAsync();
+    }
+    
+    public override async Task<IEnumerable<T>> ReadAll(PaginationFilter pagination) {
+      return await _context.Set<T>()
+        .Skip((pagination.PageIndex - 1) * pagination.PageSize)
+        .Take(pagination.PageSize)
         .ToListAsync();
     }
 
@@ -154,6 +185,21 @@ namespace OpenOsp.Server.Api.Services {
         await base.ReadById(id1, id2, id3);
         throw;
       }
+    }
+    
+    public override async Task<int> ReadCount(TId1 id1) {
+      return await _context.Set<T>()
+        .Where(e => e.Id1.Equals(id1))
+        .CountAsync();
+    }
+
+    public override async Task<int> ReadCount(TId1 id1, TId2 id2) {
+      return await _context.Set<T>()
+        .Where(e => 
+          e.Id1.Equals(id1)
+          && e.Id2.Equals(id2)
+        )
+        .CountAsync();
     }
 
   }

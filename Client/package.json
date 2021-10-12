@@ -1,5 +1,5 @@
 {
-  "name": "openosp-blazor-wasm",
+  "name": "openosp-blazor",
   "author": "Paul B. Kunka",
   "description": "OpenOSP is a free software for firefighter's HQ management.",
   "scripts": {

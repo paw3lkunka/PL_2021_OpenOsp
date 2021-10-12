@@ -4,6 +4,7 @@ using System.Linq;
 using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Server.Enums;
 using OpenOsp.Server.Exceptions;
+using OpenOsp.Model.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -44,6 +45,16 @@ namespace OpenOsp.Server.Api.Services {
         .IgnoreQueryFilters()
         .ToListAsync();
     }
+
+    public virtual async Task<IEnumerable<T>> ReadAll(PaginationFilter pagination) {
+      return await _context.Set<T>()
+        .IgnoreQueryFilters()
+        .Skip((pagination.PageIndex - 1) * pagination.PageSize)
+        .Take(pagination.PageSize)
+        .ToListAsync();
+    }
+    
+    public virtual async Task<int> ReadCount() => await _context.Set<T>().IgnoreQueryFilters().CountAsync();
 
     public async Task CommitDbTransaction(int rows, DbTransactionType type) {
       if (await _context.SaveChangesAsync() < 0) {

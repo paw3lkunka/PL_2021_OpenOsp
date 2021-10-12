@@ -18,6 +18,8 @@ namespace OpenOsp.Server.Api.Services {
 
     Task<IEnumerable<T>> ReadAll();
 
+    Task<int> ReadCount();
+
     void Update(T entity);
 
     Task UpdateAsync(T entity);

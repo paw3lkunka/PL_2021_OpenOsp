@@ -443,11 +443,8 @@ $RECYCLE.BIN/
 ## Visual Studio Code
 ##
 .vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # CSS
 normalize.min.css
 tailwind.min.css
+app.min.css

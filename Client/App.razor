@@ -1,9 +1,9 @@
 ﻿<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
   <Found Context="routeData">
-    <RouteView RouteData="@routeData" DefaultLayout="@typeof(Body)" />
+    <RouteView RouteData="@routeData" DefaultLayout="@typeof(OpenOsp.Client.Components.Main.Body)" />
   </Found>
   <NotFound>
-    <LayoutView Layout="typeof(Body)">
+    <LayoutView Layout="typeof(OpenOsp.Client.Components.Main.Body)">
       <OpenOsp.Client.Pages.NotFound />
     </LayoutView>
   </NotFound>

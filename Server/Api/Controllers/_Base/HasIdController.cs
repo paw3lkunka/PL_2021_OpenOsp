@@ -154,6 +154,16 @@ namespace OpenOsp.Server.Api.Controllers {
       }
     }
 
+    [HttpGet("{id1}/count")]
+    public virtual async Task<ActionResult<int>> ReadCount(TId1 id1) {
+      try {
+        return await _service.ReadCount(id1);
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
     [HttpGet("{id1}/{id2}")]
     public virtual async Task<ActionResult<TReadDto>> ReadById(TId1 id1, TId2 id2) {
       try {
@@ -299,6 +309,16 @@ namespace OpenOsp.Server.Api.Controllers {
       }
       catch (NotFoundException) {
         return NotFound();
+      }
+      catch {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
+    [HttpGet("{id1}/{id2}/count")]
+    public virtual async Task<ActionResult<int>> ReadCount(TId1 id1, TId2 id2) {
+      try {
+        return await _service.ReadCount(id1, id2);
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);

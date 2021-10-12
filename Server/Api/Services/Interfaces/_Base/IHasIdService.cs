@@ -22,6 +22,8 @@ namespace OpenOsp.Server.Api.Services {
 
     Task<T> ReadById(TId1 id1, TId2 id2);
 
+    Task<int> ReadCount(TId1 id1);
+
   }
 
   public interface IHasIdService<T, TId1, TId2, TId3> : IService<T>
@@ -35,6 +37,10 @@ namespace OpenOsp.Server.Api.Services {
     Task<IEnumerable<T>> ReadById(TId1 id1, TId2 id2);
 
     Task<T> ReadById(TId1 id1, TId2 id2, TId3 id3);
+
+    Task<int> ReadCount(TId1 id1);
+
+    Task<int> ReadCount(TId1 id1, TId2 id2);
 
   }
 
