@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
+using OpenOsp.Model.Filters;
 using OpenOsp.Server.Enums;
 using OpenOsp.Model.Models;
 
@@ -8,21 +11,17 @@ namespace OpenOsp.Server.Api.Services {
 
   public interface IService<T> where T : class {
 
-    void Create(T entity);
+    Task Create(T entity);
 
-    Task CreateAsync(T entity);
+    Task Delete(T entity);
 
-    void Delete(T entity);
-
-    Task DeleteAsync(T entity);
+    Task Update(T entity);
 
     Task<IEnumerable<T>> ReadAll();
+    
+    Task<IEnumerable<T>> ReadAll(PaginationFilter pagination);
 
     Task<int> ReadCount();
-
-    void Update(T entity);
-
-    Task UpdateAsync(T entity);
 
     Task CommitDbTransaction(int rows, DbTransactionType type);
 

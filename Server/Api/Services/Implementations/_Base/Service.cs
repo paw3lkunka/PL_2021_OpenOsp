@@ -8,53 +8,39 @@ using OpenOsp.Model.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
+using OpenOsp.Server.Api.Repositories.Implementations;
+
 namespace OpenOsp.Server.Api.Services {
 
   public class Service<T> : IService<T>
     where T : class {
 
-    public Service(AppDbContext context) {
-      _context = context;
+    public Service(Repository<T> repo) {
+      _repo = repo;
     }
 
-    protected readonly AppDbContext _context;
+    protected readonly Repository<T> _repo;
 
-    public void Create(T entity) => _context.Add<T>(entity);
-
-    public async Task CreateAsync(T entity) {
-      Create(entity);
+    public async Task Create(T entity) {
+      _repo.Create(entity);
       await CommitDbTransaction(DbTransactionType.Create);
     }
 
-    public void Update(T entity) => _context.Update<T>(entity);
-
-    public async Task UpdateAsync(T entity) {
-      Update(entity);
+    public async Task Update(T entity) {
+      _repo.Update(entity);
       await CommitDbTransaction(DbTransactionType.Update);
     }
 
-    public void Delete(T entity) => _context.Remove<T>(entity);
-
-    public async Task DeleteAsync(T entity) {
-      Delete(entity);
+    public async Task Delete(T entity) {
+      _repo.Delete(entity);
       await CommitDbTransaction(DbTransactionType.Delete);
     }
 
-    public virtual async Task<IEnumerable<T>> ReadAll() {
-      return await _context.Set<T>()
-        .IgnoreQueryFilters()
-        .ToListAsync();
-    }
+    public virtual async Task<IEnumerable<T>> ReadAll() => await _repo.ReadAll().ToListAsync();
 
-    public virtual async Task<IEnumerable<T>> ReadAll(PaginationFilter pagination) {
-      return await _context.Set<T>()
-        .IgnoreQueryFilters()
-        .Skip((pagination.PageIndex - 1) * pagination.PageSize)
-        .Take(pagination.PageSize)
-        .ToListAsync();
-    }
+    public virtual async Task<IEnumerable<T>> ReadAll(PaginationFilter pagination) => await _repo.ReadAll(pagination).ToListAsync();
     
-    public virtual async Task<int> ReadCount() => await _context.Set<T>().IgnoreQueryFilters().CountAsync();
+    public virtual async Task<int> ReadCount() => await ReadAll().CountAsync();
 
     public async Task CommitDbTransaction(int rows, DbTransactionType type) {
       if (await _context.SaveChangesAsync() < 0) {

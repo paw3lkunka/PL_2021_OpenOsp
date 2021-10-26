@@ -74,7 +74,7 @@ namespace OpenOsp.Server.Api.Services {
     public override async Task<IEnumerable<T>> ReadById(TId1 id1) {
       try {
         var entities = await _context.Set<T>()
-          .Where(e => e.Id1.Equals(id1))
+          .Where(e => e.Id.Equals(id1))
           .ToListAsync();
         if (entities?.Any() != true) {
           throw new UnauthorizedException();
@@ -91,7 +91,7 @@ namespace OpenOsp.Server.Api.Services {
       try {
         var entity = await _context.Set<T>()
           .FirstOrDefaultAsync(e =>
-            e.Id1.Equals(id1)
+            e.Id.Equals(id1)
             && e.Id2.Equals(id2));
         if (entity == default(T)) {
           throw new UnauthorizedException();
@@ -106,7 +106,7 @@ namespace OpenOsp.Server.Api.Services {
 
     public override async Task<int> ReadCount(TId1 id1) {
       return await _context.Set<T>()
-        .Where(e => e.Id1.Equals(id1))
+        .Where(e => e.Id.Equals(id1))
         .CountAsync();
     }
 
@@ -137,7 +137,7 @@ namespace OpenOsp.Server.Api.Services {
     public override async Task<IEnumerable<T>> ReadById(TId1 id1) {
       try {
         var entities = await _context.Set<T>()
-          .Where(e => e.Id1.Equals(id1))
+          .Where(e => e.Id.Equals(id1))
           .ToListAsync();
         if (entities?.Any() != true) {
           throw new UnauthorizedException();
@@ -154,7 +154,7 @@ namespace OpenOsp.Server.Api.Services {
       try {
         var entities = await _context.Set<T>()
           .Where(e => 
-            e.Id1.Equals(id1)
+            e.Id.Equals(id1)
             && e.Id2.Equals(id2)
           )
           .ToListAsync();
@@ -173,7 +173,7 @@ namespace OpenOsp.Server.Api.Services {
       try {
         var entity = await _context.Set<T>()
           .FirstOrDefaultAsync(e =>
-            e.Id1.Equals(id1)
+            e.Id.Equals(id1)
             && e.Id2.Equals(id2)
             && e.Id3.Equals(id3));
         if (entity == default(T)) {
@@ -189,14 +189,14 @@ namespace OpenOsp.Server.Api.Services {
     
     public override async Task<int> ReadCount(TId1 id1) {
       return await _context.Set<T>()
-        .Where(e => e.Id1.Equals(id1))
+        .Where(e => e.Id.Equals(id1))
         .CountAsync();
     }
 
     public override async Task<int> ReadCount(TId1 id1, TId2 id2) {
       return await _context.Set<T>()
         .Where(e => 
-          e.Id1.Equals(id1)
+          e.Id.Equals(id1)
           && e.Id2.Equals(id2)
         )
         .CountAsync();

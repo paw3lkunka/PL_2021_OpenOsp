@@ -41,7 +41,7 @@ namespace OpenOsp.Server.Api.Services {
     public virtual async Task<IEnumerable<T>> ReadById(TId1 id1) {
       var entities = await _context.Set<T>()
         .IgnoreQueryFilters()
-        .Where(e => e.Id1.Equals(id1))
+        .Where(e => e.Id.Equals(id1))
         .ToListAsync();
       if (entities?.Any() != true) {
         throw new NotFoundException<T, TId1>(id1, true);
@@ -53,7 +53,7 @@ namespace OpenOsp.Server.Api.Services {
       var entity = await _context.Set<T>()
         .IgnoreQueryFilters()
         .FirstOrDefaultAsync(e =>
-          e.Id1.Equals(id1)
+          e.Id.Equals(id1)
           && e.Id2.Equals(id2));
       if (entity == default(T)) {
         throw new NotFoundException<T, TId1, TId2>(id1, id2);
@@ -64,7 +64,7 @@ namespace OpenOsp.Server.Api.Services {
     public virtual async Task<int> ReadCount(TId1 id1) {
       return await _context.Set<T>()
         .IgnoreQueryFilters()
-        .Where(e => e.Id1.Equals(id1))
+        .Where(e => e.Id.Equals(id1))
         .CountAsync();
     }
 
@@ -83,7 +83,7 @@ namespace OpenOsp.Server.Api.Services {
     public virtual async Task<IEnumerable<T>> ReadById(TId1 id1) {
       var entities = await _context.Set<T>()
         .IgnoreQueryFilters()
-        .Where(e => e.Id1.Equals(id1))
+        .Where(e => e.Id.Equals(id1))
         .ToListAsync();
       if (entities?.Any() != true) {
         throw new NotFoundException<T, TId1>(id1, true);
@@ -95,7 +95,7 @@ namespace OpenOsp.Server.Api.Services {
       var entities = await _context.Set<T>()
         .IgnoreQueryFilters()
         .Where(e => 
-          e.Id1.Equals(id1)
+          e.Id.Equals(id1)
           && e.Id2.Equals(id2)
         )
         .ToListAsync();
@@ -109,7 +109,7 @@ namespace OpenOsp.Server.Api.Services {
       var entity = await _context.Set<T>()
         .IgnoreQueryFilters()
         .FirstOrDefaultAsync(e =>
-          e.Id1.Equals(id1)
+          e.Id.Equals(id1)
           && e.Id2.Equals(id2)
           && e.Id3.Equals(id3));
       if (entity == default(T)) {
@@ -121,7 +121,7 @@ namespace OpenOsp.Server.Api.Services {
     public virtual async Task<int> ReadCount(TId1 id1) {
       return await _context.Set<T>()
         .IgnoreQueryFilters()
-        .Where(e => e.Id1.Equals(id1))
+        .Where(e => e.Id.Equals(id1))
         .CountAsync();
     }
 
@@ -129,7 +129,7 @@ namespace OpenOsp.Server.Api.Services {
       return await _context.Set<T>()
         .IgnoreQueryFilters()
         .Where(e => 
-          e.Id1.Equals(id1)
+          e.Id.Equals(id1)
           && e.Id2.Equals(id2)
         )
         .CountAsync();

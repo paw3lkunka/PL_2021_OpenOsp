@@ -9,7 +9,7 @@ namespace OpenOsp.Model.Models {
 
     [Display(Name = "Action's id"), Column("ActionId")]
     [OspDA.Required]
-    public int Id1 { get; set; }
+    public int Id { get; set; }
 
     [Display(Name = "Equipment's id"), Column("EquipmentId")]
     [OspDA.Required]

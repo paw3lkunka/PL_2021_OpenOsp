@@ -8,8 +8,8 @@ namespace OpenOsp.Server.Data.Configurations {
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<ActionEquipment>(entity => {
         /// Properties
-        entity.HasKey(e => new { e.Id1, e.Id2 });
-        entity.Property(e => e.Id1)
+        entity.HasKey(e => new {Id1 = e.Id, e.Id2 });
+        entity.Property(e => e.Id)
           .HasColumnName("ActionId")
           .IsRequired();
         entity.Property(e => e.Id2)
@@ -24,7 +24,7 @@ namespace OpenOsp.Server.Data.Configurations {
         /// Relations
         entity.HasOne(e => e.Action)
           .WithMany(e => e.Equipment)
-          .HasForeignKey(e => e.Id1)
+          .HasForeignKey(e => e.Id)
           .OnDelete(DeleteBehavior.NoAction);
         entity.HasOne(e => e.Equipment)
           .WithMany(e => e.Actions)

@@ -188,11 +188,11 @@ namespace OpenOsp.Server.Api.Controllers {
           throw new ValidationProblemException();
         }
         var entity = _mapper.MapCreate(createDto);
-        entity.Id1 = id1;
+        entity.Id = id1;
         entity = await base.CreateEntity(entity);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtAction(nameof(ReadById),
-          new { id1 = entity.Id1, id2 = entity.Id2 },
+          new { id1 = entity.Id, id2 = entity.Id2 },
           readDto);
       }
       catch (UnauthorizedException) {
@@ -349,13 +349,13 @@ namespace OpenOsp.Server.Api.Controllers {
           throw new ValidationProblemException();
         }
         var entity = _mapper.MapCreate(createDto);
-        entity.Id1 = id1;
+        entity.Id = id1;
         entity.Id2 = id2;
         entity = await base.CreateEntity(entity);
         var readDto = _mapper.MapRead(entity);
         return CreatedAtAction(
           nameof(ReadById),
-          new { id1 = entity.Id1, id2 = entity.Id2, id3 = entity.Id3 },
+          new { id1 = entity.Id, id2 = entity.Id2, id3 = entity.Id3 },
           readDto);
       }
       catch (UnauthorizedException) {

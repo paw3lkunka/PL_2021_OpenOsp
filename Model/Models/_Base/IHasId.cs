@@ -10,11 +10,9 @@ namespace OpenOsp.Model.Models {
 
   }
 
-  public interface IHasId<T1, T2>
+  public interface IHasId<T1, T2> : IHasId<T1>
     where T1 : IEquatable<T1>, IComparable<T1>
     where T2 : IEquatable<T2>, IComparable<T2> {
-
-    T1 Id1 { get; set; }
 
     T2 Id2 { get; set; }
 

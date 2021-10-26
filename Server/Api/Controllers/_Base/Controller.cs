@@ -77,7 +77,7 @@ namespace OpenOsp.Server.Api.Controllers {
     }
 
     protected async Task<T> CreateEntity(T entity) {
-      await _service.CreateAsync(entity);
+      await _service.Create(entity);
       return entity;
     }
 
@@ -105,7 +105,7 @@ namespace OpenOsp.Server.Api.Controllers {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(updateDto, entity);
-        await _service.UpdateAsync(entity);
+        await _service.Update(entity);
         return NoContent();
       }
       catch (ValidationProblemException) {
@@ -124,7 +124,7 @@ namespace OpenOsp.Server.Api.Controllers {
           throw new ValidationProblemException();
         }
         _mapper.MapUpdate(entityToPatch, entity);
-        await _service.UpdateAsync(entity);
+        await _service.Update(entity);
         return NoContent();
       }
       catch (ValidationProblemException) {
@@ -137,7 +137,7 @@ namespace OpenOsp.Server.Api.Controllers {
 
     protected virtual async Task<ActionResult> DeleteEntity(T entity) {
       try {
-        await _service.DeleteAsync(entity);
+        await _service.Delete(entity);
         return NoContent();
       }
       catch (DbTransactionException) {
