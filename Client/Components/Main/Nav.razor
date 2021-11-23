@@ -19,6 +19,13 @@
 
 @code {
 
+  private IDictionary<string, string> NavLinks = new Dictionary<string, string>() {
+    { "/", "Home" },
+    { "userpanel", "User Panel" },
+    { "about", "About" },
+    { "contact", "Contact Us" },
+  };
+
   [Parameter]
   public bool IsNavdrawer { get; set; }
 
