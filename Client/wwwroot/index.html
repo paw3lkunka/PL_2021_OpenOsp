@@ -3,34 +3,35 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <title>OpenOSP</title>
   <base href="/" />
   <!-- CSS -->
   <link href="./css/app.min.css" rel="stylesheet" />
   <!-- Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link href="./apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="./favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="./favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
   <!-- Manifest -->
-  <link rel="manifest" href="./manifest.json">
+  <link href="./manifest.json" rel="manifest">
 </head>
 
 <body class="w-full h-full">
   <!-- App's html -->
-  <div id="app" class="w-full h-full">
+  <div class="w-full h-full" id="app">
     <!-- WASM loading -->
     <div class="w-full h-full flex justify-center items-center bg-base-300">
       <button class="btn btn-primary btn-outline btn-lg loading">Loading OpenOSP...</button>
     </div>
   </div>
   <!-- WASM -->
-  <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+  <script autostart="false" src="_framework/blazor.webassembly.js"></script>
   <!-- ServiceWorker for PWA -->
   <script>navigator.serviceWorker.register('./service-worker.js');</script>
   <!-- Decoding for faster data transfer -->
   <script type="module">
     import { BrotliDecode } from './js/decode.min.js';
+
     Blazor.start({
       loadBootResource: function (type, name, defaultUri, integrity) {
         if (type !== 'dotnetjs' && location.hostname !== 'localhost') {

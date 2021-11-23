@@ -1,21 +1,25 @@
-using System.Linq;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.JsonPatch;
-using OpenOsp.Server.Api.Services;
-using OpenOsp.Model.Dtos.Mappers;
-using OpenOsp.Server.Exceptions;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace OpenOsp.Server.Api.Controllers {
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 
+using OpenOsp.Model.Dtos.Mappers;
+using OpenOsp.Server.Api.Services;
+using OpenOsp.Server.Exceptions;
+
+namespace OpenOsp.Server.Api.Controllers {
   [Route("api/[controller]")]
   public class Controller<T, TCreateDto, TReadDto, TUpdateDto> : ControllerBase
     where T : class
     where TCreateDto : class
     where TReadDto : class
     where TUpdateDto : class {
+    protected readonly IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> _mapper;
+
+    protected readonly IService<T> _service;
 
     public Controller(
       IService<T> service,
@@ -23,10 +27,6 @@ namespace OpenOsp.Server.Api.Controllers {
       _service = service;
       _mapper = mapper;
     }
-
-    protected readonly IService<T> _service;
-
-    protected readonly IDtoMapper<T, TCreateDto, TReadDto, TUpdateDto> _mapper;
 
     [HttpGet]
     public virtual async Task<ActionResult<IEnumerable<TReadDto>>> ReadAll() {
@@ -85,6 +85,7 @@ namespace OpenOsp.Server.Api.Controllers {
       if (TryValidateModel(createDto) == false) {
         throw new ValidationProblemException();
       }
+
       var entity = _mapper.MapCreate(createDto);
       return await CreateEntity(entity);
     }
@@ -93,7 +94,7 @@ namespace OpenOsp.Server.Api.Controllers {
       var readDto = _mapper.MapRead(entity);
       return Ok(readDto);
     }
-    
+
     protected virtual ActionResult<IEnumerable<TReadDto>> ReadEntities(IEnumerable<T> entities) {
       var readDtos = entities.Select(e => _mapper.MapRead(e)).ToList();
       return Ok(readDtos);
@@ -104,6 +105,7 @@ namespace OpenOsp.Server.Api.Controllers {
         if (TryValidateModel(updateDto) == false) {
           throw new ValidationProblemException();
         }
+
         _mapper.MapUpdate(updateDto, entity);
         await _service.Update(entity);
         return NoContent();
@@ -123,6 +125,7 @@ namespace OpenOsp.Server.Api.Controllers {
         if (TryValidateModel(entityToPatch) == false) {
           throw new ValidationProblemException();
         }
+
         _mapper.MapUpdate(entityToPatch, entity);
         await _service.Update(entity);
         return NoContent();
@@ -144,7 +147,5 @@ namespace OpenOsp.Server.Api.Controllers {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
-
   }
-
 }

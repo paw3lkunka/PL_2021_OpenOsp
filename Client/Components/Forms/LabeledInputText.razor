@@ -2,14 +2,13 @@
 
 <div class="form-control">
   <label class="label">
-    <LabelText For="@ValueExpression" class="label-text" />
+    <LabelText For="@ValueExpression" class="label-text"/>
   </label>
-  <InputText Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
-    class="@("input input-bordered " + CssClass.Replace(" valid", " input-success").Replace(" invalid", " input-error"))"
-    @attributes="@AdditionalAttributes" />
+  <InputText @attributes="AdditionalAttributes" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
+             class=@("input input-bordered " + CssClass.Replace(" valid", " input-success").Replace(" invalid", " input-error"))/>
   <label class="label">
     <div class="label-text-alt mx-2 text-error">
-      <ValidationMessage For="@ValueExpression" />
+      <ValidationMessage For="@ValueExpression"/>
     </div>
   </label>
 </div>

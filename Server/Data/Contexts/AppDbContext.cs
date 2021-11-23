@@ -1,23 +1,21 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.AspNetCore.Identity;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using OpenOsp.Server.Api.Services;
+using Microsoft.EntityFrameworkCore;
+
 using OpenOsp.Model.Models;
+using OpenOsp.Server.Api.Services;
 using OpenOsp.Server.Data.Configurations;
 using OpenOsp.Server.Exceptions;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace OpenOsp.Server.Data.Contexts {
-
   public class AppDbContext : IdentityUserContext<User, int> {
+    private readonly int _userId;
 
-    public AppDbContext() : base() { }
+    public AppDbContext() { }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -28,9 +26,7 @@ namespace OpenOsp.Server.Data.Contexts {
       _userId = userClaims.UserId;
     }
 
-    private readonly int _userId;
-
-    public virtual DbSet<OpenOsp.Model.Models.Action> Actions { get; set; }
+    public virtual DbSet<Action> Actions { get; set; }
 
     public virtual DbSet<ActionEquipment> ActionEquipment { get; set; }
 
@@ -56,7 +52,8 @@ namespace OpenOsp.Server.Data.Contexts {
         entityConfiguration.AddConfiguration(builder);
         entityConfiguration.SeedData(builder);
       }
-      builder.Entity<Model.Models.Action>()
+
+      builder.Entity<Action>()
         .HasQueryFilter(e => e.UserId.Equals(_userId));
       builder.Entity<Equipment>()
         .HasQueryFilter(e => e.UserId.Equals(_userId));
@@ -68,18 +65,17 @@ namespace OpenOsp.Server.Data.Contexts {
         .HasQueryFilter(e => e.Action.UserId.Equals(_userId));
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) {
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) {
       var addedOwnedEntities = ChangeTracker.Entries()
         .Where(e => e.State.Equals(EntityState.Added) && e.Entity is IOwnedBy<int>)
         .Select(e => e.Entity as IOwnedBy<int>)
         .ToList();
-      if (addedOwnedEntities.Count > 0 && _userId == default(int)) {
+      if (addedOwnedEntities.Count > 0 && _userId == default) {
         throw new UnauthorizedException();
       }
+
       addedOwnedEntities.ForEach(e => e.UserId = _userId);
       return await base.SaveChangesAsync(cancellationToken);
     }
-
   }
-
 }

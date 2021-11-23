@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Server.Data.Configurations {
-
   internal class MemberConfiguration : IEntityConfiguration {
-
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<Member>(entity => {
         /// Properties
@@ -42,7 +41,5 @@ namespace OpenOsp.Server.Data.Configurations {
       //   }
       // );
     }
-
   }
-
 }

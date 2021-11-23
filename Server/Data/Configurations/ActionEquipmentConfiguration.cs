@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Server.Data.Configurations {
-
   internal class ActionEquipmentConfiguration : IEntityConfiguration {
-
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<ActionEquipment>(entity => {
         /// Properties
-        entity.HasKey(e => new {Id1 = e.Id, e.Id2 });
+        entity.HasKey(e => new {e.Id, e.Id2});
         entity.Property(e => e.Id)
           .HasColumnName("ActionId")
           .IsRequired();
@@ -40,7 +39,5 @@ namespace OpenOsp.Server.Data.Configurations {
       //   }
       // );
     }
-
   }
-
 }

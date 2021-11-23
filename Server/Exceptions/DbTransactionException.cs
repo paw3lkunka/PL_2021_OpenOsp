@@ -1,13 +1,11 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+
 using OpenOsp.Server.Enums;
 
 namespace OpenOsp.Server.Exceptions {
-
   public class DbTransactionException : Exception {
-
-    public DbTransactionException() : base() {
+    public DbTransactionException() {
     }
 
     public DbTransactionException(string message) : base(message) {
@@ -22,7 +20,7 @@ namespace OpenOsp.Server.Exceptions {
     }
 
     private static string CreateMessage(DbTransactionType type, string entityName, int rows) {
-      var message = $"Could not ";
+      var message = "Could not ";
       switch (type) {
         case DbTransactionType.None:
           message += "process";
@@ -40,7 +38,9 @@ namespace OpenOsp.Server.Exceptions {
           message += "delete";
           break;
       }
-      message += $" {((rows > 1) ? rows : "the")} {(entityName == null ? string.Empty : entityName + " ")}{((rows > 1) ? "entities" : "entity")}";
+
+      message +=
+        $" {(rows > 1 ? rows : "the")} {(entityName == null ? string.Empty : entityName + " ")}{(rows > 1 ? "entities" : "entity")}";
       return message + " due to the database transaction failure.";
     }
 
@@ -49,12 +49,10 @@ namespace OpenOsp.Server.Exceptions {
       errors?.ForEach(e => message += $"\n\t{e}");
       return message;
     }
-
   }
 
-  public class DbTransactionException<T> : DbTransactionException 
+  public class DbTransactionException<T> : DbTransactionException
     where T : class {
-
     public DbTransactionException(DbTransactionType type, int rows, List<string> errors)
       : base(type, typeof(T).Name, rows, errors) {
     }
@@ -78,7 +76,5 @@ namespace OpenOsp.Server.Exceptions {
     public DbTransactionException()
       : this(DbTransactionType.None, 1) {
     }
-
   }
-
 }

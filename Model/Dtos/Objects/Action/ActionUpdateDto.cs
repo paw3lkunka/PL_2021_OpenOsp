@@ -1,28 +1,25 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 using OpenOsp.Model.Enums;
-using OpenOsp.Model.DataAnnotations;
+
 using OspDA = OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
-
   public class ActionUpdateDto {
+    [OspDA.RequiredAttribute] public ActionType Type { get; set; } = ActionType.Fire;
 
-    [OspDA.Required]
-    public ActionType Type { get; set; } = ActionType.Fire;
-
-    [OspDA.Required, OspDA.MaxLength(64)]
+    [OspDA.RequiredAttribute]
+    [OspDA.MaxLengthAttribute(64)]
     public string Location { get; set; }
 
     [Display(Name = "Start time")]
-    [OspDA.Required]
+    [OspDA.RequiredAttribute]
     public DateTime StartTime { get; set; }
 
     [Display(Name = "End time")]
-    [OspDA.Required, DateGreaterEqual("StartTime")]
+    [OspDA.RequiredAttribute]
+    [OspDA.DateGreaterEqualAttribute("StartTime")]
     public DateTime EndTime { get; set; }
-
   }
-
 }

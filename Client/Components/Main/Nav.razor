@@ -1,26 +1,36 @@
-<!-- TODO: Make navdrawer hide after click in the link -->
-<nav @attributes="@AdditionalAttributes">
-  <a href="/" class="btn btn-ghost rounded-btn lg:btn-sm">
+<nav @attributes="AdditionalAttributes">
+  <NavLink ActiveClass="bg-primary btn-active" Match=@NavLinkMatch.All href="/" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
     Home
-  </a>
-  <a href="/userpanel" class="btn btn-ghost rounded-btn lg:btn-sm">
+  </NavLink>
+  <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="userpanel" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
     User Panel
-  </a>
-  <a href="/" class="btn btn-ghost rounded-btn lg:btn-sm">
+  </NavLink>
+  <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="about" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
     <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
       About
     </span>
-  </a>
-  <a href="/" class="btn btn-ghost rounded-btn lg:btn-sm">
+  </NavLink>
+  <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="contact" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
     <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
       Contact Us
     </span>
-  </a>
+  </NavLink>
 </nav>
 
 @code {
 
+  [Parameter]
+  public bool IsNavdrawer { get; set; }
+
+  [Parameter]
+  public EventCallback<bool> IsNavdrawerChanged { get; set; }
+
   [Parameter(CaptureUnmatchedValues = true)]
   public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
+
+  private async Task OnNavLinkClick() {
+    IsNavdrawer = false;
+    await IsNavdrawerChanged.InvokeAsync();
+  }
 
 }

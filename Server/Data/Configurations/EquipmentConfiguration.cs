@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+
 using OpenOsp.Model.Models;
 
 namespace OpenOsp.Server.Data.Configurations {
-
   internal class EquipmentConfiguration : IEntityConfiguration {
-
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<Equipment>(entity => {
         /// Relations
@@ -42,7 +41,5 @@ namespace OpenOsp.Server.Data.Configurations {
       //   }
       // );
     }
-
   }
-
 }

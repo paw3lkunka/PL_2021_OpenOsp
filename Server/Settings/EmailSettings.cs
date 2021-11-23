@@ -1,7 +1,5 @@
 namespace OpenOsp.Server.Settings {
-
   public class EmailSettings {
-
     public string Server { get; set; }
 
     public int Port { get; set; }
@@ -11,7 +9,5 @@ namespace OpenOsp.Server.Settings {
     public string Address { get; set; }
 
     public string Password { get; set; }
-
   }
-
 }

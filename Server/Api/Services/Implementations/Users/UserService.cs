@@ -1,25 +1,29 @@
 using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using OpenOsp.Model.Models;
-using OpenOsp.Server.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using System.Linq;
 using System.Security.Claims;
-using OpenOsp.Server.Settings;
-using OpenOsp.Server.Enums;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
-namespace OpenOsp.Server.Api.Services {
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
+using OpenOsp.Server.Enums;
+using OpenOsp.Server.Exceptions;
+using OpenOsp.Server.Settings;
+
+namespace OpenOsp.Server.Api.Services {
   public class UserService<T, TId>
     : IUserService<T, TId>
     where T : IdentityUser<TId>
     where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
+    private readonly JwtSettings _jwtSettings;
+
+    private readonly SignInManager<T> _signInManager;
+
+    private readonly UserManager<T> _userManager;
 
     public UserService(
       UserManager<T> userManager,
@@ -29,12 +33,6 @@ namespace OpenOsp.Server.Api.Services {
       _signInManager = signInManager;
       _jwtSettings = jwtSettings.Value;
     }
-
-    private readonly UserManager<T> _userManager;
-
-    private readonly SignInManager<T> _signInManager;
-
-    private readonly JwtSettings _jwtSettings;
 
     public async Task Create(T user, string password) {
       var result = await _userManager.CreateAsync(user, password);
@@ -53,6 +51,7 @@ namespace OpenOsp.Server.Api.Services {
       if (user == default(T)) {
         throw new NotFoundException<T, TId>(id);
       }
+
       return user;
     }
 
@@ -61,6 +60,7 @@ namespace OpenOsp.Server.Api.Services {
       if (user == default(T)) {
         throw new NotFoundException<T, string>(email);
       }
+
       return user;
     }
 
@@ -71,7 +71,9 @@ namespace OpenOsp.Server.Api.Services {
       }
     }
 
-    public async Task<string> GetEmailConfirmationToken(T user) => HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));
+    public async Task<string> GetEmailConfirmationToken(T user) {
+      return HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));
+    }
 
     public async Task ConfirmEmail(T user, string token) {
       var result = await _userManager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(token));
@@ -85,12 +87,12 @@ namespace OpenOsp.Server.Api.Services {
       if (signInResult.Succeeded == false) {
         throw new UnauthorizedException();
       }
+
       var claimsIdentity = new ClaimsIdentity(
-        new Claim[] {
-          new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-          new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-          new Claim(JwtRegisteredClaimNames.UniqueName, user.Email),
-          new Claim("uid", user.Id.ToString()),
+        new[] {
+          new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+          new Claim(JwtRegisteredClaimNames.Sub, user.Email), new Claim(JwtRegisteredClaimNames.UniqueName, user.Email),
+          new Claim("uid", user.Id.ToString())
         },
         "Token"
       );
@@ -105,7 +107,5 @@ namespace OpenOsp.Server.Api.Services {
       );
       return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
   }
-
 }

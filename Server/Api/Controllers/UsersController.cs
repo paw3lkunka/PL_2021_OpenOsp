@@ -1,19 +1,25 @@
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OpenOsp.Server.Exceptions;
-using OpenOsp.Server.Api.Services;
-using OpenOsp.Model.Models;
+
 using OpenOsp.Model.Dtos;
 using OpenOsp.Model.Dtos.Mappers;
+using OpenOsp.Model.Models;
+using OpenOsp.Server.Api.Services;
+using OpenOsp.Server.Exceptions;
 
 namespace OpenOsp.Server.Api.Controllers {
-
   [ApiController]
   [Route("api/[controller]")]
   [AllowAnonymous]
   public class UsersController : ControllerBase {
+    private readonly IEmailsService _emailsService;
+
+    private readonly IUserDtoMapper _mapper;
+
+    private readonly IUserService<User, int> _service;
 
     public UsersController(
       IUserService<User, int> service,
@@ -24,18 +30,13 @@ namespace OpenOsp.Server.Api.Controllers {
       _emailsService = emailsService;
     }
 
-    private readonly IUserService<User, int> _service;
-    
-    private readonly IUserDtoMapper _mapper;
-
-    private readonly IEmailsService _emailsService;
-
     [HttpPost("login")]
     public async Task<ActionResult<string>> LogIn([FromBody] UserLoginDto dto) {
       try {
         if (TryValidateModel(dto) == false) {
           throw new ValidationProblemException();
         }
+
         var user = await _service.ReadByEmail(dto.Email);
         var token = await _service.GetAuthenticationToken(user, dto.Password);
         return Ok(token);
@@ -60,14 +61,15 @@ namespace OpenOsp.Server.Api.Controllers {
         if (TryValidateModel(dto) == false) {
           throw new ValidationProblemException();
         }
+
         var user = _mapper.MapRegister(dto);
         await _service.Create(user, dto.Password);
         var token = await _service.GetEmailConfirmationToken(user);
         var link = Url.Action(
           "Verify",
           "Users",
-          new { uid = user.Id, token = token },
-          protocol: HttpContext.Request.Scheme);
+          new {uid = user.Id, token},
+          HttpContext.Request.Scheme);
         await _emailsService.SendVerificationEmail(user.Email, link);
         return Ok();
       }
@@ -75,7 +77,7 @@ namespace OpenOsp.Server.Api.Controllers {
         return ValidationProblem();
       }
       catch (DbTransactionException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+        return StatusCode(StatusCodes.Status500InternalServerError, new {ex.Message});
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
@@ -90,13 +92,11 @@ namespace OpenOsp.Server.Api.Controllers {
         return Ok();
       }
       catch (DbTransactionException ex) {
-        return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+        return StatusCode(StatusCodes.Status500InternalServerError, new {ex.Message});
       }
       catch {
         return StatusCode(StatusCodes.Status500InternalServerError);
       }
     }
-
   }
-
 }

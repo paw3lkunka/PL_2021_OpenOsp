@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using OpenOsp.Model.Models;
+
 using OpenOsp.Model.Enums;
+using OpenOsp.Model.Models;
 
 namespace OpenOsp.Server.Data.Configurations {
-
   internal class ActionConfiguration : IEntityConfiguration {
-
     public void AddConfiguration(ModelBuilder builder) {
       builder.Entity<Action>(entity => {
         /// Properties
@@ -46,7 +45,5 @@ namespace OpenOsp.Server.Data.Configurations {
       //   }
       // );
     }
-
   }
-
 }

@@ -1,34 +1,33 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+
 using Newtonsoft.Json.Serialization;
+
 using OpenOsp.Model.Dtos;
 using OpenOsp.Model.Dtos.Mappers;
-using OpenOsp.Model.Models;
-using OspM = OpenOsp.Model.Models;
 using OpenOsp.Server.Api.Controllers;
+using OpenOsp.Server.Api.Repositories;
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Server.Settings;
 
-namespace OpenOsp.Server {
+using OspM = OpenOsp.Model.Models;
 
+namespace OpenOsp.Server {
   public class Startup {
+    private readonly IWebHostEnvironment _env;
 
     public Startup(
       IConfiguration configuration,
@@ -38,8 +37,6 @@ namespace OpenOsp.Server {
     }
 
     public IConfiguration Configuration { get; }
-
-    private readonly IWebHostEnvironment _env;
 
     /// This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
@@ -53,29 +50,29 @@ namespace OpenOsp.Server {
       /// Database Context
       services.AddDbContext<AppDbContext>(options => {
         options.UseNpgsql(
-          Configuration.GetConnectionString("PostgreSql"),
-          builder => builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
-        )
-        .EnableSensitiveDataLogging(false);
+            Configuration.GetConnectionString("PostgreSql"),
+            builder => builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
+          )
+          .EnableSensitiveDataLogging(false);
       });
       /// Identity users
-      services.AddIdentityCore<User>(cfg => {
-        cfg.User.RequireUniqueEmail = true;
-        cfg.Password.RequireDigit = false;
-        cfg.Password.RequireLowercase = false;
-        cfg.Password.RequireUppercase = false;
-        cfg.Password.RequireNonAlphanumeric = false;
-        cfg.Password.RequiredLength = 12;
-        cfg.SignIn.RequireConfirmedEmail = true;
-      })
+      services.AddIdentityCore<OspM.User>(cfg => {
+          cfg.User.RequireUniqueEmail = true;
+          cfg.Password.RequireDigit = false;
+          cfg.Password.RequireLowercase = false;
+          cfg.Password.RequireUppercase = false;
+          cfg.Password.RequireNonAlphanumeric = false;
+          cfg.Password.RequiredLength = 12;
+          cfg.SignIn.RequireConfirmedEmail = true;
+        })
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders()
-        .AddUserManager<UserManager<User>>()
-        .AddSignInManager<SignInManager<User>>();
+        .AddUserManager<UserManager<OspM.User>>()
+        .AddSignInManager<SignInManager<OspM.User>>();
       /// Authentication with JWT
       services.AddAuthentication()
         .AddJwtBearer(cfg => {
-          cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters() {
+          cfg.TokenValidationParameters = new TokenValidationParameters {
             ValidIssuer = Configuration["Jwt:Issuer"],
             ValidateIssuer = true,
             ValidAudience = Configuration["Jwt:Audience"],
@@ -86,21 +83,51 @@ namespace OpenOsp.Server {
             ValidateLifetime = true
           };
         });
+      /// API Repositories
+      /// HasIdRepository as IHasIdRepository
+      services.AddScoped<IHasIdRepository<OspM.Action, int>, HasIdRepository<OspM.Action, int>>();
+      services
+        .AddScoped<IHasIdRepository<OspM.ActionEquipment, int, int>, HasIdRepository<OspM.ActionEquipment, int, int>>();
+      services.AddScoped<IHasIdRepository<OspM.ActionMember, int, int>, HasIdRepository<OspM.ActionMember, int, int>>();
+      services.AddScoped<IHasIdRepository<OspM.Equipment, int>, HasIdRepository<OspM.Equipment, int>>();
+      services.AddScoped<IHasIdRepository<OspM.Member, int>, HasIdRepository<OspM.Member, int>>();
+      /// UnauthorizedRepository as IHasIdRepository
+      // services.AddScoped<IHasIdRepository<OspM.Action, int>, UnauthorizedRepository<OspM.Action, int>>();
+      // services.AddScoped<IHasIdRepository<OspM.ActionEquipment, int, int>, UnauthorizedRepository<OspM.ActionEquipment, int, int>>();
+      // services.AddScoped<IHasIdRepository<OspM.ActionMember, int, int>, UnauthorizedRepository<OspM.ActionMember, int, int>>();
+      // services.AddScoped<IHasIdRepository<OspM.Equipment, int>, UnauthorizedRepository<OspM.Equipment, int>>();
+      // services.AddScoped<IHasIdRepository<OspM.Member, int>, UnauthorizedRepository<OspM.Member, int>>();
       /// API Services
-      services.AddScoped<IHasIdService<OspM.Action, int>, AuthService<OpenOsp.Model.Models.Action, int>>();
-      services.AddScoped<IHasIdService<ActionEquipment, int, int>, AuthService<ActionEquipment, int, int>>();
-      services.AddScoped<IHasIdService<ActionMember, int, int>, AuthService<ActionMember, int, int>>();
-      services.AddScoped<IHasIdService<Equipment, int>, AuthService<Equipment, int>>();
-      services.AddScoped<IHasIdService<Member, int>, AuthService<Member, int>>();
+      /// HasIdService as IHasIdService
+      services.AddScoped<IHasIdService<OspM.Action, int>, HasIdService<OspM.Action, int>>();
+      services.AddScoped<IHasIdService<OspM.ActionEquipment, int, int>, HasIdService<OspM.ActionEquipment, int, int>>();
+      services.AddScoped<IHasIdService<OspM.ActionMember, int, int>, HasIdService<OspM.ActionMember, int, int>>();
+      services.AddScoped<IHasIdService<OspM.Equipment, int>, HasIdService<OspM.Equipment, int>>();
+      services.AddScoped<IHasIdService<OspM.Member, int>, HasIdService<OspM.Member, int>>();
+      /// AuhorizedService as IHasIdService
+      // services.AddScoped<IHasIdService<OspM.Action, int>, AuthorizedService<OspM.Action, int, int>>();
+      // services.AddScoped<IHasIdService<OspM.Equipment, int>, AuthorizedService<OspM.Equipment, int, int>>();
+      // services.AddScoped<IHasIdService<OspM.Member, int>, AuthorizedService<OspM.Member, int, int>>();
+      /// EntitiesAuthService as IEntitiesAuthService
+      // services.AddScoped<IEntitiesAuthService<OspM.Action>, EntitiesAuthService<OspM.Action, int>>();
+      // services.AddScoped<IEntitiesAuthService<OspM.Equipment>, EntitiesAuthService<OspM.Equipment, int>>();
+      // services.AddScoped<IEntitiesAuthService<OspM.Member>, EntitiesAuthService<OspM.Member, int>>();
+      /// Other services
       services.AddScoped<IEmailsService, EmailsService>();
-      services.AddScoped<IUserService<User, int>, UserService<User, int>>();
+      services.AddScoped<IUserService<OspM.User, int>, UserService<OspM.User, int>>();
       services.AddScoped<IUserClaimsService<int>, UserClaimsService<int>>();
       /// DTO Mappers
       services.AddScoped<IDtoMapper<OspM.Action, ActionCreateDto, ActionReadDto, ActionUpdateDto>, ActionDtoMapper>();
-      services.AddScoped<IDtoMapper<ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto, ActionEquipmentUpdateDto>, ActionEquipmentDtoMapper>();
-      services.AddScoped<IDtoMapper<ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto>, ActionMemberDtoMapper>();
-      services.AddScoped<IDtoMapper<Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto>, EquipmentDtoMapper>();
-      services.AddScoped<IDtoMapper<Member, MemberCreateDto, MemberReadDto, MemberUpdateDto>, MemberDtoMapper>();
+      services
+        .AddScoped<IDtoMapper<OspM.ActionEquipment, ActionEquipmentCreateDto, ActionEquipmentReadDto,
+          ActionEquipmentUpdateDto>, ActionEquipmentDtoMapper>();
+      services
+        .AddScoped<IDtoMapper<OspM.ActionMember, ActionMemberCreateDto, ActionMemberReadDto, ActionMemberUpdateDto>,
+          ActionMemberDtoMapper>();
+      services
+        .AddScoped<IDtoMapper<OspM.Equipment, EquipmentCreateDto, EquipmentReadDto, EquipmentUpdateDto>,
+          EquipmentDtoMapper>();
+      services.AddScoped<IDtoMapper<OspM.Member, MemberCreateDto, MemberReadDto, MemberUpdateDto>, MemberDtoMapper>();
       services.AddScoped<IUserDtoMapper, UserDtoMapper>();
       /// API Controllers
       services.AddControllers()
@@ -117,10 +144,10 @@ namespace OpenOsp.Server {
         options.HttpsPort = _env.IsDevelopment() ? 5001 : 443;
       });
       /// Development-only and Production-only services
-      if(_env.IsDevelopment()) {
+      if (_env.IsDevelopment()) {
         /// Swagger
         services.AddSwaggerGen(c => {
-          c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenOsp.Server", Version = "v1" });
+          c.SwaggerDoc("v1", new OpenApiInfo {Title = "OpenOsp.Server", Version = "v1"});
         });
       }
       else {
@@ -145,6 +172,7 @@ namespace OpenOsp.Server {
       else {
         app.UseHsts();
       }
+
       app.UseRouting();
       app.UseAuthorization();
       app.UseBlazorFrameworkFiles();
@@ -154,7 +182,5 @@ namespace OpenOsp.Server {
         endpoints.MapFallbackToFile("{*path:nonfile}", "index.html");
       });
     }
-
   }
-
 }

@@ -1,5 +1,4 @@
 namespace OpenOsp.Server.Enums {
-
   public enum DbTransactionType {
     None,
     Create,
@@ -7,5 +6,4 @@ namespace OpenOsp.Server.Enums {
     Update,
     Delete
   }
-
 }

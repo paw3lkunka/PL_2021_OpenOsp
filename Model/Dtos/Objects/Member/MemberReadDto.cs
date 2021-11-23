@@ -1,24 +1,24 @@
 using System.ComponentModel.DataAnnotations;
-using OpenOsp.Model.DataAnnotations;
+
 using OspDA = OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
-
   public class MemberReadDto {
+    [OspDA.RequiredAttribute] public int Id { get; set; }
 
-    [OspDA.Required]
-    public int Id { get; set; }
-
-    [OspDA.Required, OspDA.MaxLength(24), Name]
+    [OspDA.RequiredAttribute]
+    [OspDA.MaxLengthAttribute(24)]
+    [OspDA.NameAttribute]
     public string FirstName { get; set; }
 
-    [OspDA.Required, OspDA.MaxLength(24), Name]
+    [OspDA.RequiredAttribute]
+    [OspDA.MaxLengthAttribute(24)]
+    [OspDA.NameAttribute]
     public string LastName { get; set; }
 
     [Display(Name = "PESEL")]
-    [OspDA.Required, Pesel]
+    [OspDA.RequiredAttribute]
+    [OspDA.PeselAttribute]
     public string Pesel { get; set; }
-
   }
-
 }

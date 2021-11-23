@@ -1,21 +1,19 @@
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
 using Microsoft.Extensions.Options;
+
 using OpenOsp.Server.Settings;
 
 namespace OpenOsp.Server.Api.Services {
-
   public class EmailsService : IEmailsService {
+    private readonly EmailSettings _emailSettings;
 
     public EmailsService(IOptions<EmailSettings> emailSettings) {
       _emailSettings = emailSettings.Value;
     }
-
-    private readonly EmailSettings _emailSettings;
 
     public async Task SendVerificationEmail(string email, string link) {
       var body = $@"
@@ -39,11 +37,9 @@ namespace OpenOsp.Server.Api.Services {
           Subject = subject,
           Body = body,
           IsBodyHtml = true,
-          BodyEncoding = System.Text.Encoding.UTF8
+          BodyEncoding = Encoding.UTF8
         });
       }
     }
-
   }
-
 }
