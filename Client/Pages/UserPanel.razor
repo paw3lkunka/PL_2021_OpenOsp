@@ -1,6 +1,6 @@
-@page "/userpanel"
 @using OpenOsp.Client.Enums
 @using OpenOsp.Client.Components.UserPanel.Tables
+@page "/userpanel"
 
 <div class="card w-full min-w-screen-md shadow-2xl bg-base-200 bg-opacity-95">
   <div class="tabs w-full">
@@ -20,13 +20,19 @@
   <div class="card-body bg-base-100">
     @switch (Mode) {
       case UserPanelMode.Members:
-        <MembersTable/>
+        <CascadingValue Name="MarkedMembers" Value="@MarkedMembers">
+          <MembersTable/>
+        </CascadingValue>
         break;
       case UserPanelMode.Equipment:
-        <EquipmentTable/>
+        <CascadingValue Name="MarkedEquipment" Value="@MarkedEquipment">
+          <EquipmentTable/>
+        </CascadingValue>
         break;
       case UserPanelMode.Actions:
-        <ActionsTable/>
+        <CascadingValue Name="MarkedActions" Value="@MarkedActions">
+          <ActionsTable/>
+        </CascadingValue>
         break;
     }
   </div>
