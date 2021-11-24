@@ -14,51 +14,34 @@
   </div>
   <div>
     <span class="footer-title">Attributions</span>
-    <p class="italic">
-      <a class="link link-hover link-primary"
-         href="https://www.flickr.com/photos/69125796@N00/7415300266" target="_blank">
-        "Firefighters"
-      </a>
-      <span>
-        by
-        <a
-          class="link link-hover link-secondary" href="https://www.flickr.com/photos/69125796@N00"
-          target="_blank">
-          starmanseries
-        </a>
-      </span> is licensed under
-      <a class="link link-hover link-accent"
-         href="https://creativecommons.org/licenses/by/2.0/" target="_blank">
-        CC BY 2.0
-      </a>
-    </p>
-    <p class="italic">
-      <a class="link link-hover link-primary" href="https://twemoji.twitter.com/"
-         target="_blank">
-        "Twemoji"
-      </a>
-      <span>
-        by
-        <a class="link link-hover link-secondary"
-           href="https://about.twitter.com/" target="_blank">
-          Twitter, Inc
-        </a>
-      </span> and other contributors is licensed
-      under
-      <a class="link link-hover link-accent" href="https://creativecommons.org/licenses/by/4.0/"
-         target="_blank">
-        CC BY 4.0
-      </a>
-    </p>
+    @foreach (var attr in _attributions) {
+      @_attributionFragment(attr)
+    }
   </div>
 </footer>
 
 @code {
 
-  private IEnumerable<Attribution> Attributions = new List<Attribution> {
+  private IEnumerable<AttributionStruct> _attributions = new List<AttributionStruct> {
     new() {
-      Title = new KeyValuePair<string, string>("aaa", "aaa")
+      Title = new KeyValuePair<string, string>("Firefighters", "https://www.flickr.com/photos/69125796@N00/7415300266"),
+      Author = new KeyValuePair<string, string>("starmanseries", "https://www.flickr.com/photos/69125796@N00"),
+      License = new KeyValuePair<string, string>("CC BY 2.0", "https://creativecommons.org/licenses/by/2.0/")
+    },
+    new() {
+      Title = new KeyValuePair<string, string>("Twemoji", "https://twemoji.twitter.com/"),
+      Author = new KeyValuePair<string, string>("Twitter, Inc and other contributors", "https://about.twitter.com/"),
+      License = new KeyValuePair<string, string>("CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/")
     }
+  };
+
+  private RenderFragment<AttributionStruct> _attributionFragment = attr => __builder => {
+    <p class="italic">
+      <a class="link link-hover link-primary" href="@attr.Title.Value" target="_blank">"@attr.Title.Key"</a>
+      <span> by <a class="link link-hover link-secondary" href="@attr.Author.Value" target="_blank">@attr.Author.Key</a> </span>
+      is licensed under
+      <a class="link link-hover link-accent" href="@attr.License.Value" target="_blank">@attr.License.Key</a>
+    </p>
   };
 
 }

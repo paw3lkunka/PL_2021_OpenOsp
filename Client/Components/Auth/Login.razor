@@ -1,9 +1,9 @@
 @using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.Forms
-<EditForm Model="@dto" OnValidSubmit="HandleLogin">
+<EditForm Model="@_dto" OnValidSubmit="HandleLogin">
   <DataAnnotationsValidator/>
-  <LabeledInputText @bind-Value="dto.Email" type="email" placeholder="your@email.com"/>
-  <LoginInputPassword @bind-Value="dto.Password" placeholder="password"/>
+  <LabeledInputText @bind-Value="_dto.Email" type="email" placeholder="your@email.com"/>
+  <LoginInputPassword @bind-Value="_dto.Password" placeholder="password"/>
   <div class="form-control mt-6">
     <button type="submit" class="btn btn-primary">Log in</button>
   </div>
@@ -11,10 +11,10 @@
 
 @code {
 
-  private UserLoginDto dto = new();
+  private UserLoginDto _dto = new();
 
   private async Task HandleLogin() {
-    Console.WriteLine($"{dto.Email} and {dto.Password}");
+    Console.WriteLine($"{_dto.Email} and {_dto.Password}");
   }
 
 }

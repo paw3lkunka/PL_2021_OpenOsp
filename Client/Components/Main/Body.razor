@@ -1,7 +1,7 @@
 @inherits LayoutComponentBase
 
 <div class="drawer w-auto min-h-screen text-base-content">
-  <input id="navdrawer" type="checkbox" class="drawer-toggle" @bind="IsNavdrawer"/>
+  <input id="navdrawer" type="checkbox" class="drawer-toggle" @bind="_isNavdrawer"/>
   <div class="drawer-content min-h-screen items-stretch">
     <div class="hero min-h-screen flex flex-col bg-firefighters">
       <div class="hero-overlay bg-opacity-70"/>
@@ -14,12 +14,12 @@
   </div>
   <div class="drawer-side">
     <label for="navdrawer" class="drawer-overlay"/>
-    <Nav @bind-IsNavdrawer="IsNavdrawer" class="menu w-80 p-4 overflow-y-auto bg-base-300 bg-opacity-90"/>
+    <Nav @bind-IsNavdrawer="_isNavdrawer" class="menu w-80 p-4 overflow-y-auto bg-base-300 bg-opacity-90"/>
   </div>
 </div>
 
 @code {
 
-  public bool IsNavdrawer { get; set; }
+  private bool _isNavdrawer { get; set; }
 
 }

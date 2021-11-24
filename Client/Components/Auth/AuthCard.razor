@@ -2,17 +2,17 @@
 <div class="card w-full max-w-sm mx-2 flex-shrink-0 shadow-2xl bg-base-200 bg-opacity-95">
   <div class="card-body">
     <div class="card-title w-full flex flex-row">
-      <button @onclick="() => Mode = AuthCardMode.Login" disabled="@(Mode.Equals(AuthCardMode.Login))"
+      <button @onclick="() => _mode = AuthCardMode.Login" disabled="@(_mode.Equals(AuthCardMode.Login))"
               class="btn btn-secondary flex-grow">
         Log in
       </button>
       <div class="divider divider-vertical"/>
-      <button @onclick="() => Mode = AuthCardMode.Register" disabled="@(Mode.Equals(AuthCardMode.Register))"
+      <button @onclick="() => _mode = AuthCardMode.Register" disabled="@(_mode.Equals(AuthCardMode.Register))"
               class="btn btn-accent flex-grow">
         Register
       </button>
     </div>
-    @switch (Mode) {
+    @switch (_mode) {
       case AuthCardMode.Login:
         <Login/>
         break;
@@ -25,6 +25,6 @@
 
 @code {
 
-  private AuthCardMode Mode { get; set; } = AuthCardMode.Login;
+  private AuthCardMode _mode { get; set; } = AuthCardMode.Login;
 
 }

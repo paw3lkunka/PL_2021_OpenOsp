@@ -4,21 +4,21 @@
 
 <div class="card w-full min-w-screen-md shadow-2xl bg-base-200 bg-opacity-95">
   <div class="tabs w-full">
-    <div @onclick="() => Mode = UserPanelMode.Members"
-         class="tab tab-lg tab-lifted @(Mode == UserPanelMode.Members ? "tab-active" : string.Empty)">
+    <div @onclick="() => _mode = UserPanelMode.Members"
+         class="tab tab-lg tab-lifted @(_mode == UserPanelMode.Members ? "tab-active" : string.Empty)">
       Members
     </div>
-    <div @onclick="() => Mode = UserPanelMode.Equipment"
-         class="tab tab-lg tab-lifted @(Mode == UserPanelMode.Equipment ? "tab-active" : string.Empty)">
+    <div @onclick="() => _mode = UserPanelMode.Equipment"
+         class="tab tab-lg tab-lifted @(_mode == UserPanelMode.Equipment ? "tab-active" : string.Empty)">
       Equipment
     </div>
-    <div @onclick="() => Mode = UserPanelMode.Actions"
-         class="tab tab-lg tab-lifted @(Mode == UserPanelMode.Actions ? "tab-active" : string.Empty)">
+    <div @onclick="() => _mode = UserPanelMode.Actions"
+         class="tab tab-lg tab-lifted @(_mode == UserPanelMode.Actions ? "tab-active" : string.Empty)">
       Actions
     </div>
   </div>
   <div class="card-body bg-base-100">
-    @switch (Mode) {
+    @switch (_mode) {
       case UserPanelMode.Members:
         <CascadingValue Name="MarkedMembers" Value="@MarkedMembers">
           <MembersTable/>
@@ -40,12 +40,12 @@
 
 @code {
 
-  private UserPanelMode Mode { get; set; } = UserPanelMode.Members;
+  private UserPanelMode _mode { get; set; } = UserPanelMode.Members;
 
-  private IEnumerable<int> MarkedActions { get; set; } = new HashSet<int>();
+  private ISet<int> _markedActions { get; set; } = new HashSet<int>();
 
-  private IEnumerable<int> MarkedEquipment { get; set; } = new HashSet<int>();
+  private ISet<int> _markedEquipment { get; set; } = new HashSet<int>();
 
-  private IEnumerable<int> MarkedMembers { get; set; } = new HashSet<int>();
+  private ISet<int> _markedMembers { get; set; } = new HashSet<int>();
 
 }

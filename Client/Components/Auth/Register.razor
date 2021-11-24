@@ -1,11 +1,11 @@
 @using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.Forms
-<EditForm Model="@dto" OnValidSubmit="HandleRegister">
+<EditForm Model="@_dto" OnValidSubmit="HandleRegister">
   <DataAnnotationsValidator/>
-  <LabeledInputText @bind-Value="dto.UserName" type="text" placeholder="username"/>
-  <LabeledInputText @bind-Value="dto.Email" type="email" placeholder="your@email.com"/>
-  <LabeledInputText @bind-Value="dto.Password" type="password" placeholder="password"/>
-  <LabeledInputText @bind-Value="dto.PasswordConfirmation" type="password" placeholder="password"/>
+  <LabeledInputText @bind-Value="_dto.UserName" type="text" placeholder="username"/>
+  <LabeledInputText @bind-Value="_dto.Email" type="email" placeholder="your@email.com"/>
+  <LabeledInputText @bind-Value="_dto.Password" type="password" placeholder="password"/>
+  <LabeledInputText @bind-Value="_dto.PasswordConfirmation" type="password" placeholder="password"/>
   <div class="form-control mt-6">
     <button type="submit" class="btn btn-primary">Register</button>
   </div>
@@ -13,7 +13,7 @@
 
 @code {
 
-  private UserRegisterDto dto = new();
+  private UserRegisterDto _dto = new();
 
   private async Task HandleRegister() {
   }

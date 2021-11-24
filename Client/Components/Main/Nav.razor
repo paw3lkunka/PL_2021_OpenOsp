@@ -1,23 +1,31 @@
-<nav @attributes="AdditionalAttributes">
-  <NavLink ActiveClass="bg-primary btn-active" Match=@NavLinkMatch.All href="/" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
-    Home
-  </NavLink>
-  <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="userpanel" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
-    User Panel
-  </NavLink>
-  <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="about" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
-    <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
-      About
-    </span>
-  </NavLink>
-  <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="contact" class="btn btn-ghost rounded-btn lg:btn-sm" @onclick="OnNavLinkClick">
-    <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
-      Contact Us
-    </span>
-  </NavLink>
+@using OpenOsp.Client.Structures
+<nav @attributes="AdditionalAttributes" @onclick="OnNavClick">
+  @foreach (var navLink in _navLinks) {
+    @_navLinkFragment(navLink)
+  }
 </nav>
 
 @code {
+
+  private IEnumerable<NavLinkStruct> _navLinks = new List<NavLinkStruct> {
+    new() {Url = "/", Label = "Home", IsAvailable = true},
+    new() {Url = "userpanel", Label = "User Panel", IsAvailable = true},
+    new() {Url = "about", Label = "About", IsAvailable = false},
+    new() {Url = "contact", Label = "Contact Us", IsAvailable = false}
+  };
+
+  private RenderFragment<NavLinkStruct> _navLinkFragment = navLink => __builder => {
+    <NavLink ActiveClass="btn-primary btn-active" Match="@NavLinkMatch.All" href="@navLink.Url" class="btn btn-ghost rounded-btn lg:btn-sm">
+      @if (navLink.IsAvailable) {
+        @navLink.Label
+      }
+      else {
+        <span data-tip="Not available" class="tooltip tooltip-right lg:tooltip-bottom tooltip-info">
+          @navLink.Label
+        </span>
+      }
+    </NavLink>
+  };
 
   [Parameter]
   public bool IsNavdrawer { get; set; }
@@ -28,7 +36,7 @@
   [Parameter(CaptureUnmatchedValues = true)]
   public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
 
-  private async Task OnNavLinkClick() {
+  private async Task OnNavClick() {
     IsNavdrawer = false;
     await IsNavdrawerChanged.InvokeAsync();
   }
