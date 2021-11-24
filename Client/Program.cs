@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 using Blazored.LocalStorage;
@@ -19,7 +20,7 @@ namespace OpenOsp.Client {
       /// Blazored.LocalStorage
       builder.Services.AddBlazoredLocalStorage(config => {
         config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-        config.JsonSerializerOptions.IgnoreNullValues = true;
+        config.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         config.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
         config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         config.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;

@@ -1,3 +1,4 @@
+@using OpenOsp.Client.Structures
 <footer class="footer p-10 bg-base-300 text-neutral-content">
   <div>
     <svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
@@ -51,3 +52,13 @@
     </p>
   </div>
 </footer>
+
+@code {
+
+  private IEnumerable<Attribution> Attributions = new List<Attribution> {
+    new() {
+      Title = new KeyValuePair<string, string>("aaa", "aaa")
+    }
+  };
+
+}
