@@ -1,0 +1,25 @@
+@using OpenOsp.Client.Enums
+
+<tr>
+  @switch (_mode) {
+    case TableRecordMode.Read:
+      <td></td>
+      <td></td>
+      <td></td>
+      break;
+    case TableRecordMode.Update:
+      <td></td>
+      <td></td>
+      <td></td>
+      break;
+  }
+</tr>
+
+@code {
+
+  private TableRecordMode _mode { get; set; } = TableRecordMode.Read;
+
+  [CascadingParameter(Name = "MarkedEquipment")]
+  private ISet<int> _markedEquipment { get; set; }
+
+}

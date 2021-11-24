@@ -1,0 +1,37 @@
+﻿@using OpenOsp.Model.Dtos
+@using OpenOsp.Client.UserPanel.Members
+
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox"/>
+          </label>
+        </th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>PESEL</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach(var member in _members) {
+        <CascadingValue Value=@member>
+          <MemberRecord/>
+        </CascadingValue>
+      }
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
+</div>
+
+@code {
+
+  private IEnumerable<MwmberReadDto> _members { get; set; }
+
+  [CascadingParameter(Name = "MarkedMembers")]
+  private ISet<int> _markedMembers { get; set; }
+
+}

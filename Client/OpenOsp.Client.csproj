@@ -12,6 +12,14 @@
   <ItemGroup>
     <ServiceWorker Include=".\wwwroot\service-worker.js" PublishedContent=".\wwwroot\service-worker.published.js" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Components\UserPanel\ActionsTable.razor" />
+    <AdditionalFiles Include="Components\UserPanel\Actions\ActionRecord.razor" />
+    <AdditionalFiles Include="Components\UserPanel\EquipmentTable.razor" />
+    <AdditionalFiles Include="Components\UserPanel\Equipment\EquipmentRecord.razor" />
+    <AdditionalFiles Include="Components\UserPanel\MembersTable.razor" />
+    <AdditionalFiles Include="Components\UserPanel\Members\MemberRecord.razor" />
+  </ItemGroup>
   <!-- NodeJs -->
   <Target Name="NpmCheck" BeforeTargets="NpmInstall">
     <Exec Command="npm -v" ContinueOnError="true">
