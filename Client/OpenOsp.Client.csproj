@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     <NpmLastInstall>./node_modules/.last-install</NpmLastInstall>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\OpenOsp.Model.csproj" />
@@ -14,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="Components\UserPanel\ActionsTable.razor" />
-    <AdditionalFiles Include="Components\UserPanel\Actions\ActionRecord.razor" />
     <AdditionalFiles Include="Components\UserPanel\EquipmentTable.razor" />
     <AdditionalFiles Include="Components\UserPanel\Equipment\EquipmentRecord.razor" />
     <AdditionalFiles Include="Components\UserPanel\MembersTable.razor" />
