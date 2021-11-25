@@ -1,19 +1,16 @@
 ﻿@using OpenOsp.Model.Dtos
-@using OpenOsp.Client.UserPanel.Members
+@using OpenOsp.Client.Components.UserPanel.Members
+@using OpenOsp.Client.Components.Forms
 
 <div class="overflow-x-auto">
   <table class="table w-full">
     <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox"/>
-          </label>
-        </th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>PESEL</th>
-      </tr>
+    <tr>
+      <th><label><input type="checkbox" class="checkbox"/></label></th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>PESEL</th>
+    </tr>
     </thead>
     <tbody>
       @foreach(var member in _members) {
@@ -23,13 +20,21 @@
       }
     </tbody>
     <tfoot>
+    <tr>
+      <td></td>
+      <td><LabeledInputText @bind-Value="_createDto.FirstName" placeholder="first"></LabeledInputText></td>
+      <td><LabeledInputText @bind-Value="_createDto.LastName" placeholder="last"></LabeledInputText></td>
+      <td><LabeledInputText @bind-Value="_createDto.Pesel" placeholder="00000000000"></LabeledInputText></td>
+    </tr>
     </tfoot>
   </table>
 </div>
 
 @code {
 
-  private IEnumerable<MwmberReadDto> _members { get; set; }
+  private IEnumerable<MemberReadDto> _members { get; set; }
+
+  private MemberCreateDto _createDto { get; set; } = new();
 
   [CascadingParameter(Name = "MarkedMembers")]
   private ISet<int> _markedMembers { get; set; }
