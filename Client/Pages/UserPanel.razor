@@ -18,23 +18,23 @@
     </div>
   </div>
   <div class="card-body bg-base-100">
-    @switch (_mode) {
-      case UserPanelMode.Members:
-        <CascadingValue Name="MarkedMembers" Value="@_markedMembers">
-          <MembersTable/>
-        </CascadingValue>
-        break;
-      case UserPanelMode.Equipment:
-        <CascadingValue Name="MarkedEquipment" Value="@_markedEquipment">
-          <EquipmentTable/>
-        </CascadingValue>
-        break;
-      case UserPanelMode.Actions:
-        <CascadingValue Name="MarkedActions" Value="@_markedActions">
-          <ActionsTable/>
-        </CascadingValue>
-        break;
-    }
+    @* @switch (_mode) { *@
+    @*   case UserPanelMode.Members: *@
+    @*     <CascadingValue Name="MarkedMembers" Value="@_markedMembers"> *@
+    @*       <MembersTable/> *@
+    @*     </CascadingValue> *@
+    @*     break; *@
+    @*   case UserPanelMode.Equipment: *@
+    @*     <CascadingValue Name="MarkedEquipment" Value="@_markedEquipment"> *@
+    @*       <EquipmentTable/> *@
+    @*     </CascadingValue> *@
+    @*     break; *@
+    @*   case UserPanelMode.Actions: *@
+    @*     <CascadingValue Name="MarkedActions" Value="@_markedActions"> *@
+    @*       <ActionsTable/> *@
+    @*     </CascadingValue> *@
+    @*     break; *@
+    @* } *@
   </div>
 </div>
 
@@ -42,10 +42,10 @@
 
   private UserPanelMode _mode { get; set; } = UserPanelMode.Members;
 
-  private ISet<int> _markedActions { get; set; } = new HashSet<int>();
-
-  private ISet<int> _markedEquipment { get; set; } = new HashSet<int>();
-
-  private ISet<int> _markedMembers { get; set; } = new HashSet<int>();
+  // private ISet<int> _markedActions { get; set; } = new HashSet<int>();
+  //
+  // private ISet<int> _markedEquipment { get; set; } = new HashSet<int>();
+  //
+  // private ISet<int> _markedMembers { get; set; } = new HashSet<int>();
 
 }
