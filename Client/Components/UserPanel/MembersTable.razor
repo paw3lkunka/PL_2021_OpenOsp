@@ -13,30 +13,32 @@
     </tr>
     </thead>
     <tbody>
-      @* @foreach(var member in _members) { *@
-      @*   <CascadingValue Value=@member> *@
-      @*     <MemberRecord/> *@
-      @*   </CascadingValue> *@
-      @* } *@
+    @foreach(var member in _members) {
+      <CascadingValue Value=@member>
+        <MemberRecord/>
+      </CascadingValue>
+    }
     </tbody>
     <tfoot>
-    @* <tr> *@
-    @*   <td></td> *@
-    @*   <td><LabeledInputText @bind-Value="_createDto.FirstName" placeholder="first"></LabeledInputText></td> *@
-    @*   <td><LabeledInputText @bind-Value="_createDto.LastName" placeholder="last"></LabeledInputText></td> *@
-    @*   <td><LabeledInputText @bind-Value="_createDto.Pesel" placeholder="00000000000"></LabeledInputText></td> *@
-    @* </tr> *@
+    <tr>
+      <td></td>
+      <td><LabeledInputText @bind-Value="_createDto.FirstName" placeholder="first"/></td>
+      <td><LabeledInputText @bind-Value="_createDto.LastName" placeholder="last"/></td>
+      <td><LabeledInputText @bind-Value="_createDto.Pesel" placeholder="00000000000"/></td>
+    </tr>
     </tfoot>
   </table>
 </div>
 
 @code {
 
-  private IEnumerable<MemberReadDto> _members { get; set; }
+  private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>() {
+    new() {FirstName = "test", LastName = "testowy", Pesel = "0000000000", Id = 1}
+  };
 
   private MemberCreateDto _createDto { get; set; } = new();
 
-  // [CascadingParameter(Name = "MarkedMembers")]
-  // private ISet<int> _markedMembers { get; set; }
+  [CascadingParameter(Name = "MarkedMembers")]
+  private ISet<int> _markedMembers { get; set; }
 
 }

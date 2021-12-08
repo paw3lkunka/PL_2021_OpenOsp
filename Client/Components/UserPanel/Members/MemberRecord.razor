@@ -5,10 +5,12 @@
   @switch (_mode) {
     case TableRecordMode.Read:
       <td></td>
-      <td></td>
-      <td></td>
+      <td>@_readDto.FirstName</td>
+      <td>@_readDto.LastName</td>
+      <td>@_readDto.Pesel</td>
       break;
     case TableRecordMode.Update:
+      <MemberUpdateRecord/>
       break;
   }
 </tr>
@@ -18,7 +20,7 @@
   private TableRecordMode _mode { get; set; } = TableRecordMode.Read;
   
   [CascadingParameter]
-  public MemberReadDto ReadDto { get; set; }
+  private MemberReadDto _readDto { get; set; }
 
   [CascadingParameter(Name = "MarkedMembers")]
   private ISet<int> _markedMembers { get; set; }

@@ -1,4 +1,9 @@
-﻿<div class="overflow-x-auto">
+﻿@using OpenOsp.Model.Dtos
+@using OpenOsp.Client.Components.UserPanel.Actions
+@using OpenOsp.Client.Components.Forms
+@using OpenOsp.Model.Enums
+
+<div class="overflow-x-auto">
   <table class="table w-full">
     <thead>
     <tr>
@@ -10,15 +15,39 @@
     </tr>
     </thead>
     <tbody>
+    @foreach (var action in _actions) {
+      <CascadingValue Value="@action">
+        <ActionRecord/>
+      </CascadingValue>
+    }
     </tbody>
     <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><LabeledInputText @bind-Value="_createDto.Location"/></td>
+      <td></td>
+      <td></td>
+    </tr>
     </tfoot>
   </table>
 </div>
 
 @code {
 
-  // [CascadingParameter(Name = "MarkedActions")]
-  // private ISet<int> _markedActions { get; set; }
+  private IEnumerable<ActionReadDto> _actions { get; set; } = new List<ActionReadDto>() {
+    new() {
+      Type = ActionType.Fire,
+      Location = "wypizdów 2",
+      StartTime = new DateTime(2021, 12, 1),
+      EndTime = new DateTime(2021, 12, 2),
+      Id = 1
+    }
+  };
+
+  private ActionCreateDto _createDto { get; set; }= new();
+
+  [CascadingParameter(Name = "MarkedActions")]
+  private ISet<int> _markedActions { get; set; }
 
 }

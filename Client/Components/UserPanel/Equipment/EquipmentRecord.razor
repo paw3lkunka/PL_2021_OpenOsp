@@ -1,16 +1,16 @@
 @using OpenOsp.Client.Enums
+@using OpenOsp.Model.Dtos
 
 <tr>
   @switch (_mode) {
     case TableRecordMode.Read:
       <td></td>
-      <td></td>
-      <td></td>
+      <td>@_readDto.Brand</td>
+      <td>@_readDto.Model</td>
+      <td>@_readDto.RegistryNumber</td>
       break;
     case TableRecordMode.Update:
-      <td></td>
-      <td></td>
-      <td></td>
+      <EquipmentUpdateRecord/>
       break;
   }
 </tr>
@@ -18,6 +18,9 @@
 @code {
 
   private TableRecordMode _mode { get; set; } = TableRecordMode.Read;
+  
+  [CascadingParameter]
+  private  EquipmentReadDto _readDto { get; set; }
 
   [CascadingParameter(Name = "MarkedEquipment")]
   private ISet<int> _markedEquipment { get; set; }

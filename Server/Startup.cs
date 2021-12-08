@@ -45,8 +45,7 @@ namespace OpenOsp.Server {
       services.Configure<EmailSettings>(Configuration.GetSection("Email"));
       /// Basic server configuration
       services.AddCors();
-      services.AddMvc()
-        .SetCompatibilityVersion(CompatibilityVersion.Latest);
+      services.AddMvc();
       /// Database Context
       services.AddDbContext<AppDbContext>(options => {
         options.UseNpgsql(
