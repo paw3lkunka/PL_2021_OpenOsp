@@ -1,10 +1,10 @@
-@using OpenOsp.Model.Dtos
+﻿@using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.Forms
 
 <EditForm Model="@_dto" OnValidSubmit="HandleLogin">
   <DataAnnotationsValidator/>
   <LabeledInputText @bind-Value="_dto.Email" type="email" placeholder="your@email.com"/>
-  <LoginInputPassword @bind-Value="_dto.Password" placeholder="password"/>
+  <LabeledInputText @bind-Value="_dto.Password" placeholder="password" SubLabel="@_forgotPasswordFragment"/>
   <div class="form-control mt-6">
     <button type="submit" class="btn btn-primary">Log in</button>
   </div>
@@ -17,5 +17,11 @@
   private void HandleLogin() {
     Console.WriteLine($"{_dto.Email} and {_dto.Password}");
   }
+
+  private RenderFragment _forgotPasswordFragment = __builder => {
+    <div data-tip="Not available" class="tooltip tooltip-bottom tooltip-info">
+      <a href="/" class="label-text-alt link-hover">Forgot password?</a>
+    </div>
+  };
 
 }

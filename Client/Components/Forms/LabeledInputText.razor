@@ -1,14 +1,28 @@
 @inherits InputText
 
 <div class="form-control">
-  <label class="label">
-    <LabelText For="@ValueExpression" class="label-text"/>
-  </label>
-  <InputText @attributes="AdditionalAttributes" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
+  @if (IsLabeled) {
+    <label class="label">
+      <LabelText For="@ValueExpression" class="label-text"/>
+    </label>
+  }
+  <InputText @attributes="AdditionalAttributes"
+             Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
              class=@("input input-bordered " + CssClass.Replace(" valid", " input-success").Replace(" invalid", " input-error"))/>
   <label class="label">
-    <div class="label-text-alt mx-2 text-error">
+    @SubLabel
+    <div class="label-text-alt mx-2 text-error text-xs">
       <ValidationMessage For="@ValueExpression"/>
     </div>
   </label>
 </div>
+
+@code {
+
+  [Parameter]
+  public bool IsLabeled { get; set; } = true;
+
+  [Parameter]
+  public RenderFragment SubLabel { get; set; }
+
+}

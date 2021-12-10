@@ -3,31 +3,34 @@
 @using OpenOsp.Client.Components.Forms
 
 <div class="overflow-x-auto">
-  <table class="table w-full">
-    <thead>
-    <tr>
-      <th><label><input type="checkbox" class="checkbox"/></label></th>
-      <th>Brand</th>
-      <th>Model</th>
-      <th>Registry number</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach(var equipment in _equipment) {
-      <CascadingValue Value="@equipment">
-        <EquipmentRecord/>
-      </CascadingValue>
-    }
-    </tbody>
-    <tfoot>
-    <tr>
-      <td></td>
-      <td><LabeledInputText @bind-Value="_createDto.Brand" placeholder="brand"/></td>
-      <td><LabeledInputText @bind-Value="_createDto.Model" placeholder="model"/></td>
-      <td><LabeledInputText @bind-Value="_createDto.RegistryNumber" placeholder="i.e. AAA-12345"/></td>
-    </tr>
-    </tfoot>
-  </table>
+  <EditForm Model="@_createDto">
+    <DataAnnotationsValidator/>
+    <table class="table w-full">
+      <thead>
+      <tr>
+        <th><label><input type="checkbox" class="checkbox"/></label></th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Registry number</th>
+      </tr>
+      </thead>
+      <tbody>
+      @foreach(var equipment in _equipment) {
+        <CascadingValue Value="@equipment">
+          <EquipmentRecord/>
+        </CascadingValue>
+      }
+      </tbody>
+      <tfoot>
+      <tr>
+        <th></th>
+        <th><LabeledInputText @bind-Value="_createDto.Brand" class="input-sm" placeholder="brand" IsLabeled="false"/></th>
+        <th><LabeledInputText @bind-Value="_createDto.Model" class="input-sm" placeholder="model" IsLabeled="false"/></th>
+        <th><LabeledInputText @bind-Value="_createDto.RegistryNumber" class="input-sm" placeholder="i.e. AAA-12345" IsLabeled="false"/></th>
+      </tr>
+      </tfoot>
+    </table>
+  </EditForm>
 </div>
 
 @code {

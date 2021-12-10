@@ -3,31 +3,34 @@
 @using OpenOsp.Client.Components.Forms
 
 <div class="overflow-x-auto">
-  <table class="table w-full">
-    <thead>
-    <tr>
-      <th><label><input type="checkbox" class="checkbox"/></label></th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>PESEL</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach(var member in _members) {
-      <CascadingValue Value=@member>
-        <MemberRecord/>
-      </CascadingValue>
-    }
-    </tbody>
-    <tfoot>
-    <tr>
-      <td></td>
-      <td><LabeledInputText @bind-Value="_createDto.FirstName" placeholder="first"/></td>
-      <td><LabeledInputText @bind-Value="_createDto.LastName" placeholder="last"/></td>
-      <td><LabeledInputText @bind-Value="_createDto.Pesel" placeholder="00000000000"/></td>
-    </tr>
-    </tfoot>
-  </table>
+  <EditForm Model="@_createDto">
+    <DataAnnotationsValidator/>
+    <table class="table w-full">
+      <thead>
+      <tr>
+        <th><label><input type="checkbox" class="checkbox"/></label></th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>PESEL</th>
+      </tr>
+      </thead>
+      <tbody>
+      @foreach(var member in _members) {
+        <CascadingValue Value=@member>
+          <MemberRecord/>
+        </CascadingValue>
+      }
+      </tbody>
+      <tfoot>
+      <tr>
+        <td></td>
+        <td><LabeledInputText @bind-Value="_createDto.FirstName"  placeholder="first" IsLabeled="false"/></td>
+        <td><LabeledInputText @bind-Value="_createDto.LastName" class="input-sm" placeholder="last" IsLabeled="false"/></td>
+        <td><LabeledInputText @bind-Value="_createDto.Pesel" class="input-sm" placeholder="00000000000" IsLabeled="false"/></td>
+      </tr>
+      </tfoot>
+    </table>
+  </EditForm>
 </div>
 
 @code {

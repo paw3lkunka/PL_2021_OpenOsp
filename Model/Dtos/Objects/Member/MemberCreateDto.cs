@@ -4,11 +4,13 @@ using OspDA = OpenOsp.Model.DataAnnotations;
 
 namespace OpenOsp.Model.Dtos {
   public class MemberCreateDto {
+    [Display(Name = "First name")]
     [OspDA.RequiredAttribute]
     [OspDA.MaxLengthAttribute(24)]
     [OspDA.NameAttribute]
     public string FirstName { get; set; }
 
+    [Display(Name = "Last name")]
     [OspDA.RequiredAttribute]
     [OspDA.MaxLengthAttribute(24)]
     [OspDA.NameAttribute]
