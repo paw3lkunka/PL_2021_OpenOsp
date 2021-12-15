@@ -2,35 +2,34 @@
 @using OpenOsp.Client.Components.UserPanel.Members
 @using OpenOsp.Client.Components.Forms
 
+<div class="flex mb-5 justify-between">
+  <div>
+    <MemberCreateModal/>
+    <button class="btn btn-secondary">Delete</button>
+  </div>
+  <button class="btn btn-warning">Action!</button>
+</div>
 <div class="overflow-x-auto">
-  <EditForm Model="@_createDto">
-    <DataAnnotationsValidator/>
-    <table class="table w-full">
-      <thead>
-      <tr>
-        <th><label><input type="checkbox" class="checkbox"/></label></th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>PESEL</th>
-      </tr>
-      </thead>
-      <tbody>
-      @foreach(var member in _members) {
-        <CascadingValue Value=@member>
-          <MemberRecord/>
-        </CascadingValue>
-      }
-      </tbody>
-      <tfoot>
-      <tr>
-        <td></td>
-        <td><LabeledInputText @bind-Value="_createDto.FirstName"  placeholder="first" IsLabeled="false"/></td>
-        <td><LabeledInputText @bind-Value="_createDto.LastName" class="input-sm" placeholder="last" IsLabeled="false"/></td>
-        <td><LabeledInputText @bind-Value="_createDto.Pesel" class="input-sm" placeholder="00000000000" IsLabeled="false"/></td>
-      </tr>
-      </tfoot>
-    </table>
-  </EditForm>
+  <table class="table w-full">
+    <thead>
+    <tr>
+      <th><label><input type="checkbox" class="checkbox"/></label></th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>PESEL</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var member in _members) {
+      <CascadingValue Value=@member>
+        <MemberRecord/>
+      </CascadingValue>
+    }
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
 </div>
 
 @code {
@@ -38,8 +37,6 @@
   private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>() {
     new() {FirstName = "test", LastName = "testowy", Pesel = "0000000000", Id = 1}
   };
-
-  private MemberCreateDto _createDto { get; set; } = new();
 
   [CascadingParameter(Name = "MarkedMembers")]
   private ISet<int> _markedMembers { get; set; }

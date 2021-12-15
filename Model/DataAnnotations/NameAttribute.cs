@@ -4,7 +4,7 @@ namespace OpenOsp.Model.DataAnnotations {
   public class NameAttribute : RegularExpressionAttribute {
     public NameAttribute()
       : base(
-        @"/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u") {
+        @"^[\p{L} \.\-]+$") {
       ErrorMessage = @"{0} is not a valid name";
     }
   }

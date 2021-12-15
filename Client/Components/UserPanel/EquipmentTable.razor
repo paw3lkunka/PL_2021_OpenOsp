@@ -2,35 +2,33 @@
 @using OpenOsp.Client.Components.UserPanel.Equipment
 @using OpenOsp.Client.Components.Forms
 
+<div class="flex mb-5 justify-between">
+  <div>
+    <EquipmentCreateModal/>
+    <button class="btn btn-secondary">Delete</button>
+  </div>
+  <button class="btn btn-warning">Action!</button>
+</div>
 <div class="overflow-x-auto">
-  <EditForm Model="@_createDto">
-    <DataAnnotationsValidator/>
-    <table class="table w-full">
-      <thead>
-      <tr>
-        <th><label><input type="checkbox" class="checkbox"/></label></th>
-        <th>Brand</th>
-        <th>Model</th>
-        <th>Registry number</th>
-      </tr>
-      </thead>
-      <tbody>
-      @foreach(var equipment in _equipment) {
-        <CascadingValue Value="@equipment">
-          <EquipmentRecord/>
-        </CascadingValue>
-      }
-      </tbody>
-      <tfoot>
-      <tr>
-        <th></th>
-        <th><LabeledInputText @bind-Value="_createDto.Brand" class="input-sm" placeholder="brand" IsLabeled="false"/></th>
-        <th><LabeledInputText @bind-Value="_createDto.Model" class="input-sm" placeholder="model" IsLabeled="false"/></th>
-        <th><LabeledInputText @bind-Value="_createDto.RegistryNumber" class="input-sm" placeholder="i.e. AAA-12345" IsLabeled="false"/></th>
-      </tr>
-      </tfoot>
-    </table>
-  </EditForm>
+  <table class="table w-full">
+    <thead>
+    <tr>
+      <th><label><input type="checkbox" class="checkbox"/></label></th>
+      <th>Brand</th>
+      <th>Model</th>
+      <th>Registry number</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(var equipment in _equipment) {
+      <CascadingValue Value="@equipment">
+        <EquipmentRecord/>
+      </CascadingValue>
+    }
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
 </div>
 
 @code {
@@ -38,8 +36,6 @@
   private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto>() {
     new() {Brand = "aaa", Model = "bbb", RegistryNumber = "EPA 1234", Id = 1}
   };
-
-  private EquipmentCreateDto _createDto { get; set; } = new();
 
   [CascadingParameter(Name = "MarkedEquipment")]
   private ISet<int> _markedEquipment { get; set; }

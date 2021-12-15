@@ -1,24 +1,15 @@
-@using OpenOsp.Client.Enums
-@using OpenOsp.Model.Dtos
+﻿@using OpenOsp.Model.Dtos
 
 <tr>
-  @switch (_mode) {
-    case TableRecordMode.Read:
-      <td></td>
-      <td>@_readDto.Brand</td>
-      <td>@_readDto.Model</td>
-      <td>@_readDto.RegistryNumber</td>
-      break;
-    case TableRecordMode.Update:
-      <EquipmentUpdateRecord/>
-      break;
-  }
+  <td></td>
+  <td>@_readDto.Brand</td>
+  <td>@_readDto.Model</td>
+  <td>@_readDto.RegistryNumber</td>
+  <td><EquipmentUpdateModal/></td>
 </tr>
 
 @code {
 
-  private TableRecordMode _mode { get; set; } = TableRecordMode.Read;
-  
   [CascadingParameter]
   private  EquipmentReadDto _readDto { get; set; }
 
