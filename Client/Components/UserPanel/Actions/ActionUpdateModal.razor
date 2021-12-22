@@ -1,32 +1,37 @@
 ﻿@using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.Forms
 
-<label for="member-update-modal" class="btn btn-primary btn-outline modal-button">Add</label> 
-<input type="checkbox" id="member-update-modal" class="modal-toggle"> 
+<label for="@_modalId" class="btn btn-sm btn-primary btn-outline modal-button">Edit</label>
+<input type="checkbox" id="@_modalId" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_updateDto" OnValidSubmit="HandleUpdate" class="modal-box">
     <h1 class="mb-5 text-center text-2xl font-bold">Update an action</h1>
     <DataAnnotationsValidator/>
     <LabeledInputText @bind-Value="_updateDto.Location"/>
     <div class="modal-action">
-      <button type="submit" for="member-update-modal" class="btn btn-primary">Update</button>
-      <label for="member-update-modal" class="btn">Cancel</label>
+      <button type="submit" for="@_modalId" class="btn btn-primary">Update</button>
+      <label for="@_modalId" class="btn">Cancel</label>
     </div>
   </EditForm>
 </div>
 
 @code {
-  
+
   [CascadingParameter]
   private ActionReadDto _readDto { get; set; }
 
   private ActionUpdateDto _updateDto { get; set; } = new();
+
+  private string _modalId { get; set; }
+
+  private bool _isOpen { get; set; } = false;
 
   protected override Task OnInitializedAsync() {
     _updateDto.Type = _readDto.Type;
     _updateDto.Location = _updateDto.Location;
     _updateDto.StartTime = _updateDto.StartTime;
     _updateDto.EndTime = _updateDto.EndTime;
+    _modalId = $"action-update-modal-{_readDto.Id}";
     return base.OnInitializedAsync();
   }
 

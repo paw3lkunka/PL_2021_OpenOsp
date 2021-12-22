@@ -1,7 +1,7 @@
 ﻿@using OpenOsp.Model.Dtos
 
 <tr>
-  <td></td>
+  <td><label><input type="checkbox" @onchange="eventArgs => HandleCheckboxChange(eventArgs.Value)" checked="@_checkedMembers.ContainsKey(_readDto.Id)"/></label></td>
   <td>@_readDto.FirstName</td>
   <td>@_readDto.LastName</td>
   <td>@_readDto.Pesel</td>
@@ -13,7 +13,16 @@
   [CascadingParameter]
   private MemberReadDto _readDto { get; set; }
 
-  [CascadingParameter(Name = "MarkedMembers")]
-  private ISet<int> _markedMembers { get; set; }
+  [CascadingParameter(Name = "CheckedMembers")]
+  private IDictionary<int, string> _checkedMembers { get; set; }
+  
+  private void HandleCheckboxChange(object value) {
+    if ((bool)value) {
+      _checkedMembers.TryAdd(_readDto.Id, $"{_readDto.FirstName} {_readDto.LastName}");
+    }
+    else {
+      _checkedMembers.Remove(_readDto.Id);
+    }
+  }
 
 }

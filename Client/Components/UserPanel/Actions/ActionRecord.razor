@@ -1,11 +1,11 @@
 ﻿@using OpenOsp.Model.Dtos
 
 <tr>
-  <td></td>
+  <td><label><input type="checkbox" @onchange="eventArgs => HandleCheckboxChange(eventArgs.Value)" checked="@_checkedActions.Contains(_readDto.Id)"/></label></td>
   <td>@_readDto.Type</td>
-  <td>@_readDto.Location</td>
   <td>@_readDto.StartTime.ToString("MMMM dd yyyy")</td>
   <td>@_readDto.EndTime.ToString("MMMM dd")</td>
+  <td><ActionReadModal/></td>
   <td><ActionUpdateModal/></td>
 </tr>
 
@@ -14,7 +14,16 @@
   [CascadingParameter]
   private  ActionReadDto _readDto { get; set; }
 
-  [CascadingParameter(Name = "MarkedActions")]
-  private ISet<int> _markedActions { get; set; }
+  [CascadingParameter(Name = "CheckedActions")]
+  private ISet<int> _checkedActions { get; set; }
+  
+  private void HandleCheckboxChange(object value) {
+    if ((bool)value) {
+      _checkedActions.Add(_readDto.Id);
+    }
+    else {
+      _checkedActions.Remove(_readDto.Id);
+    }
+  }
 
 }

@@ -13,10 +13,11 @@
   <table class="table w-full">
     <thead>
     <tr>
-      <th><label><input type="checkbox" class="checkbox"/></label></th>
+      <th></th>
       <th>Brand</th>
       <th>Model</th>
       <th>Registry number</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -36,8 +37,5 @@
   private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto>() {
     new() {Brand = "aaa", Model = "bbb", RegistryNumber = "EPA 1234", Id = 1}
   };
-
-  [CascadingParameter(Name = "MarkedEquipment")]
-  private ISet<int> _markedEquipment { get; set; }
 
 }

@@ -2,7 +2,7 @@
 @using OpenOsp.Client.Components.Forms
 
 <label for="member-create-modal" class="btn btn-accent modal-button">Add</label> 
-<input type="checkbox" id="member-create-modal" class="modal-toggle"> 
+<input type="checkbox" id="member-create-modal" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_createDto" OnValidSubmit="HandleCreate" class="modal-box">
     <h1 class="mb-5 text-center text-2xl font-bold">Create a member</h1>
@@ -11,7 +11,7 @@
     <LabeledInputText @bind-Value="_createDto.LastName"/>
     <LabeledInputText @bind-Value="_createDto.Pesel"/>
     <div class="modal-action">
-      <button type="submit" for="member-create-modal" class="btn btn-primary">Create</button>
+      <button type="submit" class="btn btn-primary">Create</button>
       <label for="member-create-modal" class="btn">Cancel</label>
     </div>
   </EditForm>
@@ -21,7 +21,9 @@
 
   private MemberCreateDto _createDto { get; set; } = new();
 
+  private bool _isOpen { get; set; } = false;
+
   private void HandleCreate() {
   }
-
+  
 }

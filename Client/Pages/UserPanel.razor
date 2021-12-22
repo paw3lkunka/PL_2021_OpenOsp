@@ -1,5 +1,6 @@
 @using OpenOsp.Client.Enums
 @using OpenOsp.Client.Components.UserPanel
+@using System.Runtime.CompilerServices
 @page "/userpanel"
 
 <div class="card w-full min-w-screen-md shadow-2xl bg-base-200 bg-opacity-95">
@@ -20,17 +21,17 @@
   <div class="card-body bg-base-100">
     @switch (_mode) {
       case UserPanelMode.Members:
-        <CascadingValue Name="MarkedMembers" Value="@_markedMembers">
+        <CascadingValue Name="CheckedMembers" Value="@_checkedMembers">
           <MembersTable/>
         </CascadingValue>
         break;
       case UserPanelMode.Equipment:
-        <CascadingValue Name="MarkedEquipment" Value="@_markedEquipment">
+        <CascadingValue Name="CheckedEquipment" Value="@_checkedEquipment">
           <EquipmentTable/>
         </CascadingValue>
         break;
       case UserPanelMode.Actions:
-        <CascadingValue Name="MarkedActions" Value="@_markedActions">
+        <CascadingValue Name="CheckedActions" Value="@_checkedActions">
           <ActionsTable/>
         </CascadingValue>
         break;
@@ -42,10 +43,10 @@
 
   private UserPanelMode _mode { get; set; } = UserPanelMode.Members;
 
-  private ISet<int> _markedActions { get; set; } = new HashSet<int>();
+  private ISet<int> _checkedActions { get; set; } = new HashSet<int>();
+
+  private IDictionary<int, string> _checkedEquipment { get; set; } = new Dictionary<int, string>();
   
-  private ISet<int> _markedEquipment { get; set; } = new HashSet<int>();
-  
-  private ISet<int> _markedMembers { get; set; } = new HashSet<int>();
+  private IDictionary<int, string> _checkedMembers { get; set; } = new Dictionary<int, string>();
 
 }

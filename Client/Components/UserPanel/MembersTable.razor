@@ -13,7 +13,7 @@
   <table class="table w-full">
     <thead>
     <tr>
-      <th><label><input type="checkbox" class="checkbox"/></label></th>
+      <th><!--TODO: Think of incorporating SelectAll checkbox and pagination sometime--></th>
       <th>First name</th>
       <th>Last name</th>
       <th>PESEL</th>
@@ -35,10 +35,8 @@
 @code {
 
   private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>() {
-    new() {FirstName = "test", LastName = "testowy", Pesel = "0000000000", Id = 1}
+    new() {FirstName = "test", LastName = "testowy", Pesel = "0000000000", Id = 1},
+    new() {FirstName = "dwójka", LastName = "panie", Pesel = "0000000000", Id = 2}
   };
-
-  [CascadingParameter(Name = "MarkedMembers")]
-  private ISet<int> _markedMembers { get; set; }
 
 }

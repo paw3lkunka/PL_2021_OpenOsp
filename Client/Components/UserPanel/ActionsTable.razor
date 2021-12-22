@@ -14,11 +14,11 @@
   <table class="table w-full">
     <thead>
     <tr>
-      <th><label><input type="checkbox" class="checkbox"/></label></th>
+      <th></th>
       <th>Type</th>
-      <th>Location</th>
       <th>Start time</th>
       <th>End time</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -44,8 +44,5 @@
       Id = 1
     }
   };
-
-  [CascadingParameter(Name = "MarkedActions")]
-  private ISet<int> _markedActions { get; set; }
 
 }
