@@ -3,22 +3,22 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
 
-namespace OpenOsp.Server.Api.Services {
-  public interface IUserService<T, TId>
-    where T : IdentityUser<TId>
-    where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
-    Task Create(T user, string password);
+namespace OpenOsp.Server.Api.Services; 
 
-    Task<T> ReadById(TId id);
+public interface IUserService<T, TId>
+  where T : IdentityUser<TId>
+  where TId : IEquatable<TId>, IComparable<TId>, IConvertible {
+  Task Create(T user, string password);
 
-    Task<T> ReadByEmail(string email);
+  Task<T> ReadById(TId id);
 
-    Task Delete(T user);
+  Task<T> ReadByEmail(string email);
 
-    Task<string> GetEmailConfirmationToken(T user);
+  Task Delete(T user);
 
-    Task ConfirmEmail(T user, string token);
+  Task<string> GetEmailConfirmationToken(T user);
 
-    Task<string> GetAuthenticationToken(T user, string password);
-  }
+  Task ConfirmEmail(T user, string token);
+
+  Task<string> GetAuthenticationToken(T user, string password);
 }

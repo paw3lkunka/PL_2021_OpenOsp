@@ -4,24 +4,24 @@ using System.Threading.Tasks;
 using OpenOsp.Model.Filters;
 using OpenOsp.Server.Enums;
 
-namespace OpenOsp.Server.Api.Services {
-  public interface IService<T> where T : class {
-    Task Create(T entity);
+namespace OpenOsp.Server.Api.Services; 
 
-    Task Delete(T entity);
+public interface IService<T> where T : class {
+  Task Create(T entity);
 
-    Task Update(T entity);
+  Task Delete(T entity);
 
-    Task<IEnumerable<T>> ReadAll();
+  Task Update(T entity);
 
-    Task<IEnumerable<T>> ReadAll(PaginationFilter pagination);
+  Task<IEnumerable<T>> ReadAll();
 
-    Task<int> ReadCount();
+  Task<IEnumerable<T>> ReadAll(PaginationFilter pagination);
 
-    Task CommitDbTransaction(int rows, DbTransactionType type);
+  Task<int> ReadCount();
 
-    Task CommitDbTransaction(DbTransactionType type);
+  Task CommitDbTransaction(int rows, DbTransactionType type);
 
-    Task CommitDbTransaction();
-  }
+  Task CommitDbTransaction(DbTransactionType type);
+
+  Task CommitDbTransaction();
 }

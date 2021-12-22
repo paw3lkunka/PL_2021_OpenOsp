@@ -1,11 +1,11 @@
 using System;
 
-namespace OpenOsp.Server.Exceptions {
-  public class UnauthorizedException : Exception {
-    public UnauthorizedException() {
-    }
+namespace OpenOsp.Server.Exceptions; 
 
-    public UnauthorizedException(string message) : base(message) {
-    }
+public class UnauthorizedException : Exception {
+  public UnauthorizedException() {
+  }
+
+  public UnauthorizedException(string message) : base(message) {
   }
 }

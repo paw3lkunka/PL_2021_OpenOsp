@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace OpenOsp.Server.Data.Configurations {
-  internal interface IEntityConfiguration {
-    void AddConfiguration(ModelBuilder builder);
+namespace OpenOsp.Server.Data.Configurations; 
 
-    void SeedData(ModelBuilder builder);
-  }
+internal interface IEntityConfiguration {
+  void AddConfiguration(ModelBuilder builder);
+
+  void SeedData(ModelBuilder builder);
 }

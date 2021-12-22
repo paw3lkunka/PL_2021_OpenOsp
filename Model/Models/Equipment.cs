@@ -4,34 +4,34 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using OspDA = OpenOsp.Model.DataAnnotations;
 
-namespace OpenOsp.Model.Models {
-  public class Equipment : IHasId<int>, IOwnedBy<int> {
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(24)]
-    [OspDA.NameAttribute]
-    public string Brand { get; set; }
+namespace OpenOsp.Model.Models; 
 
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(24)]
-    [OspDA.NameAttribute]
-    public string Model { get; set; }
+public class Equipment : IHasId<int>, IOwnedBy<int> {
+  [OspDA.Required]
+  [OspDA.MaxLength(24)]
+  [OspDA.Name]
+  public string Brand { get; set; }
 
-    [Display(Name = "Registry number")]
-    [Column(TypeName = "varchar(16)")]
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(16)]
-    [OspDA.RegistryNumberAttribute]
-    public string RegistryNumber { get; set; }
+  [OspDA.Required]
+  [OspDA.MaxLength(24)]
+  [OspDA.Name]
+  public string Model { get; set; }
 
-    public virtual User User { get; set; }
+  [Display(Name = "Registry number")]
+  [Column(TypeName = "varchar(16)")]
+  [OspDA.Required]
+  [OspDA.MaxLength(16)]
+  [OspDA.RegistryNumber]
+  public string RegistryNumber { get; set; }
 
-    public virtual IEnumerable<ActionEquipment> Actions { get; set; }
+  public virtual User User { get; set; }
 
-    [Key] [OspDA.RequiredAttribute] public int Id { get; set; }
+  public virtual IEnumerable<ActionEquipment> Actions { get; set; }
 
-    [Display(Name = "Owner's id")]
-    [Column("OwnerId")]
-    [OspDA.RequiredAttribute]
-    public int UserId { get; set; }
-  }
+  [Key] [OspDA.Required] public int Id { get; set; }
+
+  [Display(Name = "Owner's id")]
+  [Column("OwnerId")]
+  [OspDA.Required]
+  public int UserId { get; set; }
 }

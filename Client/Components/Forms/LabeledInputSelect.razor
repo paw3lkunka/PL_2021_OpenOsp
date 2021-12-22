@@ -1,0 +1,34 @@
+﻿@typeparam T
+@inherits InputBase<T>
+
+<div class="form-control">
+  @if (IsLabeled) {
+    <label class="label">
+      <LabelText For="@ValueExpression" class="label-text"/>
+    </label>
+  }
+  <InputSelect @attributes="AdditionalAttributes" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
+               class="select select-bordered w-full max-w-xs">
+    @if (Placeholder != null) {
+      <option selected disabled>@Placeholder</option>
+    }
+    @foreach (var value in Enum.GetValues(T)) {
+      <option>@value</option>
+    }
+  </InputSelect>
+  <label class="label">
+    @SubLabel
+  </label>
+</div>
+
+@code {
+
+  [Parameter]
+  public bool IsLabeled { get; set; } = true;
+
+  [Parameter]
+  public RenderFragment SubLabel { get; set; }
+
+  [Parameter]
+  public string Placeholder { get; set; }
+}

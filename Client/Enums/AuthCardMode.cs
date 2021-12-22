@@ -1,6 +1,6 @@
-namespace OpenOsp.Client.Enums {
-  public enum AuthCardMode {
-    Login,
-    Register
-  }
+namespace OpenOsp.Client.Enums; 
+
+public enum AuthCardMode {
+  Login,
+  Register
 }

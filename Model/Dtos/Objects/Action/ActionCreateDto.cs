@@ -6,25 +6,23 @@ using OpenOsp.Model.Enums;
 
 using OspDA = OpenOsp.Model.DataAnnotations;
 
-namespace OpenOsp.Model.Dtos {
-  public class ActionCreateDto {
-    [OspDA.RequiredAttribute] public ActionType Type { get; set; }
+namespace OpenOsp.Model.Dtos; 
 
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(64)]
-    public string Location { get; set; }
+public class ActionCreateDto {
+  [OspDA.Required] public ActionType Type { get; set; }
 
-    [Display(Name = "Start time")]
-    [OspDA.RequiredAttribute]
-    public DateTime StartTime { get; set; }
+  [OspDA.Required] [OspDA.MaxLength(64)] public string Location { get; set; }
 
-    [Display(Name = "End time")]
-    [OspDA.RequiredAttribute]
-    [OspDA.DateGreaterEqualAttribute("StartTime")]
-    public DateTime EndTime { get; set; }
+  [Display(Name = "Start time")]
+  [OspDA.Required]
+  public DateTime StartTime { get; set; }
 
-    public virtual IEnumerable<ActionMemberCreateDto> Members { get; set; }
+  [Display(Name = "End time")]
+  [OspDA.Required]
+  [OspDA.DateGreaterEqual("StartTime")]
+  public DateTime EndTime { get; set; }
 
-    public virtual IEnumerable<ActionEquipmentCreateDto> Equipment { get; set; }
-  }
+  public virtual IEnumerable<ActionMemberCreateDto> Members { get; set; }
+
+  public virtual IEnumerable<ActionEquipmentCreateDto> Equipment { get; set; }
 }

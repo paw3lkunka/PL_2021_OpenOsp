@@ -5,23 +5,21 @@ using OpenOsp.Model.Enums;
 
 using OspDA = OpenOsp.Model.DataAnnotations;
 
-namespace OpenOsp.Model.Dtos {
-  public class ActionReadDto {
-    [OspDA.RequiredAttribute] public int Id { get; set; }
+namespace OpenOsp.Model.Dtos; 
 
-    [OspDA.RequiredAttribute] public ActionType Type { get; set; } = ActionType.Fire;
+public class ActionReadDto {
+  [OspDA.Required] public int Id { get; set; }
 
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(64)]
-    public string Location { get; set; }
+  [OspDA.Required] public ActionType Type { get; set; } = ActionType.Fire;
 
-    [Display(Name = "Start time")]
-    [OspDA.RequiredAttribute]
-    public DateTime StartTime { get; set; }
+  [OspDA.Required] [OspDA.MaxLength(64)] public string Location { get; set; }
 
-    [Display(Name = "End time")]
-    [OspDA.RequiredAttribute]
-    [OspDA.DateGreaterEqualAttribute("StartTime")]
-    public DateTime EndTime { get; set; }
-  }
+  [Display(Name = "Start time")]
+  [OspDA.Required]
+  public DateTime StartTime { get; set; }
+
+  [Display(Name = "End time")]
+  [OspDA.Required]
+  [OspDA.DateGreaterEqual("StartTime")]
+  public DateTime EndTime { get; set; }
 }

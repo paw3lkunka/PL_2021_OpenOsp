@@ -1,7 +1,5 @@
 ﻿@using OpenOsp.Model.Dtos
-@using OpenOsp.Client.Components.Forms
-
-<label for="member-create-modal" class="btn btn-accent modal-button">Add</label> 
+<label for="member-create-modal" class="btn btn-accent modal-button">Add</label>
 <input type="checkbox" id="member-create-modal" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_createDto" OnValidSubmit="HandleCreate" class="modal-box">
@@ -25,5 +23,5 @@
 
   private void HandleCreate() {
   }
-  
+
 }

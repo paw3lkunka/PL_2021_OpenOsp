@@ -1,6 +1,4 @@
 ﻿@using OpenOsp.Model.Dtos
-@using OpenOsp.Client.Components.Forms
-
 <EditForm Model="@_dto" OnValidSubmit="HandleLogin">
   <DataAnnotationsValidator/>
   <LabeledInputText @bind-Value="_dto.Email" type="email" placeholder="your@email.com"/>

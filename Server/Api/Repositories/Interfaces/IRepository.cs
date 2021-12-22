@@ -3,18 +3,18 @@ using System.Threading.Tasks;
 
 using OpenOsp.Model.Filters;
 
-namespace OpenOsp.Server.Api.Repositories {
-  public interface IRepository<T> {
-    void Create(T entity);
+namespace OpenOsp.Server.Api.Repositories; 
 
-    void Delete(T entity);
+public interface IRepository<T> {
+  void Create(T entity);
 
-    void Update(T entity);
+  void Delete(T entity);
 
-    IQueryable<T> ReadAll();
+  void Update(T entity);
 
-    IQueryable<T> ReadAll(PaginationFilter pagination);
+  IQueryable<T> ReadAll();
 
-    Task<int> SaveChangesAsync();
-  }
+  IQueryable<T> ReadAll(PaginationFilter pagination);
+
+  Task<int> SaveChangesAsync();
 }

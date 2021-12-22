@@ -1,7 +1,7 @@
-namespace OpenOsp.Client.Enums {
-  public enum UserPanelMode {
-    Members,
-    Equipment,
-    Actions
-  }
+namespace OpenOsp.Client.Enums; 
+
+public enum UserPanelMode {
+  Members,
+  Equipment,
+  Actions
 }

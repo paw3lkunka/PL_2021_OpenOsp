@@ -1,21 +1,26 @@
 ﻿@using OpenOsp.Model.Dtos
-
 <tr>
-  <td><label><input type="checkbox" @onchange="eventArgs => HandleCheckboxChange(eventArgs.Value)" checked="@_checkedEquipment.ContainsKey(_readDto.Id)"/></label></td>
+  <td>
+    <label>
+      <input type="checkbox" @onchange="eventArgs => HandleCheckboxChange(eventArgs.Value)" checked="@_checkedEquipment.ContainsKey(_readDto.Id)"/>
+    </label>
+  </td>
   <td>@_readDto.Brand</td>
   <td>@_readDto.Model</td>
   <td>@_readDto.RegistryNumber</td>
-  <td><EquipmentUpdateModal/></td>
+  <td>
+    <EquipmentUpdateModal/>
+  </td>
 </tr>
 
 @code {
 
   [CascadingParameter]
-  private  EquipmentReadDto _readDto { get; set; }
+  private EquipmentReadDto _readDto { get; set; }
 
   [CascadingParameter(Name = "CheckedEquipment")]
   private IDictionary<int, string> _checkedEquipment { get; set; }
-  
+
   private void HandleCheckboxChange(object value) {
     if ((bool)value) {
       _checkedEquipment.TryAdd(_readDto.Id, $"{_readDto.Brand} {_readDto.RegistryNumber}");

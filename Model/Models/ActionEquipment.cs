@@ -3,30 +3,30 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using OspDA = OpenOsp.Model.DataAnnotations;
 
-namespace OpenOsp.Model.Models {
-  public class ActionEquipment : IHasId<int, int> {
-    [Display(Name = "Fuel used")]
-    [OspDA.RequiredAttribute]
-    [OspDA.NaturalNumberAttribute]
-    public float FuelUsed { get; set; } = 0.0f;
+namespace OpenOsp.Model.Models; 
 
-    [Display(Name = "Counter state")]
-    [OspDA.RequiredAttribute]
-    [OspDA.NaturalNumberAttribute]
-    public int CounterState { get; set; } = 0;
+public class ActionEquipment : IHasId<int, int> {
+  [Display(Name = "Fuel used")]
+  [OspDA.Required]
+  [OspDA.NaturalNumber]
+  public float FuelUsed { get; set; } = 0.0f;
 
-    public virtual Action Action { get; set; }
+  [Display(Name = "Counter state")]
+  [OspDA.Required]
+  [OspDA.NaturalNumber]
+  public int CounterState { get; set; } = 0;
 
-    public virtual Equipment Equipment { get; set; }
+  public virtual Action Action { get; set; }
 
-    [Display(Name = "Action's id")]
-    [Column("ActionId")]
-    [OspDA.RequiredAttribute]
-    public int Id { get; set; }
+  public virtual Equipment Equipment { get; set; }
 
-    [Display(Name = "Equipment's id")]
-    [Column("EquipmentId")]
-    [OspDA.RequiredAttribute]
-    public int Id2 { get; set; }
-  }
+  [Display(Name = "Action's id")]
+  [Column("ActionId")]
+  [OspDA.Required]
+  public int Id { get; set; }
+
+  [Display(Name = "Equipment's id")]
+  [Column("EquipmentId")]
+  [OspDA.Required]
+  public int Id2 { get; set; }
 }

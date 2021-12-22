@@ -1,9 +1,9 @@
-﻿namespace OpenOsp.Client.Structures {
-  public struct NavLinkStruct {
-    public string Url { get; set; }
+﻿namespace OpenOsp.Client.Structures; 
 
-    public string Label { get; set; }
+public struct NavLinkStruct {
+  public string Url { get; set; }
 
-    public bool IsAvailable { get; set; }
-  }
+  public string Label { get; set; }
+
+  public bool IsAvailable { get; set; }
 }

@@ -4,38 +4,38 @@ using System.Threading.Tasks;
 using OpenOsp.Model.Filters;
 using OpenOsp.Server.Data.Contexts;
 
-namespace OpenOsp.Server.Api.Repositories {
-  public class Repository<T> : IRepository<T>
-    where T : class {
-    private readonly AppDbContext _context;
+namespace OpenOsp.Server.Api.Repositories; 
 
-    public Repository(AppDbContext context) {
-      _context = context;
-    }
+public class Repository<T> : IRepository<T>
+  where T : class {
+  private readonly AppDbContext _context;
 
-    public void Create(T entity) {
-      _context.Add(entity);
-    }
+  public Repository(AppDbContext context) {
+    _context = context;
+  }
 
-    public void Update(T entity) {
-      _context.Update(entity);
-    }
+  public void Create(T entity) {
+    _context.Add(entity);
+  }
 
-    public void Delete(T entity) {
-      _context.Remove(entity);
-    }
+  public void Update(T entity) {
+    _context.Update(entity);
+  }
 
-    public virtual IQueryable<T> ReadAll() {
-      return _context.Set<T>();
-    }
+  public void Delete(T entity) {
+    _context.Remove(entity);
+  }
 
-    public IQueryable<T> ReadAll(PaginationFilter pagination) {
-      return ReadAll().Skip((pagination.PageIndex - 1) * pagination.PageSize)
-        .Take(pagination.PageSize);
-    }
+  public virtual IQueryable<T> ReadAll() {
+    return _context.Set<T>();
+  }
 
-    public async Task<int> SaveChangesAsync() {
-      return await _context.SaveChangesAsync();
-    }
+  public IQueryable<T> ReadAll(PaginationFilter pagination) {
+    return ReadAll().Skip((pagination.PageIndex - 1) * pagination.PageSize)
+      .Take(pagination.PageSize);
+  }
+
+  public async Task<int> SaveChangesAsync() {
+    return await _context.SaveChangesAsync();
   }
 }

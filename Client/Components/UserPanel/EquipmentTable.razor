@@ -1,7 +1,4 @@
 ﻿@using OpenOsp.Model.Dtos
-@using OpenOsp.Client.Components.UserPanel.Equipment
-@using OpenOsp.Client.Components.Forms
-
 <div class="flex mb-5 justify-between">
   <div>
     <EquipmentCreateModal/>
@@ -21,7 +18,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var equipment in _equipment) {
+    @foreach (var equipment in _equipment) {
       <CascadingValue Value="@equipment">
         <EquipmentRecord/>
       </CascadingValue>
@@ -34,7 +31,7 @@
 
 @code {
 
-  private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto>() {
+  private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto> {
     new() {Brand = "aaa", Model = "bbb", RegistryNumber = "EPA 1234", Id = 1}
   };
 

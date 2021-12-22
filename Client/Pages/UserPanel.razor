@@ -1,7 +1,5 @@
-@using OpenOsp.Client.Enums
-@using OpenOsp.Client.Components.UserPanel
-@using System.Runtime.CompilerServices
 @page "/userpanel"
+@using OpenOsp.Client.Enums
 
 <div class="card w-full min-w-screen-md shadow-2xl bg-base-200 bg-opacity-95">
   <div class="tabs w-full">
@@ -43,10 +41,10 @@
 
   private UserPanelMode _mode { get; set; } = UserPanelMode.Members;
 
-  private ISet<int> _checkedActions { get; set; } = new HashSet<int>();
+  private ISet<int> _checkedActions { get; } = new HashSet<int>();
 
-  private IDictionary<int, string> _checkedEquipment { get; set; } = new Dictionary<int, string>();
-  
-  private IDictionary<int, string> _checkedMembers { get; set; } = new Dictionary<int, string>();
+  private IDictionary<int, string> _checkedEquipment { get; } = new Dictionary<int, string>();
+
+  private IDictionary<int, string> _checkedMembers { get; } = new Dictionary<int, string>();
 
 }

@@ -1,8 +1,5 @@
 ﻿@using OpenOsp.Model.Dtos
-@using OpenOsp.Client.Components.Forms
-@using Microsoft.EntityFrameworkCore.Metadata
-
-<label for="@_modalId" class="btn btn-sm btn-primary btn-outline modal-button">Edit</label> 
+<label for="@_modalId" class="btn btn-sm btn-primary btn-outline modal-button">Edit</label>
 <input type="checkbox" id="@_modalId" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_updateDto" OnValidSubmit="HandleUpdate" class="modal-box">
@@ -24,7 +21,7 @@
   private MemberReadDto _readDto { get; set; }
 
   private MemberUpdateDto _updateDto { get; set; } = new();
-  
+
   private string _modalId { get; set; }
 
   private bool _isOpen { get; set; } = false;
@@ -36,7 +33,6 @@
   }
 
   private void HandleUpdate() {
-    
   }
 
   private void HandleCancel() {

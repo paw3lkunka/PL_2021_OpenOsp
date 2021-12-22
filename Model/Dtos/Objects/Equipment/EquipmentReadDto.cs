@@ -2,23 +2,23 @@ using System.ComponentModel.DataAnnotations;
 
 using OspDA = OpenOsp.Model.DataAnnotations;
 
-namespace OpenOsp.Model.Dtos {
-  public class EquipmentReadDto {
-    [OspDA.RequiredAttribute] public int Id { get; set; }
+namespace OpenOsp.Model.Dtos; 
 
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(24)]
-    [OspDA.NameAttribute]
-    public string Brand { get; set; }
+public class EquipmentReadDto {
+  [OspDA.Required] public int Id { get; set; }
 
-    [OspDA.RequiredAttribute]
-    [OspDA.MaxLengthAttribute(24)]
-    [OspDA.NameAttribute]
-    public string Model { get; set; }
+  [OspDA.Required]
+  [OspDA.MaxLength(24)]
+  [OspDA.Name]
+  public string Brand { get; set; }
 
-    [Display(Name = "Registry number")]
-    [OspDA.RequiredAttribute]
-    [OspDA.RegistryNumberAttribute]
-    public string RegistryNumber { get; set; }
-  }
+  [OspDA.Required]
+  [OspDA.MaxLength(24)]
+  [OspDA.Name]
+  public string Model { get; set; }
+
+  [Display(Name = "Registry number")]
+  [OspDA.Required]
+  [OspDA.RegistryNumber]
+  public string RegistryNumber { get; set; }
 }

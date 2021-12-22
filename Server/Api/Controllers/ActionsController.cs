@@ -9,96 +9,96 @@ using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Model.Models;
 using OpenOsp.Server.Api.Services;
 
-namespace OpenOsp.Server.Api.Controllers {
-  [ApiController]
-  public class ActionsController
-    : AuthorizedController<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto, int> {
-    private readonly ActionEquipmentController _actionEquipment;
+namespace OpenOsp.Server.Api.Controllers; 
 
-    private readonly ActionMembersController _actionMembers;
+[ApiController]
+public class ActionsController
+  : AuthorizedController<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto, int> {
+  private readonly ActionEquipmentController _actionEquipment;
 
-    public ActionsController(
-      IHasIdService<Action, int> service,
-      IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> mapper,
-      ActionEquipmentController actionEquipment,
-      ActionMembersController actionMembers)
-      : base(service, mapper) {
-      _actionEquipment = actionEquipment;
-      _actionMembers = actionMembers;
-    }
+  private readonly ActionMembersController _actionMembers;
 
-    /// ActionEquipment
-    [HttpGet("{id}/equipment")]
-    public async Task<ActionResult<IEnumerable<ActionEquipmentReadDto>>> ReadEquipment(int id) {
-      return await _actionEquipment.ReadById(id);
-    }
+  public ActionsController(
+    IHasIdService<Action, int> service,
+    IDtoMapper<Action, ActionCreateDto, ActionReadDto, ActionUpdateDto> mapper,
+    ActionEquipmentController actionEquipment,
+    ActionMembersController actionMembers)
+    : base(service, mapper) {
+    _actionEquipment = actionEquipment;
+    _actionMembers = actionMembers;
+  }
 
-    [HttpGet("{id}/equipment/count")]
-    public async Task<ActionResult<int>> ReadEquipmentCount(int id) {
-      return await _actionEquipment.ReadCount(id);
-    }
+  /// ActionEquipment
+  [HttpGet("{id}/equipment")]
+  public async Task<ActionResult<IEnumerable<ActionEquipmentReadDto>>> ReadEquipment(int id) {
+    return await _actionEquipment.ReadById(id);
+  }
 
-    [HttpGet("{id}/equipment/{id2}")]
-    public async Task<ActionResult<ActionEquipmentReadDto>> ReadEquipment(int id, int id2) {
-      return await _actionEquipment.ReadById(id, id2);
-    }
+  [HttpGet("{id}/equipment/count")]
+  public async Task<ActionResult<int>> ReadEquipmentCount(int id) {
+    return await _actionEquipment.ReadCount(id);
+  }
 
-    [HttpPost("{id}/equipment")]
-    public async Task<ActionResult<ActionEquipmentReadDto>>
-      CreateEquipment(int id, ActionEquipmentCreateDto createDto) {
-      return await _actionEquipment.Create(id, createDto);
-    }
+  [HttpGet("{id}/equipment/{id2}")]
+  public async Task<ActionResult<ActionEquipmentReadDto>> ReadEquipment(int id, int id2) {
+    return await _actionEquipment.ReadById(id, id2);
+  }
 
-    [HttpPut("{id}/equipment/{id2}")]
-    public async Task<ActionResult> UpdateEquipment(int id, int id2, ActionEquipmentUpdateDto updateDto) {
-      return await _actionEquipment.Update(id, id2, updateDto);
-    }
+  [HttpPost("{id}/equipment")]
+  public async Task<ActionResult<ActionEquipmentReadDto>>
+    CreateEquipment(int id, ActionEquipmentCreateDto createDto) {
+    return await _actionEquipment.Create(id, createDto);
+  }
 
-    [HttpPatch("{id}/equipment/{id2}")]
-    public async Task<ActionResult> PatchEquipment(int id, int id2,
-      JsonPatchDocument<ActionEquipmentUpdateDto> patchDoc) {
-      return await _actionEquipment.Patch(id, id2, patchDoc);
-    }
+  [HttpPut("{id}/equipment/{id2}")]
+  public async Task<ActionResult> UpdateEquipment(int id, int id2, ActionEquipmentUpdateDto updateDto) {
+    return await _actionEquipment.Update(id, id2, updateDto);
+  }
 
-    [HttpDelete("{id}/equipment/{id2}")]
-    public async Task<ActionResult> DeleteEquipment(int id, int id2) {
-      return await _actionEquipment.Delete(id, id2);
-    }
+  [HttpPatch("{id}/equipment/{id2}")]
+  public async Task<ActionResult> PatchEquipment(int id, int id2,
+    JsonPatchDocument<ActionEquipmentUpdateDto> patchDoc) {
+    return await _actionEquipment.Patch(id, id2, patchDoc);
+  }
 
-    /// ActionMembers
-    [HttpGet("{id}/members")]
-    public async Task<ActionResult<IEnumerable<ActionMemberReadDto>>> ReadMembers(int id) {
-      return await _actionMembers.ReadById(id);
-    }
+  [HttpDelete("{id}/equipment/{id2}")]
+  public async Task<ActionResult> DeleteEquipment(int id, int id2) {
+    return await _actionEquipment.Delete(id, id2);
+  }
 
-    [HttpGet("{id}/members/count")]
-    public async Task<ActionResult<int>> ReadMembersCount(int id) {
-      return await _actionMembers.ReadCount(id);
-    }
+  /// ActionMembers
+  [HttpGet("{id}/members")]
+  public async Task<ActionResult<IEnumerable<ActionMemberReadDto>>> ReadMembers(int id) {
+    return await _actionMembers.ReadById(id);
+  }
 
-    [HttpGet("{id}/members/{id2}")]
-    public async Task<ActionResult<ActionMemberReadDto>> ReadMember(int id, int id2) {
-      return await _actionMembers.ReadById(id, id2);
-    }
+  [HttpGet("{id}/members/count")]
+  public async Task<ActionResult<int>> ReadMembersCount(int id) {
+    return await _actionMembers.ReadCount(id);
+  }
 
-    [HttpPost("{id}/members")]
-    public async Task<ActionResult<ActionMemberReadDto>> CreateMembers(int id, ActionMemberCreateDto createDto) {
-      return await _actionMembers.Create(id, createDto);
-    }
+  [HttpGet("{id}/members/{id2}")]
+  public async Task<ActionResult<ActionMemberReadDto>> ReadMember(int id, int id2) {
+    return await _actionMembers.ReadById(id, id2);
+  }
 
-    [HttpPut("{id}/members/{id2}")]
-    public async Task<ActionResult> UpdateMembers(int id, int id2, ActionMemberUpdateDto updateDto) {
-      return await _actionMembers.Update(id, id2, updateDto);
-    }
+  [HttpPost("{id}/members")]
+  public async Task<ActionResult<ActionMemberReadDto>> CreateMembers(int id, ActionMemberCreateDto createDto) {
+    return await _actionMembers.Create(id, createDto);
+  }
 
-    [HttpPatch("{id}/members/{id2}")]
-    public async Task<ActionResult> PatchMembers(int id, int id2, JsonPatchDocument<ActionMemberUpdateDto> patchDoc) {
-      return await _actionMembers.Patch(id, id2, patchDoc);
-    }
+  [HttpPut("{id}/members/{id2}")]
+  public async Task<ActionResult> UpdateMembers(int id, int id2, ActionMemberUpdateDto updateDto) {
+    return await _actionMembers.Update(id, id2, updateDto);
+  }
 
-    [HttpDelete("{id}/members/{id2}")]
-    public async Task<ActionResult> DeleteMembers(int id, int id2) {
-      return await _actionMembers.Delete(id, id2);
-    }
+  [HttpPatch("{id}/members/{id2}")]
+  public async Task<ActionResult> PatchMembers(int id, int id2, JsonPatchDocument<ActionMemberUpdateDto> patchDoc) {
+    return await _actionMembers.Patch(id, id2, patchDoc);
+  }
+
+  [HttpDelete("{id}/members/{id2}")]
+  public async Task<ActionResult> DeleteMembers(int id, int id2) {
+    return await _actionMembers.Delete(id, id2);
   }
 }

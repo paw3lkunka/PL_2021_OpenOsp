@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace OpenOsp.Server.Api.Services {
-  public interface IEntitiesAuthService<T> where T : class {
-    bool IsAuthorized(T entity);
+namespace OpenOsp.Server.Api.Services; 
 
-    T ReadAuthorized(T entity);
+public interface IEntitiesAuthService<T> where T : class {
+  bool IsAuthorized(T entity);
 
-    IEnumerable<T> ReadAuthorized(IEnumerable<T> entity);
-  }
+  T ReadAuthorized(T entity);
+
+  IEnumerable<T> ReadAuthorized(IEnumerable<T> entity);
 }
