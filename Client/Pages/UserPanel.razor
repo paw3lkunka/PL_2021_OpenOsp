@@ -1,5 +1,6 @@
 @page "/userpanel"
 @using OpenOsp.Client.Enums
+@using OpenOsp.Client.Components.UserPanel
 
 <div class="card w-full min-w-screen-md shadow-2xl bg-base-200 bg-opacity-95">
   <div class="tabs w-full">
@@ -30,7 +31,11 @@
         break;
       case UserPanelMode.Actions:
         <CascadingValue Name="CheckedActions" Value="@_checkedActions">
-          <ActionsTable/>
+          <CascadingValue Name="CheckedMembers" Value="_checkedMembers">
+            <CascadingValue Name="CheckedEquipment" Value="_checkedEquipment">
+              <ActionsTable/>
+            </CascadingValue>
+          </CascadingValue>
         </CascadingValue>
         break;
     }

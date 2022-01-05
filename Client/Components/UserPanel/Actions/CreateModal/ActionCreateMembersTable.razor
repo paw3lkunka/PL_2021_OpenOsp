@@ -1,0 +1,69 @@
+﻿@using OpenOsp.Client.Enums
+@using OpenOsp.Client.Components.Forms
+@using OpenOsp.Model.Dtos
+@using OpenOsp.Model.Enums
+
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+    <tr>
+      <th>Member</th>
+      <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var dto in CreateDtos) {
+      <tr>
+        <td>@_checkedMembers[dto.MemberId]</td>
+        <td>
+          <InputSelect @bind-Value="dto.Role" class="select select-bordered w-full max-w-xs">
+            @foreach (var value in Enum.GetValues(typeof(ActionMemberRole))) {
+              <option>@value</option>
+            }
+          </InputSelect>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
+<div class="modal-action">
+  <button class="btn" @onclick="OnPrevClick">Prev</button> 
+  <button class="btn" @onclick="OnNextClick">Next</button> 
+</div>
+
+@code {
+  
+  [CascadingParameter(Name = "CheckedMembers")]
+  private IDictionary<int, string> _checkedMembers { get; set; }
+
+  [Parameter]
+  public IList<ActionMemberCreateDto> CreateDtos { get; set; }
+
+  [Parameter]
+  public ActionModalMode Mode { get; set; }
+
+  [Parameter]
+  public EventCallback<ActionModalMode> ModeChanged { get; set; } 
+  
+  protected override Task OnParametersSetAsync() {
+    CreateDtos.Clear();
+    foreach (var member in _checkedMembers) {
+      CreateDtos.Add(new() {
+        MemberId = member.Key
+      });
+    }
+    return base.OnParametersSetAsync();
+  }
+
+  private async Task OnPrevClick() {
+    Mode = ActionModalMode.Basics;
+    await ModeChanged.InvokeAsync(Mode);
+  }
+  
+  private async Task OnNextClick() {
+    Mode = ActionModalMode.Equipment;
+    await ModeChanged.InvokeAsync(Mode);
+  }
+  
+}

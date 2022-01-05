@@ -1,6 +1,8 @@
 ﻿@using OpenOsp.Model.Dtos
-<label for="@_modalId" class="btn btn-sm btn-primary btn-outline modal-button">Edit</label>
-<input type="checkbox" id="@_modalId" class="modal-toggle" @bind="_isOpen"/>
+@using OpenOsp.Client.Components.Forms
+
+<label @onclick="() => _isOpen = true" class="btn btn-sm btn-primary btn-outline modal-button">Edit</label>
+<input type="checkbox" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_updateDto" OnValidSubmit="HandleCreate" class="modal-box">
     <h1 class="mb-5 text-center text-2xl font-bold">Update an equipment</h1>
@@ -10,7 +12,7 @@
     <LabeledInputText @bind-Value="_updateDto.RegistryNumber"/>
     <div class="modal-action">
       <button type="submit" class="btn btn-primary">Create</button>
-      <label for="@_modalId" class="btn">Cancel</label>
+      <label @onclick="HandleCancel" class="btn">Cancel</label>
     </div>
   </EditForm>
 </div>
@@ -20,21 +22,28 @@
   [CascadingParameter]
   private EquipmentReadDto _readDto { get; set; }
 
-  private EquipmentCreateDto _updateDto { get; set; } = new();
-
-  private string _modalId { get; set; }
+  private EquipmentUpdateDto _updateDto { get; set; } = new();
 
   private bool _isOpen { get; set; } = false;
 
-  protected override Task OnInitializedAsync() {
-    _updateDto.Brand = _readDto.Brand;
-    _updateDto.Model = _readDto.Model;
-    _updateDto.RegistryNumber = _readDto.RegistryNumber;
-    _modalId = $"equipment-update-modal-{_readDto.Id}";
-    return base.OnInitializedAsync();
+  protected override Task OnParametersSetAsync() {
+    ResetForm();
+    return base.OnParametersSetAsync();
   }
 
   private void HandleCreate() {
+    _isOpen = false;
+  }
+
+  private void HandleCancel() {
+    ResetForm();
+    _isOpen = false;
+  }
+
+  private void ResetForm() {
+    _updateDto.Brand = _readDto.Brand;
+    _updateDto.Model = _readDto.Model;
+    _updateDto.RegistryNumber = _readDto.RegistryNumber;
   }
 
 }

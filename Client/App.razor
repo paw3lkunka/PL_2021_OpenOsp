@@ -1,11 +1,19 @@
 ﻿@using OpenOsp.Client.Components.Main
 <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="true">
   <Found Context="routeData">
-    <RouteView RouteData="@routeData" DefaultLayout="@typeof(Body)"/>
+    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Body)">
+      <Authorizing>
+        <div class="w-full h-full flex justify-center items-center bg-base-300">
+          <button class="btn btn-primary btn-outline btn-lg loading">Authorizing...</button>
+        </div>
+      </Authorizing>
+    </AuthorizeRouteView>
   </Found>
   <NotFound>
-    <LayoutView Layout="typeof(Body)">
-      <OpenOsp.Client.Pages.NotFound/>
-    </LayoutView>
+    <CascadingAuthenticationState>
+      <LayoutView Layout="typeof(Body)">
+        <OpenOsp.Client.Pages.NotFound/>
+      </LayoutView>
+    </CascadingAuthenticationState>
   </NotFound>
 </Router>

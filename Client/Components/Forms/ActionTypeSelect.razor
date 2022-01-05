@@ -1,0 +1,14 @@
+﻿@using OpenOsp.Model.Enums
+@inherits InputSelect<ActionType>
+
+<div class="form-control">
+  <label class="label">
+    <LabelText For="@ValueExpression" class="label-text"/>
+  </label>
+  <InputSelect @attributes="AdditionalAttributes" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression"
+               class="select select-bordered w-full max-w-xs">
+    @foreach (var value in Enum.GetValues(typeof(ActionType))) {
+      <option>@value</option>
+    }
+  </InputSelect>
+</div>

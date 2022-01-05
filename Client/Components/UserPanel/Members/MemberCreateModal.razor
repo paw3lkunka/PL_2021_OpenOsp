@@ -1,5 +1,7 @@
 ﻿@using OpenOsp.Model.Dtos
-<label for="member-create-modal" class="btn btn-accent modal-button">Add</label>
+@using OpenOsp.Client.Components.Forms
+
+<label @onclick="() => _isOpen = true" class="btn btn-accent modal-button">Add</label>
 <input type="checkbox" id="member-create-modal" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_createDto" OnValidSubmit="HandleCreate" class="modal-box">
@@ -22,6 +24,18 @@
   private bool _isOpen { get; set; } = false;
 
   private void HandleCreate() {
+    _isOpen = false;
+  }
+
+  private void HandleCancel() {
+    ResetForm();
+    _isOpen = false;
+  }
+
+  private void ResetForm() {
+    _createDto.Pesel = String.Empty;
+    _createDto.FirstName = String.Empty;
+    _createDto.LastName = String.Empty;
   }
 
 }

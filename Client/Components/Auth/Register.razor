@@ -1,4 +1,6 @@
 @using OpenOsp.Model.Dtos
+@using OpenOsp.Client.Components.Forms
+
 <EditForm Model="@_dto" OnValidSubmit="HandleRegister">
   <DataAnnotationsValidator/>
   <LabeledInputText @bind-Value="_dto.UserName" type="text" placeholder="username"/>

@@ -1,4 +1,5 @@
 ﻿@using OpenOsp.Model.Dtos
+
 <tr>
   <td>
     <label>
@@ -6,14 +7,8 @@
     </label>
   </td>
   <td>@_readDto.Type</td>
-  <td>@_readDto.StartTime.ToString("MMMM dd yyyy")</td>
+  <td>@_readDto.StartTime.ToString("MMMM dd")</td>
   <td>@_readDto.EndTime.ToString("MMMM dd")</td>
-  <td>
-    <ActionReadModal/>
-  </td>
-  <td>
-    <ActionUpdateModal/>
-  </td>
 </tr>
 
 @code {

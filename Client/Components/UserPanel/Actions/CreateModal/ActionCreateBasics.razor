@@ -1,0 +1,29 @@
+﻿@using OpenOsp.Client.Enums
+@using OpenOsp.Model.Dtos
+@using OpenOsp.Client.Components.Forms
+
+<ActionTypeSelect @bind-Value="CreateDto.Type"/>
+<LabeledInputText @bind-Value="CreateDto.Location"/>
+<LabeledInputDateTime @bind-Value="CreateDto.StartTime"/>
+<LabeledInputDateTime @bind-Value="CreateDto.EndTime"/>
+<div class="modal-action">
+  <button class="btn" @onclick="OnNextClick">Next</button> 
+</div>
+
+@code {
+  
+  [Parameter]
+  public ActionCreateDto CreateDto { get; set; }
+
+  [Parameter]
+  public ActionModalMode Mode { get; set; }
+
+  [Parameter]
+  public EventCallback<ActionModalMode> ModeChanged { get; set; }
+
+  private async Task OnNextClick() {
+    Mode = ActionModalMode.Members;
+    await ModeChanged.InvokeAsync(Mode);
+  }
+  
+}

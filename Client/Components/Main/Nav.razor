@@ -38,7 +38,7 @@
 
   private async Task OnNavClick() {
     IsNavdrawer = false;
-    await IsNavdrawerChanged.InvokeAsync();
+    await IsNavdrawerChanged.InvokeAsync(IsNavdrawer);
   }
 
 }

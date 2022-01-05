@@ -12,6 +12,13 @@
   <ItemGroup>
     <ServiceWorker Include=".\wwwroot\service-worker.js" PublishedContent=".\wwwroot\service-worker.published.js" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\UserPanel\Actions\CreateModal\Record\ActionCreateEquipmentRecord.razor" />
+    <_ContentIncludedByDefault Remove="Components\UserPanel\Actions\CreateModal\Record\ActionCreateMemberRecord.razor" />
+    <_ContentIncludedByDefault Remove="Components\UserPanel\Actions\DetailsModal\ActionDetailsBasics.razor" />
+    <_ContentIncludedByDefault Remove="Components\UserPanel\Actions\DetailsModal\ActionDetailsEquipmentTable.razor" />
+    <_ContentIncludedByDefault Remove="Components\UserPanel\Actions\DetailsModal\ActionDetailsMembersTable.razor" />
+  </ItemGroup>
   <!-- NodeJs -->
   <Target Name="NpmCheck" BeforeTargets="NpmInstall">
     <Exec Command="npm -v" ContinueOnError="true">

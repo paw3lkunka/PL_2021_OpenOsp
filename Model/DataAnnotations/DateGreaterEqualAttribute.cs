@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace OpenOsp.Model.DataAnnotations; 
 
 public sealed class DateGreaterEqualAttribute : ValidationAttribute {
-  private const string _defaultErrorMessage = "'{0}' must be later or equal '{1}'";
+  private const string _defaultErrorMessage = "{0} must be later or equal {1}";
 
   private readonly string _basePropertyName;
 

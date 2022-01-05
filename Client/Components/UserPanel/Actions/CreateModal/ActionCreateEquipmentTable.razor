@@ -1,0 +1,70 @@
+﻿@using OpenOsp.Model.Dtos
+@using OpenOsp.Client.Components.Forms
+@using OpenOsp.Client.Enums
+
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+    <tr>
+      <th>Equipment</th>
+      <th>Fuel used</th>
+      <th>Counter state</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var dto in CreateDtos) {
+      <tr>
+        <td>@_checkedEquipment[dto.EquipmentId]</td>
+        <td><InputNumber @bind-Value="dto.FuelUsed" type="float" @bind-Value:format="F2" placeholder="1.23" class="input input-bordered input-sm"/></td>
+        <td><InputNumber @bind-Value="dto.CounterState" placeholder="12345" class="input input-bordered input-sm"/></td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
+<div class="modal-action">
+  <button class="btn" @onclick="OnPrevClick">Prev</button> 
+  <button class="btn btn-primary" @onclick="HandleCreate">Create</button> 
+</div>
+
+@code {
+  
+  [CascadingParameter(Name = "CheckedEquipment")]
+  private IDictionary<int, string> _checkedEquipment { get; set; }
+
+  [Parameter]
+  public IList<ActionEquipmentCreateDto> CreateDtos { get; set; }
+  
+  [Parameter]
+  public ActionModalMode Mode { get; set; }
+
+  [Parameter]
+  public EventCallback<ActionModalMode> ModeChanged { get; set; } 
+
+  [Parameter]
+  public bool IsOpen { get; set; }
+
+  [Parameter]
+  public EventCallback<bool> IsOpenChanged { get; set; }
+
+  protected override Task OnParametersSetAsync() {
+    CreateDtos.Clear();
+    foreach (var equipment in _checkedEquipment) {
+      CreateDtos.Add(new() {
+        EquipmentId = equipment.Key
+      });
+    }
+    return base.OnParametersSetAsync();
+  }
+
+  private async Task OnPrevClick() {
+    Mode = ActionModalMode.Members;
+    await ModeChanged.InvokeAsync(Mode);
+  }
+  
+  private void HandleCreate() {
+    IsOpen = false;
+    IsOpenChanged.InvokeAsync(IsOpen);
+  }
+  
+}

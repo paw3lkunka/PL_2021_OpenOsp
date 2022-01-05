@@ -22,7 +22,7 @@ public class ActionCreateDto {
   [OspDA.DateGreaterEqual("StartTime")]
   public DateTime EndTime { get; set; }
 
-  public virtual IEnumerable<ActionMemberCreateDto> Members { get; set; }
+  public virtual IList<ActionMemberCreateDto> Members { get; set; }
 
-  public virtual IEnumerable<ActionEquipmentCreateDto> Equipment { get; set; }
+  public virtual IList<ActionEquipmentCreateDto> Equipment { get; set; }
 }

@@ -1,4 +1,4 @@
-@inherits InputBase<string>
+@inherits InputText
 
 <div class="form-control">
   @if (IsLabeled) {
@@ -24,11 +24,5 @@
 
   [Parameter]
   public RenderFragment SubLabel { get; set; }
-
-  protected override bool TryParseValueFromString(string? value, out string result, out string? validationErrorMessage) {
-    result = value;
-    validationErrorMessage = null;
-    return true;
-  }
 
 }
