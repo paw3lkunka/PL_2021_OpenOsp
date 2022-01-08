@@ -66,11 +66,12 @@ public class UsersController : ControllerBase {
       var user = _mapper.MapRegister(dto);
       await _service.Create(user, dto.Password);
       var token = await _service.GetEmailConfirmationToken(user);
-      var link = Url.Action(
-        "Verify",
-        "Users",
-        new {uid = user.Id, token},
-        HttpContext.Request.Scheme);
+      var link = $"https://localhost:5001/verify/uid={user.Id}&token={token}";
+      // var link = Url.Action(
+      //   "Verify",
+      //   "Users",
+      //   new {uid = user.Id, token},
+      //   HttpContext.Request.Scheme);
       await _emailsService.SendVerificationEmail(user.Email, link);
       return Ok();
     }
@@ -91,6 +92,9 @@ public class UsersController : ControllerBase {
       var user = await _service.ReadById(uid);
       await _service.ConfirmEmail(user, token);
       return Ok();
+    }
+    catch (NotFoundException ex) {
+      return StatusCode(StatusCodes.Status404NotFound, new {ex.Message});
     }
     catch (DbTransactionException ex) {
       return StatusCode(StatusCodes.Status500InternalServerError, new {ex.Message});

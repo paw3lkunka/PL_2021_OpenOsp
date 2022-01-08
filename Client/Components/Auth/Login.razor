@@ -18,9 +18,16 @@
 <EditForm Model="@_dto" OnValidSubmit="HandleLogin">
   <DataAnnotationsValidator/>
   <LabeledInputText @bind-Value="_dto.Email" type="email" placeholder="your@email.com"/>
-  <LabeledInputText @bind-Value="_dto.Password" placeholder="password" SubLabel="@_forgotPasswordFragment"/>
+  <LabeledInputText @bind-Value="_dto.Password" type="password" placeholder="password" SubLabel="@_forgotPasswordFragment"/>
   <div class="form-control mt-6">
-    <button type="submit" class="btn btn-primary">Log in</button>
+    <button type="submit" class="@($"btn btn-primary {(isWaitingForResult ? "loading" : string.Empty)}")">
+      @if (isWaitingForResult is false) {
+        <span>Log in</span>
+      }
+      else {
+        <span>Logging in...</span>
+      }
+    </button>
   </div>
 </EditForm>
 
@@ -28,16 +35,21 @@
 
   private UserLoginDto _dto = new();
 
+  private bool isWaitingForResult = false;
+
   private bool showAuthenticationError = false;
+  
   private string authenticationError = string.Empty;
 
   private async Task HandleLogin() {
+    isWaitingForResult = true;
     showAuthenticationError = false;
     var result = await AuthService.Login(_dto);
     if (result is not null) {
       NavManager.NavigateTo("/userpanel");
     }
     else {
+      isWaitingForResult = false;
       authenticationError = "There was a problem logging in";
       showAuthenticationError = true;
     }

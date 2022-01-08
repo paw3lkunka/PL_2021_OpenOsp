@@ -1,6 +1,18 @@
 @using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.Forms
+@using OpenOsp.Client.Enums
+@inject HttpClient _http
 
+@if (showRegistrationError) {
+  <div class="alert alert-error">
+    <div class="flex-1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current"> 
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>                         
+      </svg>
+      <label>@registrationError</label>
+    </div>
+  </div>
+}
 <EditForm Model="@_dto" OnValidSubmit="HandleRegister">
   <DataAnnotationsValidator/>
   <LabeledInputText @bind-Value="_dto.UserName" type="text" placeholder="username"/>
@@ -8,15 +20,63 @@
   <LabeledInputText @bind-Value="_dto.Password" type="password" placeholder="password"/>
   <LabeledInputText @bind-Value="_dto.PasswordConfirmation" type="password" placeholder="password"/>
   <div class="form-control mt-6">
-    <button type="submit" class="btn btn-primary">Register</button>
+    @if (showSuccess == false) {
+      <button type="submit" class="@($"btn btn-primary {(isWaitingForResult ? "loading" : string.Empty)}")" disabled="@isWaitingForResult">
+        @if (isWaitingForResult == false) {
+          <span>Register</span>
+        }
+        else {
+          <span>Wait a sec...</span>
+        }
+      </button>
+    }
+    else {
+      <div class="alert alert-success">
+        <div class="flex-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>                          
+          </svg> 
+          <label>User has been registered! Confirm your email before you login!</label>
+        </div>
+      </div> 
+    }
   </div>
 </EditForm>
 
 @code {
+  [Parameter]
+  public AuthCardMode Mode { get; set; }
+  
+  [Parameter]
+  public EventCallback<AuthCardMode> ModeChanged { get; set; }
 
   private UserRegisterDto _dto = new();
 
-  private void HandleRegister() {
+  private bool isWaitingForResult = false;
+
+  private bool showSuccess = false;
+
+  private bool showRegistrationError = false;
+
+  private string registrationError = string.Empty;
+
+  private async Task HandleRegister() {
+    isWaitingForResult = true;
+    showSuccess = false;
+    showRegistrationError = false;
+    var result = await _http.PostAsJsonAsync("api/users/register", _dto);
+    isWaitingForResult = false;
+    if (result.IsSuccessStatusCode) {
+      showSuccess = true;
+      StateHasChanged();
+      await Task.Delay(8000);
+      Mode = AuthCardMode.Login;
+      await ModeChanged.InvokeAsync(Mode);
+    }
+    else {
+      showRegistrationError = true;
+      registrationError = "There was a problem with user registration";
+    }
   }
 
 }

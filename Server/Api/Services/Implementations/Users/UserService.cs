@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -73,11 +74,13 @@ public class UserService<T, TId>
   }
 
   public async Task<string> GetEmailConfirmationToken(T user) {
-    return HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));
+    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+    return WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
   }
 
   public async Task ConfirmEmail(T user, string token) {
-    var result = await _userManager.ConfirmEmailAsync(user, HttpUtility.UrlDecode(token));
+    var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+    var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
     if (result.Succeeded == false) {
       throw new DbTransactionException<T>();
     }

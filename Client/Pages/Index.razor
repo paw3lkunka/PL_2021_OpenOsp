@@ -2,15 +2,57 @@
 @page "/"
 @page "/about"
 @page "/contact"
+@page "/verify/{verificationString}"
+@inject HttpClient _http
+@inject NavigationManager NavManager
 
-<div class="flex flex-col items-center lg:flex-row">
-  <div class="m-5 text-center lg:text-left">
-    <h1 class="mb-5 text-5xl font-bold text-shadow-xl select-none">
-      Welcome!
-    </h1>
-    <p class="text-lg text-shadow-xl select-none">
-      Your web-based firefighting supercharger is waiting for you :3
-    </p>
+<div class="flex flex-col items-center">
+  @if (showVerificationSuccess) {
+    <div class="alert alert-success my-4">
+      <div class="flex-1">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <label>Your e-mail has been verified successfully! You can now log in</label>
+      </div>
+    </div>
+  }
+  <div class="flex flex-col items-center lg:flex-row">
+    <div class="m-5 text-center lg:text-left">
+      <h1 class="mb-5 text-5xl font-bold text-shadow-xl select-none">
+        Welcome!
+      </h1>
+      <p class="text-lg text-shadow-xl select-none">
+        Your web-based firefighting supercharger is waiting for you :3
+      </p>
+    </div>
+    <AuthCard/>
   </div>
-  <AuthCard/>
 </div>
+
+@code {
+
+  [Parameter]
+  public string VerificationString { get; set; }
+
+  private bool showVerificationSuccess = false;
+
+  protected override async Task OnInitializedAsync() {
+    if (string.IsNullOrEmpty(VerificationString) is false) {
+      var verificationResult = await _http.GetAsync($"api/users/verify?{VerificationString}");
+      if (verificationResult.IsSuccessStatusCode) {
+        showVerificationSuccess = true;
+      }
+    }
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender) {
+    if (firstRender && showVerificationSuccess) {
+      await Task.Delay(10000);
+      showVerificationSuccess = false;
+      StateHasChanged();
+      NavManager.NavigateTo("/");
+    }
+  }
+
+}
