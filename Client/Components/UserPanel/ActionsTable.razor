@@ -7,7 +7,7 @@
 <div class="flex mb-5 justify-between">
   <div>
     <ActionCreateModal OnCreateCallback="UpdateTable"/>
-    <button class="btn btn-secondary">Delete</button>
+    <button class="btn btn-secondary" @onclick="HandleDelete">Delete</button>
   </div>
 </div>
 <div class="overflow-x-auto">
@@ -34,6 +34,9 @@
 </div>
 
 @code {
+  
+  [CascadingParameter(Name = "CheckedActions")]
+  private ISet<int> _checkedActions { get; set; }
 
   private IEnumerable<ActionReadDto> _actions { get; set; } = new List<ActionReadDto>();
 
@@ -46,6 +49,16 @@
     if (result is not default(List<ActionReadDto>)) {
       _actions = result;
     }
+  }
+
+  private async Task HandleDelete() {
+    foreach (var actionId in _checkedActions) {
+      var result = await _http.DeleteAsync($"api/Actions/{actionId}");
+      if (result.IsSuccessStatusCode) {
+        _checkedActions.Remove(actionId);
+      }
+    }
+    await UpdateTable();
   }
 
 }

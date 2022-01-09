@@ -48,8 +48,8 @@
     var result = await _http.PostAsJsonAsync("api/equipment", _createDto);
     isWaitingForResponse = false;
     if (result.IsSuccessStatusCode) {
-      _isOpen = false;
       await OnCreateCallback.InvokeAsync();
+      HandleCancel();
     }
     else {
       showError = true;

@@ -6,7 +6,7 @@
 <div class="flex mb-5 justify-between">
   <div>
     <MemberCreateModal OnCreateCallback="UpdateTable"/>
-    <button class="btn btn-secondary">Delete</button>
+    <button class="btn btn-secondary" @onclick="HandleDelete">Delete</button>
   </div>
 </div>
 <div class="overflow-x-auto">
@@ -34,6 +34,9 @@
 
 @code {
 
+  [CascadingParameter(Name = "CheckedMembers")]
+  private IDictionary<int, string> _checkedMembers { get; set; }
+
   private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>();
 
   protected override async Task OnInitializedAsync() {
@@ -46,6 +49,16 @@
       _members = result;
       StateHasChanged();
     }
+  }
+
+  private async Task HandleDelete() {
+    foreach (var memberId in _checkedMembers.Keys) {
+      var result = await _http.DeleteAsync($"api/Members/{memberId}");
+      if (result.IsSuccessStatusCode) {
+        _checkedMembers.Remove(memberId);
+      }
+    }
+    await UpdateTable();
   }
 
 }

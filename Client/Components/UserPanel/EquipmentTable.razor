@@ -6,7 +6,7 @@
 <div class="flex mb-5 justify-between">
   <div>
     <EquipmentCreateModal OnCreateCallback="UpdateTable"/>
-    <button class="btn btn-secondary">Delete</button>
+    <button class="btn btn-secondary" @onclick="HandleDelete">Delete</button>
   </div>
 </div>
 <div class="overflow-x-auto">
@@ -34,6 +34,9 @@
 
 @code {
 
+  [CascadingParameter(Name = "CheckedEquipment")]
+  private IDictionary<int, string> _checkedEquipment { get; set; }
+
   private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto>();
 
   protected override async Task OnInitializedAsync() {
@@ -45,6 +48,16 @@
     if (result is not default(List<EquipmentReadDto>)) {
       _equipment = result;
     }
+  }
+
+  private async Task HandleDelete() {
+    foreach (var equipmentId in _checkedEquipment.Keys) {
+      var result = await _http.DeleteAsync($"api/Equipment/{equipmentId}");
+      if (result.IsSuccessStatusCode) {
+        _checkedEquipment.Remove(equipmentId);
+      }
+    }
+    await UpdateTable();
   }
 
 }
