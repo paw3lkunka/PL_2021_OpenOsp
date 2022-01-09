@@ -21,4 +21,5 @@ nuget Microsoft.Extensions.Identity.Stores >= 5.0.9
 nuget Microsoft.IdentityModel.Tokens >= 6.12.1
 nuget Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.7
 nuget Swashbuckle.AspNetCore >= 6.1.5
+nuget System.IdentityModel.Tokens.Jwt 6.15.0
 nuget System.Net.Http.Json >= 5.0.0

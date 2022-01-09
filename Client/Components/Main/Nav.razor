@@ -1,17 +1,29 @@
 @using OpenOsp.Client.Structures
+
 <nav @attributes="AdditionalAttributes" @onclick="OnNavClick">
-  @foreach (var navLink in _navLinks) {
-    @_navLinkFragment(navLink)
-  }
+  <AuthorizeView>
+    <Authorized>
+      @foreach (var navLink in _navLinks) {
+          @_navLinkFragment(navLink)
+      }
+    </Authorized>
+    <NotAuthorized>
+      @foreach (var navLink in _navLinks) {
+        @if (navLink.IsAuthorized is false) {
+          @_navLinkFragment(navLink)
+        }
+      }
+    </NotAuthorized>
+  </AuthorizeView>
 </nav>
 
 @code {
 
   private IEnumerable<NavLinkStruct> _navLinks = new List<NavLinkStruct> {
-    new() {Url = "/", Label = "Home", IsAvailable = true},
-    new() {Url = "userpanel", Label = "User Panel", IsAvailable = true},
-    new() {Url = "about", Label = "About", IsAvailable = false},
-    new() {Url = "contact", Label = "Contact Us", IsAvailable = false}
+    new() {Url = "/", Label = "Home", IsAvailable = true, IsAuthorized = false},
+    new() {Url = "userpanel", Label = "User Panel", IsAvailable = true, IsAuthorized = true},
+    new() {Url = "about", Label = "About", IsAvailable = false, IsAuthorized = false},
+    new() {Url = "contact", Label = "Contact Us", IsAvailable = false, IsAuthorized = false}
   };
 
   private RenderFragment<NavLinkStruct> _navLinkFragment = navLink => __builder => {

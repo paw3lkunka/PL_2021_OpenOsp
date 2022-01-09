@@ -2,10 +2,11 @@
 @using OpenOsp.Client.Components.UserPanel.Actions
 @using OpenOsp.Client.Components.Forms
 @using OpenOsp.Model.Enums
+@inject HttpClient _http
 
 <div class="flex mb-5 justify-between">
   <div>
-    <ActionCreateModal/>
+    <ActionCreateModal OnCreateCallback="UpdateTable"/>
     <button class="btn btn-secondary">Delete</button>
   </div>
 </div>
@@ -34,14 +35,17 @@
 
 @code {
 
-  private IEnumerable<ActionReadDto> _actions { get; set; } = new List<ActionReadDto>() {
-    new() {
-      Type = ActionType.Fire,
-      Location = "wypizdów 2",
-      StartTime = new DateTime(2021, 12, 1),
-      EndTime = new DateTime(2021, 12, 2),
-      Id = 1
+  private IEnumerable<ActionReadDto> _actions { get; set; } = new List<ActionReadDto>();
+
+  protected override async Task OnInitializedAsync() {
+    await UpdateTable();
+  }
+
+  private async Task UpdateTable() {
+    var result = await _http.GetFromJsonAsync<List<ActionReadDto>>("api/actions");
+    if (result is not default(List<ActionReadDto>)) {
+      _actions = result;
     }
-  };
+  }
 
 }

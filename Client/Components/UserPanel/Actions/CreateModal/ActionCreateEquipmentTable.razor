@@ -23,8 +23,8 @@
   </table>
 </div>
 <div class="modal-action">
-  <button class="btn" @onclick="OnPrevClick">Prev</button> 
-  <button class="btn btn-primary" @onclick="HandleCreate">Create</button> 
+  <button class="btn" @onclick="OnPrevClick" disabled="@IsWaitingForResponse">Prev</button> 
+  <button class="@($"btn btn-primary {(IsWaitingForResponse ? "loading" : String.Empty)}")" disabled="@IsWaitingForResponse" @onclick="HandleCreate">Create</button> 
 </div>
 
 @code {
@@ -42,10 +42,10 @@
   public EventCallback<ActionModalMode> ModeChanged { get; set; } 
 
   [Parameter]
-  public bool IsOpen { get; set; }
-
+  public EventCallback OnCreateCallback { get; set; }
+  
   [Parameter]
-  public EventCallback<bool> IsOpenChanged { get; set; }
+  public bool IsWaitingForResponse { get; set; }
 
   protected override Task OnParametersSetAsync() {
     CreateDtos.Clear();
@@ -62,9 +62,8 @@
     await ModeChanged.InvokeAsync(Mode);
   }
   
-  private void HandleCreate() {
-    IsOpen = false;
-    IsOpenChanged.InvokeAsync(IsOpen);
+  private async Task HandleCreate() {
+    await OnCreateCallback.InvokeAsync();
   }
   
 }

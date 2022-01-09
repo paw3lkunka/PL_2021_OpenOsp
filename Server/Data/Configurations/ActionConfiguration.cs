@@ -20,8 +20,10 @@ internal class ActionConfiguration : IEntityConfiguration {
         .IsRequired()
         .HasMaxLength(64);
       entity.Property(e => e.StartTime)
+        .HasColumnType("timestamp")
         .IsRequired();
       entity.Property(e => e.EndTime)
+        .HasColumnType("timestamp")
         .IsRequired();
       entity.Property(e => e.UserId)
         .HasColumnName("OwnerId")

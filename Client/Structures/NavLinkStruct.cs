@@ -6,4 +6,6 @@ public struct NavLinkStruct {
   public string Label { get; set; }
 
   public bool IsAvailable { get; set; }
+  
+  public bool IsAuthorized { get; set; }
 }

@@ -1,18 +1,29 @@
 ﻿@using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.Forms
+@inject HttpClient _http
 
 <label @onclick="() => _isOpen = true" class="btn btn-sm btn-primary btn-outline modal-button">Edit</label>
 <input type="checkbox" class="modal-toggle" @bind="_isOpen"/>
 <div class="modal">
   <EditForm Model="@_updateDto" OnValidSubmit="HandleUpdate" class="modal-box">
+    @if (showError) {
+      <div class="alert alert-error">
+        <div class="flex-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current"> 
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>                         
+          </svg>
+          <label>Could not edit member... Try again later</label>
+        </div>
+      </div>
+    }
     <h1 class="mb-5 text-center text-2xl font-bold">Update a member</h1>
     <DataAnnotationsValidator/>
     <LabeledInputText @bind-Value="_updateDto.FirstName"/>
     <LabeledInputText @bind-Value="_updateDto.LastName"/>
     <LabeledInputText @bind-Value="_updateDto.Pesel"/>
     <div class="modal-action">
-      <button type="submit" class="btn btn-primary">Update</button>
-      <button class="btn" @onclick="HandleCancel">Cancel</button>
+      <button type="submit" class="@($"btn btn-primary {(isWaitingForResponse ? "loading" : string.Empty)}")" disabled="@isWaitingForResponse">Update</button>
+      <button class="btn" @onclick="HandleCancel" disabled="@isWaitingForResponse">Cancel</button>
     </div>
   </EditForm>
 </div>
@@ -21,18 +32,36 @@
 
   [CascadingParameter]
   private MemberReadDto _readDto { get; set; }
+  
+  [Parameter]
+  public EventCallback OnUpdateCallback { get; set; }
 
   private MemberUpdateDto _updateDto { get; set; } = new();
 
   private bool _isOpen { get; set; } = false;
+
+  private bool isWaitingForResponse = false;
+
+  private bool showError = false;
 
   protected override Task OnParametersSetAsync() {
     ResetForm();
     return base.OnParametersSetAsync();
   }
 
-  private void HandleUpdate() {
-    _isOpen = false;
+  private async Task HandleUpdate() {
+    showError = false;
+    isWaitingForResponse = true;
+    var result = await _http.PutAsJsonAsync($"api/members/{_readDto.Id}", _updateDto);
+    isWaitingForResponse = false;
+    if (result.IsSuccessStatusCode) {
+      _isOpen = false;
+      await OnUpdateCallback.InvokeAsync();
+    }
+    else {
+      showError = true;
+      StateHasChanged();
+    }
   }
 
   private void HandleCancel() {

@@ -1,10 +1,11 @@
 ﻿@using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.UserPanel.Members
 @using OpenOsp.Client.Components.Forms
+@inject HttpClient _http
 
 <div class="flex mb-5 justify-between">
   <div>
-    <MemberCreateModal/>
+    <MemberCreateModal OnCreateCallback="UpdateTable"/>
     <button class="btn btn-secondary">Delete</button>
   </div>
 </div>
@@ -22,7 +23,7 @@
     <tbody>
     @foreach (var member in _members) {
       <CascadingValue Value=@member>
-        <MemberRecord/>
+        <MemberRecord OnUpdateCallback="UpdateTable"/>
       </CascadingValue>
     }
     </tbody>
@@ -33,9 +34,18 @@
 
 @code {
 
-  private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>() {
-    new() {FirstName = "test", LastName = "testowy", Pesel = "0000000000", Id = 1},
-    new() {FirstName = "dwójka", LastName = "panie", Pesel = "0000000000", Id = 2}
-  };
+  private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>();
+
+  protected override async Task OnInitializedAsync() {
+    await UpdateTable();
+  }
+
+  private async Task UpdateTable() {
+    var result = await _http.GetFromJsonAsync<List<MemberReadDto>>("api/members");
+    if (result is not default(List<MemberReadDto>)) {
+      _members = result;
+      StateHasChanged();
+    }
+  }
 
 }

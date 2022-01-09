@@ -1,10 +1,11 @@
 ﻿@using OpenOsp.Model.Dtos
 @using OpenOsp.Client.Components.UserPanel.Equipment
 @using OpenOsp.Client.Components.Forms
+@inject HttpClient _http
 
 <div class="flex mb-5 justify-between">
   <div>
-    <EquipmentCreateModal/>
+    <EquipmentCreateModal OnCreateCallback="UpdateTable"/>
     <button class="btn btn-secondary">Delete</button>
   </div>
 </div>
@@ -22,7 +23,7 @@
     <tbody>
     @foreach (var equipment in _equipment) {
       <CascadingValue Value="@equipment">
-        <EquipmentRecord/>
+        <EquipmentRecord OnUpdateCallback="UpdateTable"/>
       </CascadingValue>
     }
     </tbody>
@@ -33,8 +34,17 @@
 
 @code {
 
-  private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto> {
-    new() {Brand = "aaa", Model = "bbb", RegistryNumber = "EPA 1234", Id = 1}
-  };
+  private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto>();
+
+  protected override async Task OnInitializedAsync() {
+    await UpdateTable();
+  }
+
+  private async Task UpdateTable() {
+    var result = await _http.GetFromJsonAsync<List<EquipmentReadDto>>("api/equipment");
+    if (result is not default(List<EquipmentReadDto>)) {
+      _equipment = result;
+    }
+  }
 
 }

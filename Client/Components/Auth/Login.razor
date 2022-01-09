@@ -2,8 +2,8 @@
 @using OpenOsp.Client.Components.Forms
 @using OpenOsp.Client.Authentication
 @using OpenOsp.Client.Components.Main
-@inject IAuthenticationService AuthService
-@inject NavigationManager NavManager
+@inject IAuthenticationService _authService
+@inject NavigationManager _navManager
 
 @if (showAuthenticationError) {
   <div class="alert alert-error">
@@ -20,7 +20,7 @@
   <LabeledInputText @bind-Value="_dto.Email" type="email" placeholder="your@email.com"/>
   <LabeledInputText @bind-Value="_dto.Password" type="password" placeholder="password" SubLabel="@_forgotPasswordFragment"/>
   <div class="form-control mt-6">
-    <button type="submit" class="@($"btn btn-primary {(isWaitingForResult ? "loading" : string.Empty)}")">
+    <button type="submit" class="@($"btn btn-primary {(isWaitingForResult ? "loading" : string.Empty)}")" disabled="@isWaitingForResult">
       @if (isWaitingForResult is false) {
         <span>Log in</span>
       }
@@ -44,9 +44,9 @@
   private async Task HandleLogin() {
     isWaitingForResult = true;
     showAuthenticationError = false;
-    var result = await AuthService.Login(_dto);
+    var result = await _authService.Login(_dto);
     if (result is not null) {
-      NavManager.NavigateTo("/userpanel");
+      _navManager.NavigateTo("/userpanel");
     }
     else {
       isWaitingForResult = false;

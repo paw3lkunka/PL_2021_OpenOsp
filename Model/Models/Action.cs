@@ -15,10 +15,12 @@ public class Action : IHasId<int>, IOwnedBy<int> {
   [OspDA.Required] [OspDA.MaxLength(64)] public string Location { get; set; }
 
   [Display(Name = "Start time")]
+  [Column(TypeName = "timestamp")]
   [OspDA.Required]
   public DateTime StartTime { get; set; }
 
   [Display(Name = "End time")]
+  [Column(TypeName = "timestamp")]
   [OspDA.Required]
   [OspDA.DateGreaterEqual("StartTime")]
   public DateTime EndTime { get; set; }

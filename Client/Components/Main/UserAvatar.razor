@@ -1,22 +1,37 @@
-<div class="dropdown dropdown-end">
-  <div tabindex="0" class="avatar btn btn-ghost btn-circle">
-    <div class="rounded-full w-10 h-10 m-1">
-      <img src="https://i.pravatar.cc/500?img=32">
+@using System.IdentityModel.Tokens.Jwt 
+@using OpenOsp.Client.Authentication
+@inject IAuthenticationService _authService
+@inject NavigationManager _navManager
+
+<AuthorizeView>
+  <Authorized>
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" class="avatar btn btn-ghost btn-circle">
+        <div class="rounded-full w-10 h-10 m-1">
+          <img src="https://i.pravatar.cc/500?img=32">
+        </div>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li>
+          <p class="font-bold select-none">@context.User.FindFirst(JwtRegisteredClaimNames.UniqueName).Value</p>
+        </li>
+        <li>
+          <a @onclick="HandleLogout">Sign Out</a>
+        </li>
+      </ul>
     </div>
-  </div>
-  <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-    <li>
-      <a>Whatever</a>
-    </li>
-    <li>
-      <a>Sign Out</a>
-    </li>
-  </ul>
-</div>
+  </Authorized>
+</AuthorizeView>
 
 @code {
 
   [Parameter(CaptureUnmatchedValues = true)]
   public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; }
+
+  private async Task HandleLogout() {
+    await _authService.Logout();
+    StateHasChanged();
+    _navManager.NavigateTo("/");
+  }
 
 }

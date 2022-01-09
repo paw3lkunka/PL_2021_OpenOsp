@@ -9,7 +9,7 @@
   <td>@_readDto.Model</td>
   <td>@_readDto.RegistryNumber</td>
   <td>
-    <EquipmentUpdateModal/>
+    <EquipmentUpdateModal OnUpdateCallback="OnUpdateCallback"/>
   </td>
 </tr>
 
@@ -20,6 +20,9 @@
 
   [CascadingParameter(Name = "CheckedEquipment")]
   private IDictionary<int, string> _checkedEquipment { get; set; }
+
+  [Parameter]
+  public EventCallback OnUpdateCallback { get; set; }
 
   private void HandleCheckboxChange(object value) {
     if ((bool)value) {

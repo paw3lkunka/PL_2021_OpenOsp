@@ -6,3 +6,4 @@ Blazored.LocalStorage
 Microsoft.Extensions.Localization
 Microsoft.AspNetCore.Components.WebAssembly.Authentication
 Humanizer.Core
+System.IdentityModel.Tokens.Jwt

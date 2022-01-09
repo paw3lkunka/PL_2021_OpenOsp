@@ -5,7 +5,7 @@
   <td>@_readDto.FirstName</td>
   <td>@_readDto.LastName</td>
   <td>@_readDto.Pesel</td>
-  <td><MemberUpdateModal/></td>
+  <td><MemberUpdateModal OnUpdateCallback="OnUpdateCallback"/></td>
 </tr>
 
 @code {
@@ -16,6 +16,9 @@
   [CascadingParameter(Name = "CheckedMembers")]
   private IDictionary<int, string> _checkedMembers { get; set; }
   
+  [Parameter]
+  public EventCallback OnUpdateCallback { get; set; }
+
   private void HandleCheckboxChange(object value) {
     if ((bool)value) {
       _checkedMembers.TryAdd(_readDto.Id, $"{_readDto.FirstName} {_readDto.LastName}");
