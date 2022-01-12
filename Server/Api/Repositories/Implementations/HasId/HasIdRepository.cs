@@ -14,7 +14,7 @@ public class HasIdRepository<T, TId>
   public HasIdRepository(AppDbContext context) : base(context) {
   }
 
-  public IQueryable<T> ReadById(TId id) {
+  public virtual IQueryable<T> ReadById(TId id) {
     return ReadAll().Where(e => e.Id.Equals(id));
   }
 }

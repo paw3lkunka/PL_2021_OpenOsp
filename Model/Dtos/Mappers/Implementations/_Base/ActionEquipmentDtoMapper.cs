@@ -14,7 +14,7 @@ public class ActionEquipmentDtoMapper : IDtoMapper<ActionEquipment, ActionEquipm
 
   public ActionEquipmentReadDto MapRead(ActionEquipment entity) {
     return new ActionEquipmentReadDto {
-      CounterState = entity.CounterState, EquipmentId = entity.Id2, FuelUsed = entity.FuelUsed
+      CounterState = entity.CounterState, EquipmentId = entity.Id2, FuelUsed = entity.FuelUsed, DisplayName = $"{entity.Equipment.Brand} {entity.Equipment.RegistryNumber}"
     };
   }
 

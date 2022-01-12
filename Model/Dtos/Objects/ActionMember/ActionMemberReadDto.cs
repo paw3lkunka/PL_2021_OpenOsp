@@ -10,6 +10,8 @@ public class ActionMemberReadDto {
   [Display(Name = "Member's id")]
   [OspDA.Required]
   public int MemberId { get; set; }
+  
+  public string DisplayName { get; set; }
 
   [OspDA.Required] public ActionMemberRole Role { get; set; } = ActionMemberRole.Member;
 }

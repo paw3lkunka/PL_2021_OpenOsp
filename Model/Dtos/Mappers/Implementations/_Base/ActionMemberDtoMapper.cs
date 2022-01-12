@@ -14,7 +14,7 @@ public class
   }
 
   public ActionMemberReadDto MapRead(ActionMember entity) {
-    return new ActionMemberReadDto {MemberId = entity.Id2, Role = entity.Role};
+    return new ActionMemberReadDto {MemberId = entity.Id2, Role = entity.Role, DisplayName = $"{entity.Member.FirstName} {entity.Member.LastName}"};
   }
 
   public ActionMember MapUpdate(ActionMemberUpdateDto dto, ActionMember entity) {

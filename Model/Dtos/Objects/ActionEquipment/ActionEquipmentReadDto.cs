@@ -8,6 +8,8 @@ public class ActionEquipmentReadDto {
   [Display(Name = "Equipment's id")]
   [OspDA.Required]
   public int EquipmentId { get; set; }
+  
+  public string DisplayName { get; set; }
 
   [Display(Name = "Fuel used")]
   [OspDA.Required]

@@ -18,6 +18,7 @@ using OpenOsp.Model.Dtos;
 using OpenOsp.Model.Dtos.Mappers;
 using OpenOsp.Server.Api.Controllers;
 using OpenOsp.Server.Api.Repositories;
+using OpenOsp.Server.Api.Repositories.Actions;
 using OpenOsp.Server.Api.Services;
 using OpenOsp.Server.Data.Contexts;
 using OpenOsp.Server.Settings;
@@ -86,8 +87,8 @@ public class Startup {
     /// HasIdRepository as IHasIdRepository
     services.AddScoped<IHasIdRepository<OspM.Action, int>, HasIdRepository<OspM.Action, int>>();
     services
-      .AddScoped<IHasIdRepository<OspM.ActionEquipment, int, int>, HasIdRepository<OspM.ActionEquipment, int, int>>();
-    services.AddScoped<IHasIdRepository<OspM.ActionMember, int, int>, HasIdRepository<OspM.ActionMember, int, int>>();
+      .AddScoped<IHasIdRepository<OspM.ActionEquipment, int, int>, ActionEquipmentRepository>();
+    services.AddScoped<IHasIdRepository<OspM.ActionMember, int, int>, ActionMembersRepository>();
     services.AddScoped<IHasIdRepository<OspM.Equipment, int>, HasIdRepository<OspM.Equipment, int>>();
     services.AddScoped<IHasIdRepository<OspM.Member, int>, HasIdRepository<OspM.Member, int>>();
     /// UnauthorizedRepository as IHasIdRepository
