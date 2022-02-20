@@ -67,11 +67,6 @@ public class UsersController : ControllerBase {
       await _service.Create(user, dto.Password);
       var token = await _service.GetEmailConfirmationToken(user);
       var link = $"https://localhost:5001/verify/uid={user.Id}&token={token}";
-      // var link = Url.Action(
-      //   "Verify",
-      //   "Users",
-      //   new {uid = user.Id, token},
-      //   HttpContext.Request.Scheme);
       await _emailsService.SendVerificationEmail(user.Email, link);
       return Ok();
     }

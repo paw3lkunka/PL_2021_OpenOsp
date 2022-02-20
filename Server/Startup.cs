@@ -44,9 +44,6 @@ public class Startup {
     /// Load configuration files
     services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
     services.Configure<EmailSettings>(Configuration.GetSection("Email"));
-    /// Basic server configuration
-    services.AddCors();
-    services.AddMvc();
     /// Database Context
     services.AddDbContext<AppDbContext>(options => {
       options.UseNpgsql(
@@ -91,27 +88,12 @@ public class Startup {
     services.AddScoped<IHasIdRepository<OspM.ActionMember, int, int>, ActionMembersRepository>();
     services.AddScoped<IHasIdRepository<OspM.Equipment, int>, HasIdRepository<OspM.Equipment, int>>();
     services.AddScoped<IHasIdRepository<OspM.Member, int>, HasIdRepository<OspM.Member, int>>();
-    /// UnauthorizedRepository as IHasIdRepository
-    // services.AddScoped<IHasIdRepository<OspM.Action, int>, UnauthorizedRepository<OspM.Action, int>>();
-    // services.AddScoped<IHasIdRepository<OspM.ActionEquipment, int, int>, UnauthorizedRepository<OspM.ActionEquipment, int, int>>();
-    // services.AddScoped<IHasIdRepository<OspM.ActionMember, int, int>, UnauthorizedRepository<OspM.ActionMember, int, int>>();
-    // services.AddScoped<IHasIdRepository<OspM.Equipment, int>, UnauthorizedRepository<OspM.Equipment, int>>();
-    // services.AddScoped<IHasIdRepository<OspM.Member, int>, UnauthorizedRepository<OspM.Member, int>>();
     /// API Services
-    /// HasIdService as IHasIdService
     services.AddScoped<IHasIdService<OspM.Action, int>, HasIdService<OspM.Action, int>>();
     services.AddScoped<IHasIdService<OspM.ActionEquipment, int, int>, HasIdService<OspM.ActionEquipment, int, int>>();
     services.AddScoped<IHasIdService<OspM.ActionMember, int, int>, HasIdService<OspM.ActionMember, int, int>>();
     services.AddScoped<IHasIdService<OspM.Equipment, int>, HasIdService<OspM.Equipment, int>>();
     services.AddScoped<IHasIdService<OspM.Member, int>, HasIdService<OspM.Member, int>>();
-    /// AuhorizedService as IHasIdService
-    // services.AddScoped<IHasIdService<OspM.Action, int>, AuthorizedService<OspM.Action, int, int>>();
-    // services.AddScoped<IHasIdService<OspM.Equipment, int>, AuthorizedService<OspM.Equipment, int, int>>();
-    // services.AddScoped<IHasIdService<OspM.Member, int>, AuthorizedService<OspM.Member, int, int>>();
-    /// EntitiesAuthService as IEntitiesAuthService
-    // services.AddScoped<IEntitiesAuthService<OspM.Action>, EntitiesAuthService<OspM.Action, int>>();
-    // services.AddScoped<IEntitiesAuthService<OspM.Equipment>, EntitiesAuthService<OspM.Equipment, int>>();
-    // services.AddScoped<IEntitiesAuthService<OspM.Member>, EntitiesAuthService<OspM.Member, int>>();
     /// Other services
     services.AddScoped<IEmailsService, EmailsService>();
     services.AddScoped<IUserService<OspM.User, int>, UserService<OspM.User, int>>();
