@@ -27,11 +27,17 @@
   <!-- WASM -->
   <script autostart="false" src="_framework/blazor.webassembly.js"></script>
   <!-- ServiceWorker for PWA -->
-  <script>navigator.serviceWorker.register('./service-worker.js');</script>
+  <script>
+    try{
+      navigator.serviceWorker.register('./service-worker.js');
+    }
+    catch (error) {
+      console.info("info: PWA service worker failed. It may be, because you are running browser in private mode.\n\t" + error);
+    }
+  </script>
   <!-- Decoding for faster data transfer -->
   <script type="module">
     import { BrotliDecode } from './js/decode.min.js';
-
     Blazor.start({
       loadBootResource: function (type, name, defaultUri, integrity) {
         if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
