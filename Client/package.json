@@ -1,5 +1,5 @@
 {
-  "name": "openosp-blazor",
+  "name": "openosp-client",
   "author": "Paul B. Kunka",
   "description": "OpenOSP is a free software for firefighter's HQ management.",
   "scripts": {
