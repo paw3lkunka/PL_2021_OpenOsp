@@ -6,7 +6,20 @@
 <div class="flex mb-5 justify-between">
   <div>
     <EquipmentCreateModal OnCreateCallback="UpdateTable"/>
-    <button class="btn btn-secondary" @onclick="HandleDelete">Delete</button>
+    <span>
+      <label for="delete-equipment-modal" class="btn btn-secondary" disabled="@(_checkedEquipment.Count() == 0)">Delete</label>
+      <input type="checkbox" id="delete-equipment-modal" class="modal-toggle" @bind="_isDeleteModalOpen">
+      <div class="modal">
+        <div class="modal-box">
+          <h3 class="font-bold text-lg">Delete Equipment</h3>
+          <p class="py-4">Are you sure you want to delete @_checkedEquipment.Count() checked equipment?<br/> It is permanent.</p>
+          <div class="modal-action">
+            <button @onclick="HandleDelete" class="btn btn-error">Confirm</button>
+            <label for="delete-equipment-modal" class="btn">Cancel</label>
+          </div>
+        </div>
+      </div>
+    </span>
   </div>
 </div>
 <div class="overflow-x-auto">
@@ -38,6 +51,8 @@
   private IDictionary<int, string> _checkedEquipment { get; set; }
 
   private IEnumerable<EquipmentReadDto> _equipment { get; set; } = new List<EquipmentReadDto>();
+
+  private bool _isDeleteModalOpen = false;
 
   protected override async Task OnInitializedAsync() {
     await UpdateTable();

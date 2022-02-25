@@ -4,7 +4,7 @@
   <AuthorizeView>
     <Authorized>
       @foreach (var navLink in _navLinks) {
-          @_navLinkFragment(navLink)
+        @_navLinkFragment(navLink)
       }
     </Authorized>
     <NotAuthorized>

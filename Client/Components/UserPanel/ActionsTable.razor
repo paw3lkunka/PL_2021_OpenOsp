@@ -7,7 +7,20 @@
 <div class="flex mb-5 justify-between">
   <div>
     <ActionCreateModal OnCreateCallback="UpdateTable"/>
-    <button class="btn btn-secondary" @onclick="HandleDelete">Delete</button>
+    <span>
+      <label for="delete-actions-modal" class="btn btn-secondary" disabled="@(_checkedActions.Count() == 0)">Delete</label>
+      <input type="checkbox" id="delete-actions-modal" class="modal-toggle" @bind="_isDeleteModalOpen">
+      <div class="modal">
+        <div class="modal-box">
+          <h3 class="font-bold text-lg">Delete Actions</h3>
+          <p class="py-4">Are you sure you want to delete @_checkedActions.Count() checked actions?<br/> It is permanent.</p>
+          <div class="modal-action">
+            <button @onclick="HandleDelete" class="btn btn-error">Confirm</button>
+            <label for="delete-actions-modal" class="btn">Cancel</label>
+          </div>
+        </div>
+      </div>
+    </span>
   </div>
 </div>
 <div class="overflow-x-auto">
@@ -40,6 +53,8 @@
 
   private IEnumerable<ActionReadDto> _actions { get; set; } = new List<ActionReadDto>();
 
+  private bool _isDeleteModalOpen = false;
+
   protected override async Task OnInitializedAsync() {
     await UpdateTable();
   }
@@ -59,6 +74,7 @@
       }
     }
     await UpdateTable();
+    _isDeleteModalOpen = false;
   }
 
 }

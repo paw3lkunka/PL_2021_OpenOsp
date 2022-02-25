@@ -1,42 +1,61 @@
 \documentclass[a4paper,12pt,polish,twoside]{extreport}
 
-% ustawienia marginesów
+% set margins
 \usepackage{geometry}
-\geometry{
- a4paper,
- top=25mm,
- inner=35mm,
- outer=25mm,
- bottom=25mm,
-}
+\geometry{a4paper,top=25mm,inner=35mm,outer=25mm,bottom=25mm}
+\usepackage{changepage}
 
-% dodanie wcięcia na początku każdego akapitu
-\usepackage{indentfirst}
-
-% ustawienie interlinii na 1.5
+% set leading to 1.5
 \renewcommand{\baselinestretch}{1.5}
 
-% zmiana punktowania list na myślniki
+% change bullet points to dashes
 \renewcommand\labelitemi{---}
 
-% polskie znaki
+% prevent hyphenation
+% \hyphenpenalty=10000
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[polish,english]{babel}
+\usepackage[english,polish]{babel}
 
-
-% bibliografia
+% bibliography
 \usepackage{csquotes}
-\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\usepackage[backend=biber,style=numeric,sorting=nty]{biblatex}
 \addbibresource{bibliography.bib}
-\usepackage{hyperref}
+\usepackage[unicode]{hyperref}
 
-% listingi i~spis listingów
+% algorithms and list of algorithms
 \usepackage{listings}
 \usepackage[center]{caption}
 \DeclareCaptionType{code}[Listing][Spis listingów]
-\lstset{breaklines=true,basicstyle=\ttfamily\footnotesize, numbers=left,tabsize=1,extendedchars=\true,
-literate={ą}{{\k{a}}}1
+\renewcommand\lstlistingname{Listing}
+\renewcommand\lstlistlistingname{Spis listingów}
+
+%code listings style
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{lststyle}{
+  basicstyle=\ttfamily\scriptsize,
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=1,
+  extendedchars=true,
+  literate={ą}{{\k{a}}}1
          {Ą}{{\k{A}}}1
          {ę}{{\k{e}}}1
          {Ę}{{\k{E}}}1
@@ -53,109 +72,162 @@ literate={ą}{{\k{a}}}1
          {ć}{{\'c}}1
          {Ć}{{\'C}}1
          {ń}{{\'n}}1
-         {Ń}{{\'N}}1}
+         {Ń}{{\'N}}1
+}
+\lstset{style=lststyle}
+% CSS
+\lstdefinelanguage{CSS}{
+  keywords={color,background-image:,margin,padding,font,weight,display,position,top,left,right,bottom,list,style,border,size,white,space,min,width, transition:, transform:, transition-property, transition-duration, transition-timing-function},	
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  alsoletter={:},
+  alsodigit={-}
+}
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+  morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morestring=[b]",
+  morestring=[b]'
+}
+% C#
+\lstdefinelanguage{CSharp}
+{
+ morecomment = [l]{//}, 
+ morecomment = [l]{///},
+ morecomment = [s]{/*}{*/},
+ morestring=[b]", 
+ sensitive = true,
+ morekeywords = {abstract,  event,  new,  struct,
+   as,  explicit,  null,  switch,
+   base,  extern,  object,  this,
+   bool,  false,  operator,  throw,
+   break,  finally,  out,  true,
+   byte,  fixed,  override,  try,
+   case,  float,  params,  typeof,
+   catch,  for,  private,  uint,
+   char,  foreach,  protected,  ulong,
+   checked,  goto,  public,  unchecked,
+   class,  if,  readonly,  unsafe,
+   const,  implicit,  ref,  ushort,
+   continue,  in,  return,  using,
+   decimal,  int,  sbyte,  virtual,
+   default,  interface,  sealed,  volatile,
+   delegate,  internal,  short,  void,
+   do,  is,  sizeof,  while,
+   double,  lock,  stackalloc,   
+   else,  long,  static,   
+   enum,  namespace,  string}
+}
 
-% rysunki i~spis rysunków
+% figures and list of figures
 \usepackage{float}
 \usepackage{graphicx}
 \graphicspath{ {./img/} }
 \usepackage[nottoc]{tocbibind}
 \addto\captionspolish{\renewcommand{\figurename}{Rys.}}
 
-% praca na wielu plikach 
-\usepackage{subfiles}
+% tables
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\floatstyle{plaintop}
+\restylefloat{table}
+\captionsetup[table]{name=Tabela}
+\newcolumntype{S}{>{\hsize=0.6\hsize}X}
+\newcolumntype{L}{>{\hsize=1.4\hsize}X}
 
-% inne polepszacze
-\usepackage{amstext}
-\usepackage{lmodern}
-\usepackage{microtype}
-\usepackage{enumitem}
-\usepackage{blindtext}
-\usepackage{emptypage}
-\usepackage{pdfpages}
+% other
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
 
-\newenvironment{abstractpage}
-  {\cleardoublepage\vspace*{\fill}\thispagestyle{empty}}
-  {\vfill\cleardoublepage}
-  
-\newenvironment{multiabstract}[1]
-  {\bigskip\selectlanguage{#1}%
-   \begin{center}\bfseries\abstractname\end{center}}
-  {\par\bigskip}
+% custom command for printing a date in the format dd.mm.yyyy
+\def\mydate{\leavevmode\hbox{\the\day.\twodigits\month.\twodigits\year}}
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
 
+\title{Internetowy system zarządzania jednostkami Ochotniczej Straży Pożarnej}
+\author{Paweł Kunka}
+\date{\L{}\'od\'z, \mydate}
 
-% treść
+% header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{\thepage}
+% \fancyhead{}
+% \fancyhead[RO,LE]{Thesis Title}
+% \fancyfoot{}
+% \fancyfoot[LE,RO]{\thepage}
+%\fancyfoot[LO,CE]{Chapter \thechapter}
+% \fancyfoot[CO,RE]{Author Name}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% main text
 \begin{document}
-\includepdf[pages=-]{./praca_dyplomowa_tytulowa.pdf}
-% \includepdf{praca_dyplomowa_tytulowa}
-\begin{abstractpage}
-    \begin{multiabstract}{polish}
-        Niniejsza praca dyplomowa porusza problematykę portali społecznościowych dla programistów. Po dokonaniu analizy istniejących rozwiązań, przedstawiono propozycję autorskiej aplikacji umożliwiającej proste dzielenie się praktycznymi rozwiązaniami programistycznymi. W pracy zawarto opis technologii wybranych do realizacji serwisu internetowego (części klienckiej), wraz z przedstawieniem implementacji założonych wymagań funkcjonalnych oraz niefunkcjonalnych. Zaprezentowane rozwiązanie korzysta z technologii aktualnie stosowanych na rynku IT umożliwiających tworzenie aplikacji szybkich, niezawodnych oraz dopasowanych do wielu platform. Na koniec pracy zamieszczono instrukcję obsługi stworzonego rozwiązania, przeznaczonego dla użytkownika. Przedstawia ona najważniejsze aspekty portalu, takie jak nawigacja po podstronach lub korzystanie z głównych funkcji portalu.
-        \newline
-
-        \noindent\textbf{Słowa kluczowe:} portal społecznościowy, aplikacja webowa, React.js, Redux, TypeScript
-    \end{multiabstract}
-
-    \begin{multiabstract}{english}
-        The presenting engineering thesis addresses the issue of social media platforms for software developers. After analyzing the existing solutions, a proposition of author's application that allows simple sharing of practical programming solutions was presented. The thesis describes the technologies chosen for the internet service (client side) implementation with functional and non-functional requirements in mind. The presented solution uses technologies powering modern apps and platforms, which provides fast, reliable and multi-platform experience to the end user. In the last part the author included a user manual. It presents the most important aspects of the portal, such as navigating the subpages or using the main functions of the portal.
-        \newline
-
-        \noindent\textbf{Key words:} social media platform, web app, React.js, Redux, TypeScript
-    \end{multiabstract}
-\end{abstractpage}
-
 \selectlanguage{polish}
-\pagestyle{empty}
-{
-    \renewcommand{\thispagestyle}[1]{}
-    \tableofcontents
-}
-\clearpage
-\pagestyle{plain}
 
-\cleardoublepage
+% title page
+% to modify the contents of the title page go to titlepage.tex file
+\input{titlepage}
+
+\pagenumbering{gobble}
+\pagenumbering{roman}
+\thispagestyle{plain}
+\null\newpage
+
+\chapter*{Abstrakt}
+\input{abstract}
+
+%\chapter*{Podziękowania}
+%\input{acknowledgements}
+
+%\chapter*{}
+%\input{dedication}
+
+\tableofcontents
+\pagenumbering{arabic}
+\null\newpage
 
 \chapter{Wstęp}
-\subfile{chapters/introduction}
+\input{chapters/chapter1}
 
-\chapter{Przegląd wybranych portali dla społeczności programistów}
-W niniejszym rozdziale omówiono kwestię istnienia specjalistycznych portali dla społeczności programistów. Przedstawiono również istniejące rozwiązania i ich wady, prowadzące do zdefiniowania potrzeby powstania nowej platformy zapełniającej lukę w potrzebach tej rozwijającej się społeczności \cite{statystyki_ilosc_programistow}.
-\subfile{chapters/existing_solutions}
+\chapter{Stan zagadnienia}
+\input{chapters/chapter2}
 
-\chapter{Technologie użyte do realizacji projektu}
-W niniejszym rozdziale przedstawiono technologie niezbędne do realizacji projektu aplikacji klienckiej portalu dla programistów ``Codity''. Uzasadniono również sens wyboru każdej technologii w kontekście aplikacji wykonywanej w ramach niniejszej pracy.
-\subfile{chapters/technologies_used}
+\chapter{Teoretyczne podstawy systemów internetowych}
+\input{chapters/chapter3}
 
-\chapter{Projekt aplikacji klienckiej dla portalu ``Codity''}
-W niniejszym rozdziale przedstawiono aspekty techniczne projektu aplikacji klienckiej dla portalu dla programistów o nazwie ``Codity''. Na początku zdefiniowano wymagania funkcjonalne oraz niefunkcjonalne przyjęte na początku realizacji projektu. Następnie przedstawiono szczegóły realizacji aplikacji, takie jak architektura aplikacji, warstwa logiki oraz warstwa prezentacji.
-\subfile{chapters/implementation}
+\chapter{Projekt systemu}
+\input{chapters/chapter4}
 
-\chapter{Aplikacja kliencka portalu ``Codity'' z punktu widzenia użytkownika}
-W niniejszym rozdziale przedstawiono instrukcję użytkowania aplikacji ``Codity'', przeznaczonej dla każdego rodzaju użytkownika.
-\subfile{chapters/manual}
-\chapter{Wnioski}
-Po przeprowadzonej analizie istniejących portali społecznościowych, oferujących dzielenie się praktycznymi rozwiązaniami programistycznymi, stwierdzono, że nie istnieje taki portal, który byłby dedykowany społeczności programistów. Omówione rozwiązania cechuje skupienie się na tylko jednym z aspektów dobrego portalu społecznościowego dla programistów: tworzeniu społeczności lub oferowaniu narzędzi dedykowanych tej grupie odbiorców.
+\chapter{Proces implementacji}
+\input{chapters/chapter5}
 
-Aplikacja \textit{Codity} wypełnia lukę na rynku portali społecznościowych. Jest to rozwiązanie przeznaczone dla programistów, udostępniające narzędzia kierowane do tej grupy ludzi. Możliwość formatowania fragmentów kodu udostępnianych w aplikacji lub tworzenie kopii wpisu na platformę \textit{Github} zapewnia duży wachlarz możliwości w przekazywaniu informacji.
+\chapter{Podsumowanie}
+\input{chapters/chapter6}
 
-Serwis ``Codity'' oferuje dużą prostotę użytkowania, dzięki czemu dostępny jest nawet dla początkujących użytkowników. Ponadto, zadbano o aspekty społecznościowe, poprzez mechanizm obserwowania użytkowników. Dzięki zastosowaniu postów jako sposób komunikacji możliwe jest proste prowadzenie dyskusji w komentarzach, a pozostawione reakcje tworzą ranking dodawanej treści.
-
-Określenie na początku projektu wymagań funkcjonalnych i niefunkcjonalnych pozwoliło na dobry wybór narzędzi umożliwiających realizację zakładanych celów. Zastosowanie nowoczesnych technologii, takich jak \textit{React} lub \textit{PWA} pozwoliło na stworzenie aplikacji działającej szybko, niezawodnie i dostępnej na wszystkich popularnych platformach. Dzięki językowi \textit{Typescript} i silnemu typowaniu udało się ograniczyć błędy wynikające z ograniczeń języka \textit{JavaScript}. Dobór odpowiedniego środowiska deweloperskiego pozwolił na komfortową pracę przy kodzie aplikacji, a dodatkowe narzędzia zadbały o spójność kodu w całym projekcie.
-
-Istotną kwestią każdego nowoczesnego portalu jest warstwa prezentacji. Od dzisiejszych aplikacji wymagane jest nie tylko poprawne wyświetlanie zawartości, ale także prezentacja treści w sposób schludny, przejrzysty i intuicyjny. Dzięki zastosowaniu biblioteki \textit{Material-UI} aplikacja kliencka portalu ``Codity'' może konkurować w tej dziedzinie z popularnymi portalami o podobnej tematyce. Dla użytkownika przygotowano instrukcję obsługi przedstawiającą stworzony interfejs oraz wszystkie funkcje oferowane przez serwis.
-
-Projekt ``Codity'' ma wciąż duże możliwości rozwoju.
-Budowa na zasadzie komponentów sprawia, że dodawanie nowych funkcji jest bardzo proste. Planowany moduł wiadomości prywatnych ma potencjał na wzbogacenie doświadczenia użytkowników o jeszcze lepszą komunikację.
-
-Zakładany w niniejszej pracy dyplomowej cel -- stworzenie nowoczesnej platformy społecznościowej do dzielenia się praktycznymi rozwiązaniami programistycznymi został spełniony, a powstały portal jest godną konkurencją na rynku portali społecznościowych.
+%\appendix
+%\chapter{Acronyms and Symbols}
+%\input{chapters/appendix_acronyms}
 
 \newpage
 \listoffigures
 
 \newpage
-\listofcodes
+\listoftables
 
 \newpage
-\printbibliography[heading=bibintoc,title={Bibliografia}]
+\addcontentsline{toc}{chapter}{Spis listingów}
+\lstlistoflistings
+
+\printbibliography[heading=bibintoc]
 
 \end{document}

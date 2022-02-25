@@ -32,7 +32,7 @@ public class UsersController : ControllerBase {
   }
 
   [HttpPost("login")]
-  public async Task<ActionResult<string>> LogIn([FromBody] UserLoginDto dto) {
+  public async Task<ActionResult<string>> Login([FromBody] UserLoginDto dto) {
     try {
       if (TryValidateModel(dto) == false) {
         throw new ValidationProblemException();

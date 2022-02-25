@@ -1,0 +1,104 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Wprowadzenie} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+W ostatnich latach klienci firm tworzących oprogramowanie komputerowe, coraz częściej odrzucają plany wykorzystania w ramach swojej działalności, aplikacji natywnych na rzecz aplikacji internetowych. Jednym z dowodów na duże zainteresowanie takimi usługami programistycznymi, są wyniki przeprowadzanej przez rozpoznawalny portal Stack Overflow corocznej ankiety dla twórców oprogramowania. Już w roku 2018 trzema najpopularniejszymi rolami z którymi identyfikowali się badani, stały się powiązane z systemami internetowymi: deweloper aplikacji serwerowych (57,9\%), deweloper pełnego stosu technologicznego (48,6\%) oraz deweloper internetowych aplikacji klienckich (37,8\%). Podobne wyniki uzyskano w roku 2020. Jednakże, szczególnie ważną do odnotowania zmianą, jest rosnące zapotrzebowanie firm IT na deweloperów pełnego stosu technologicznego, czyli wzrost z 48,6\% do 54,9\% w przeciągu dwóch lat, potwierdzony wynikami statystycznymi \cite{StackOverflow.survey}.
+
+Główną zaletą inwestycji w systemy internetowe, jest oszczędność czasu i zasobów finansowych, potrzebnych do wydania oprogramowania na wielu platformach. Standardowo zapewnia to ogólną dostępność produktu na każdym urządzeniu obsługującym przeglądarkę internetową. Niemniej jednak, coraz większą popularnością cieszą się również rozwiązania Progressive web application (PWA) oraz platformy programistyczne, pozwalające łączyć zalety aplikacji internetowych i natywnych, nie powtarzając przy tym wielokrotnie procesu implementacji ich funkcjonalności. Popularnymi przykładami zastosowania tych narzędzi są: Visual Studio Code, Microsoft Teams, Pinterest czy AliExpress, udowadniające brak potrzeby tworzenia aplikacji, dedykowanych na konkretne platformy w określonych przypadkach \cite{Sanderson.PWA-and-containers} \cite{Appmaker.PWA-examples}.
+
+W niniejszej pracy opisano próbę stworzenia prototypu systemu internetowego, mającego na celu usprawnienie zarządzania jednostką Ochotniczej Straży Pożarnej (OSP). System ma być bardziej przystępną i nowocześniejszą alternatywą do rozwiązań istniejących już na rynku. OSP jest umundurowaną jednostką przeznaczoną głównie do walki z pożarami i klęskami żywiołowymi. Podstawy prawne jej działalności opisane zostały w ustawie “Prawo o stowarzyszeniach” \cite{Ustawa.prawo-o-stowarzyszeniach} oraz “o ochronie przeciwpożarowej” \cite{Ustawa.o-ochronie-przeciwpozarowej}. Dodatkowo, każda z jednostek posiada statut opisujący jej działalność. Funkcjonowanie jednostki OSP opiera się na wielu powtarzalnych procedurach. Ideą systemu internetowego opisanego w pracy, jest zoptymalizowanie tych czynności, dzięki wsparciu ich komputerowo, w sposób wygodny i przyjazny dla jego użytkowników.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cel i zakres pracy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Praca ma na celu przedstawienie projektu oraz procesu implementacji internetowego systemu wykorzystującego nowoczesny stos technologiczny. Zadaniem systemu jest ułatwienie dopełniania obowiązków formalnych jednostkom Ochotniczej Straży Pożarnej. Równie ważnym celem pracy jest uwydatnienie zalet i słabości aplikacji internetowych względem ich natywnych odpowiedników.
+
+Aby osiągnąć powyższy cel, przyjęto następujące założenia:
+
+\begin{itemize}
+    \item proste dostosowywanie działania aplikacji do rozdzielczości ekranu na jakim jest ona wyświetlana. Funkcjonalność ta określana jest jako responsywność aplikacji \cite{Raducha.responsywne-strony-internetowe}. Stanowi ona fundamentalny wymóg jakościowy stawiany przez użytkowników urządzeń mobilnych.
+    \item Mediatorem między aplikacją kliencką a bazą danych, powinna być wydajna i stabilna aplikacja serwerowa. Tworząc ją z zachowaniem wysokich standardów w łatwy sposób można spełnić te warunki dodatkowo zapewniając aplikacji skalowalność.
+    \item Obowiązkowym punktem pracy, powinno stać się również kompleksowe wprowadzenie do technologii działających za "fasadą" tworzonego systemu. 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Układ pracy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Początek rozdziału pierwszego zawiera wstęp do tematyki, o której traktuje praca oraz sformułowanie jej celu i zakresu. Rozdział zakończony został słownikiem pojęć  wykorzystywanych w dalszej części pracy. Drugi rozdział opisuje porównanie istniejących na rynku oprogramowania rozwiązań. W rozdziale trzecim przedstawiono pochodzenie i podstawy teoretyczne systemów internetowych, bazując na wybranych pozycjach z literatury.
+
+Rozdziały czwarty i piąty opisują kolejno: projekt tworzonego systemu oraz proces jego implementacji. Dzięki wcześniejszemu rozdziałowi teoretycznemu, można było uniknąć w nich niepotrzebnych dygresji i powtórzeń w treści pracy. Rozdział podsumowujący zawiera raport o końcowym efekcie pracy i wnioski wynikające z procesu jej powstawania.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Słownik pojęć}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Biorąc pod uwagę fakt, że dominująca część materiałów, dotyczących tematyki aplikacji internetowych, została wydana w języku angielskim, w terminologii tej dziedziny odnotowuje się dużą liczbę zapożyczeń z tego języka. By dopełnić spójności redakcyjnej pracy, w tabeli \ref{tab:translation} zawarto listę terminów anglojęzycznych oraz zaproponowanych polskich odpowiedników.
+
+\begin{table}[]
+    \centering
+    \caption{Polskie odpowiedniki terminów anglojęzycznych występujących w literaturze}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Termin angielski} & \textbf{Polski odpowiednik} \\
+        \hline
+        full-stack & pełny stos technologiczny \\
+        \hline
+        front-end & kliencki \\
+        \hline
+        back-end & serwerowy \\
+        \hline
+        framework & platforma programistyczna \\
+        \hline
+        enumeration & typ wyliczeniowy \\
+        \hline
+        string & łańcuch znaków \\
+        \hline
+        open-source & otwartoźródłowy \\
+        \hline
+        packet switching & komutacja pakietów \\
+        \hline
+        routing & trasowanie \\
+        \hline
+        wide area network & rozległa sieć komputerowa \\
+        \hline
+        local area network & sieć lokalna \\
+        \hline
+        gateway & brama sieciowa \\
+        \hline
+        transmission control protocol & protokół kontroli transmisji \\
+        \hline
+        internet protocol & protokół internetowy \\
+        \hline
+        document object model & model obiektowy dokumentu \\
+        \hline
+        HTTP cookies & ciasteczka HTTP \\
+        \hline
+        Web Storage API & interfejs programistyczny pamięci webowej \\
+        \hline
+        claim & twierdzenie \\
+        \hline
+        representational state transfer & reprezentacyjny transfer stanu \\
+        \hline
+        solution & rozwiązanie \\
+        \hline
+        active server pages & aktywne strony serwera \\
+        \hline
+        single page application & aplikacja pojedynczej strony \\
+        \hline
+        data transfer object & obiekt transferu danych \\
+        \hline
+        regular expression & wyrażenia regularne \\
+        \hline
+        mapper & maper \\
+        \hline
+        dependency injection & zastrzyk zależności \\
+        \hline
+        injector & iniektor \\
+        \hline
+        inversion of control & odwrócenie kontroli \\
+        \hline
+    \end{tabular}
+    \label{tab:translation}
+\end{table}
