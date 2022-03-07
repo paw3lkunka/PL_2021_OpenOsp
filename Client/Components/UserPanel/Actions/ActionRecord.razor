@@ -19,13 +19,17 @@
   [CascadingParameter(Name = "CheckedActions")]
   private ISet<int> _checkedActions { get; set; }
 
-  private void HandleCheckboxChange(object value) {
+  [Parameter]
+  public EventCallback OnDeleteButtonCheck { get; set; }
+
+  private async Task HandleCheckboxChange(object value) {
     if ((bool)value) {
       _checkedActions.Add(_readDto.Id);
     }
     else {
       _checkedActions.Remove(_readDto.Id);
     }
+    await OnDeleteButtonCheck.InvokeAsync();
   }
 
 }

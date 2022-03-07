@@ -7,14 +7,14 @@
   <div>
     <MemberCreateModal OnCreateCallback="UpdateTable"/>
     <span>
-      <label for="delete-members-modal" class="btn btn-secondary" disabled="@(_checkedMembers.Count() == 0)">Delete</label>
+      <label for="delete-members-modal" class="btn btn-secondary" disabled="@(_isDeleteButtonEnabled is false)">Delete</label>
       <input type="checkbox" id="delete-members-modal" class="modal-toggle" @bind="_isDeleteModalOpen">
       <div class="modal">
         <div class="modal-box">
           <h3 class="font-bold text-lg">Delete Members</h3>
           <p class="py-4">Are you sure you want to delete @_checkedMembers.Count() checked members?<br/> It is permanent.</p>
           <div class="modal-action">
-            <button @onclick="HandleDelete" class="btn btn-error">Confirm</button>
+            <label for="delete-members-modal" @onclick="HandleDelete" class="btn btn-error">Confirm</label>
             <label for="delete-members-modal" class="btn">Cancel</label>
           </div>
         </div>
@@ -36,7 +36,7 @@
     <tbody>
     @foreach (var member in _members) {
       <CascadingValue Value=@member>
-        <MemberRecord OnUpdateCallback="UpdateTable"/>
+        <MemberRecord OnUpdateCallback="UpdateTable" OnDeleteButtonCheck="HandleDeleteButtonCheck"/>
       </CascadingValue>
     }
     </tbody>
@@ -52,10 +52,15 @@
 
   private IEnumerable<MemberReadDto> _members { get; set; } = new List<MemberReadDto>();
 
+  private bool _isDeleteButtonEnabled = false;
   private bool _isDeleteModalOpen = false;
 
   protected override async Task OnInitializedAsync() {
     await UpdateTable();
+  }
+
+  private void HandleDeleteButtonCheck() {
+    _isDeleteButtonEnabled = (_checkedMembers.Count() is not 0);
   }
 
   private async Task UpdateTable() {
@@ -64,6 +69,7 @@
       _members = result;
       StateHasChanged();
     }
+    HandleDeleteButtonCheck();
   }
 
   private async Task HandleDelete() {

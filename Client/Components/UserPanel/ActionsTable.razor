@@ -8,14 +8,14 @@
   <div>
     <ActionCreateModal OnCreateCallback="UpdateTable"/>
     <span>
-      <label for="delete-actions-modal" class="btn btn-secondary" disabled="@(_checkedActions.Count() == 0)">Delete</label>
+      <label for="delete-actions-modal" class="btn btn-secondary" disabled="@(_isDeleteButtonEnabled is false)">Delete</label>
       <input type="checkbox" id="delete-actions-modal" class="modal-toggle" @bind="_isDeleteModalOpen">
       <div class="modal">
         <div class="modal-box">
           <h3 class="font-bold text-lg">Delete Actions</h3>
           <p class="py-4">Are you sure you want to delete @_checkedActions.Count() checked actions?<br/> It is permanent.</p>
           <div class="modal-action">
-            <button @onclick="HandleDelete" class="btn btn-error">Confirm</button>
+            <label for="delete-actions-modal" @onclick="HandleDelete" class="btn btn-error">Confirm</label>
             <label for="delete-actions-modal" class="btn">Cancel</label>
           </div>
         </div>
@@ -37,7 +37,7 @@
     <tbody>
     @foreach (var action in _actions) {
       <CascadingValue Value="@action">
-        <ActionRecord/>
+        <ActionRecord OnDeleteButtonCheck="HandleDeleteButtonCheck"/>
       </CascadingValue>
     }
     </tbody>
@@ -54,9 +54,14 @@
   private IEnumerable<ActionReadDto> _actions { get; set; } = new List<ActionReadDto>();
 
   private bool _isDeleteModalOpen = false;
+  private bool _isDeleteButtonEnabled = false;
 
   protected override async Task OnInitializedAsync() {
     await UpdateTable();
+  }
+
+  private void HandleDeleteButtonCheck() {
+    _isDeleteButtonEnabled = (_checkedActions.Count() is not 0);
   }
 
   private async Task UpdateTable() {
@@ -64,6 +69,7 @@
     if (result is not default(List<ActionReadDto>)) {
       _actions = result;
     }
+    HandleDeleteButtonCheck();
   }
 
   private async Task HandleDelete() {

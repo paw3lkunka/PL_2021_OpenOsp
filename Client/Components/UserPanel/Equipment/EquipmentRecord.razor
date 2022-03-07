@@ -23,14 +23,18 @@
 
   [Parameter]
   public EventCallback OnUpdateCallback { get; set; }
+  
+  [Parameter]
+  public EventCallback OnDeleteButtonCheck { get; set; }
 
-  private void HandleCheckboxChange(object value) {
+  private async Task HandleCheckboxChange(object value) {
     if ((bool)value) {
       _checkedEquipment.TryAdd(_readDto.Id, $"{_readDto.Brand} {_readDto.RegistryNumber}");
     }
     else {
       _checkedEquipment.Remove(_readDto.Id);
     }
+    await OnDeleteButtonCheck.InvokeAsync();
   }
-
+  
 }
